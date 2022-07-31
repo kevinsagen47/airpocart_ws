@@ -1,8 +1,8 @@
-# Install script for directory: /home/airpocart/catkin_ws/src/my_package
+# Install script for directory: /home/airpocart/airpocart_ws/src/my_package
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "/home/airpocart/catkin_ws/install")
+  set(CMAKE_INSTALL_PREFIX "/home/airpocart/airpocart_ws/install")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -38,25 +38,25 @@ if(NOT DEFINED CMAKE_CROSSCOMPILING)
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "/home/airpocart/catkin_ws/build/my_package/catkin_generated/installspace/my_package.pc")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "/home/airpocart/airpocart_ws/build/my_package/catkin_generated/installspace/my_package.pc")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/my_package/cmake" TYPE FILE FILES
-    "/home/airpocart/catkin_ws/build/my_package/catkin_generated/installspace/my_packageConfig.cmake"
-    "/home/airpocart/catkin_ws/build/my_package/catkin_generated/installspace/my_packageConfig-version.cmake"
+    "/home/airpocart/airpocart_ws/build/my_package/catkin_generated/installspace/my_packageConfig.cmake"
+    "/home/airpocart/airpocart_ws/build/my_package/catkin_generated/installspace/my_packageConfig-version.cmake"
     )
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/my_package" TYPE FILE FILES "/home/airpocart/catkin_ws/src/my_package/package.xml")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/my_package" TYPE FILE FILES "/home/airpocart/airpocart_ws/src/my_package/package.xml")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/my_package" TYPE PROGRAM FILES "/home/airpocart/catkin_ws/build/my_package/catkin_generated/installspace/talker.py")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/my_package" TYPE PROGRAM FILES "/home/airpocart/airpocart_ws/build/my_package/catkin_generated/installspace/talker.py")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/my_package" TYPE PROGRAM FILES "/home/airpocart/catkin_ws/build/my_package/catkin_generated/installspace/pointcloud_to_target.py")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/my_package" TYPE PROGRAM FILES "/home/airpocart/airpocart_ws/build/my_package/catkin_generated/installspace/pointcloud_to_target.py")
 endif()
 

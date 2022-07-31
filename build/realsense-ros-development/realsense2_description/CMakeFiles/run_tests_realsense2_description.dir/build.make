@@ -43,10 +43,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/airpocart/catkin_ws/src
+CMAKE_SOURCE_DIR = /home/airpocart/airpocart_ws/src
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/airpocart/catkin_ws/build
+CMAKE_BINARY_DIR = /home/airpocart/airpocart_ws/build
 
 # Utility rule file for run_tests_realsense2_description.
 
@@ -63,10 +63,10 @@ realsense-ros-development/realsense2_description/CMakeFiles/run_tests_realsense2
 .PHONY : realsense-ros-development/realsense2_description/CMakeFiles/run_tests_realsense2_description.dir/build
 
 realsense-ros-development/realsense2_description/CMakeFiles/run_tests_realsense2_description.dir/clean:
-	cd /home/airpocart/catkin_ws/build/realsense-ros-development/realsense2_description && $(CMAKE_COMMAND) -P CMakeFiles/run_tests_realsense2_description.dir/cmake_clean.cmake
+	cd /home/airpocart/airpocart_ws/build/realsense-ros-development/realsense2_description && $(CMAKE_COMMAND) -P CMakeFiles/run_tests_realsense2_description.dir/cmake_clean.cmake
 .PHONY : realsense-ros-development/realsense2_description/CMakeFiles/run_tests_realsense2_description.dir/clean
 
 realsense-ros-development/realsense2_description/CMakeFiles/run_tests_realsense2_description.dir/depend:
-	cd /home/airpocart/catkin_ws/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/airpocart/catkin_ws/src /home/airpocart/catkin_ws/src/realsense-ros-development/realsense2_description /home/airpocart/catkin_ws/build /home/airpocart/catkin_ws/build/realsense-ros-development/realsense2_description /home/airpocart/catkin_ws/build/realsense-ros-development/realsense2_description/CMakeFiles/run_tests_realsense2_description.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/airpocart/airpocart_ws/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/airpocart/airpocart_ws/src /home/airpocart/airpocart_ws/src/realsense-ros-development/realsense2_description /home/airpocart/airpocart_ws/build /home/airpocart/airpocart_ws/build/realsense-ros-development/realsense2_description /home/airpocart/airpocart_ws/build/realsense-ros-development/realsense2_description/CMakeFiles/run_tests_realsense2_description.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : realsense-ros-development/realsense2_description/CMakeFiles/run_tests_realsense2_description.dir/depend
 

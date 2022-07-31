@@ -1,2 +1,2 @@
 - setup-file:
-    local-name: /home/airpocart/catkin_ws/devel/setup.sh
+    local-name: /home/airpocart/airpocart_ws/devel/setup.sh

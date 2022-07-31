@@ -43,10 +43,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/airpocart/catkin_ws/src
+CMAKE_SOURCE_DIR = /home/airpocart/airpocart_ws/src
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/airpocart/catkin_ws/build
+CMAKE_BINARY_DIR = /home/airpocart/airpocart_ws/build
 
 # Utility rule file for realsense2_camera_gennodejs.
 
@@ -63,10 +63,10 @@ realsense-ros-development/realsense2_camera/CMakeFiles/realsense2_camera_gennode
 .PHONY : realsense-ros-development/realsense2_camera/CMakeFiles/realsense2_camera_gennodejs.dir/build
 
 realsense-ros-development/realsense2_camera/CMakeFiles/realsense2_camera_gennodejs.dir/clean:
-	cd /home/airpocart/catkin_ws/build/realsense-ros-development/realsense2_camera && $(CMAKE_COMMAND) -P CMakeFiles/realsense2_camera_gennodejs.dir/cmake_clean.cmake
+	cd /home/airpocart/airpocart_ws/build/realsense-ros-development/realsense2_camera && $(CMAKE_COMMAND) -P CMakeFiles/realsense2_camera_gennodejs.dir/cmake_clean.cmake
 .PHONY : realsense-ros-development/realsense2_camera/CMakeFiles/realsense2_camera_gennodejs.dir/clean
 
 realsense-ros-development/realsense2_camera/CMakeFiles/realsense2_camera_gennodejs.dir/depend:
-	cd /home/airpocart/catkin_ws/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/airpocart/catkin_ws/src /home/airpocart/catkin_ws/src/realsense-ros-development/realsense2_camera /home/airpocart/catkin_ws/build /home/airpocart/catkin_ws/build/realsense-ros-development/realsense2_camera /home/airpocart/catkin_ws/build/realsense-ros-development/realsense2_camera/CMakeFiles/realsense2_camera_gennodejs.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/airpocart/airpocart_ws/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/airpocart/airpocart_ws/src /home/airpocart/airpocart_ws/src/realsense-ros-development/realsense2_camera /home/airpocart/airpocart_ws/build /home/airpocart/airpocart_ws/build/realsense-ros-development/realsense2_camera /home/airpocart/airpocart_ws/build/realsense-ros-development/realsense2_camera/CMakeFiles/realsense2_camera_gennodejs.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : realsense-ros-development/realsense2_camera/CMakeFiles/realsense2_camera_gennodejs.dir/depend
 

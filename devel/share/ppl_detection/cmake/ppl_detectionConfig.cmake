@@ -67,14 +67,14 @@ set(ppl_detection_CONFIG_INCLUDED TRUE)
 
 # set variables for source/devel/install prefixes
 if("TRUE" STREQUAL "TRUE")
-  set(ppl_detection_SOURCE_PREFIX /home/airpocart/catkin_ws/src/ppl_detection_catkinized)
-  set(ppl_detection_DEVEL_PREFIX /home/airpocart/catkin_ws/devel)
+  set(ppl_detection_SOURCE_PREFIX /home/airpocart/airpocart_ws/src/ppl_detection_local)
+  set(ppl_detection_DEVEL_PREFIX /home/airpocart/airpocart_ws/devel)
   set(ppl_detection_INSTALL_PREFIX "")
   set(ppl_detection_PREFIX ${ppl_detection_DEVEL_PREFIX})
 else()
   set(ppl_detection_SOURCE_PREFIX "")
   set(ppl_detection_DEVEL_PREFIX "")
-  set(ppl_detection_INSTALL_PREFIX /home/airpocart/catkin_ws/install)
+  set(ppl_detection_INSTALL_PREFIX /home/airpocart/airpocart_ws/install)
   set(ppl_detection_PREFIX ${ppl_detection_INSTALL_PREFIX})
 endif()
 
@@ -91,9 +91,9 @@ endif()
 # flag project as catkin-based to distinguish if a find_package()-ed project is a catkin project
 set(ppl_detection_FOUND_CATKIN_PROJECT TRUE)
 
-if(NOT "/home/airpocart/catkin_ws/devel/include;/home/airpocart/catkin_ws/src/ppl_detection_catkinized/include " STREQUAL " ")
+if(NOT "/home/airpocart/airpocart_ws/devel/include;/home/airpocart/airpocart_ws/src/ppl_detection_local/include " STREQUAL " ")
   set(ppl_detection_INCLUDE_DIRS "")
-  set(_include_dirs "/home/airpocart/catkin_ws/devel/include;/home/airpocart/catkin_ws/src/ppl_detection_catkinized/include")
+  set(_include_dirs "/home/airpocart/airpocart_ws/devel/include;/home/airpocart/airpocart_ws/src/ppl_detection_local/include")
   if(NOT " " STREQUAL " ")
     set(_report "Check the issue tracker '' and consider creating a ticket if the problem has not been reported yet.")
   elseif(NOT "http://ros.org/wiki/ppl_detection " STREQUAL " ")
@@ -110,7 +110,7 @@ if(NOT "/home/airpocart/catkin_ws/devel/include;/home/airpocart/catkin_ws/src/pp
         message(FATAL_ERROR "Project 'ppl_detection' specifies '${idir}' as an include dir, which is not found.  It does not exist in '${include}'.  ${_report}")
       endif()
     else()
-      message(FATAL_ERROR "Project 'ppl_detection' specifies '${idir}' as an include dir, which is not found.  It does neither exist as an absolute directory nor in '/home/airpocart/catkin_ws/src/ppl_detection_catkinized/${idir}'.  ${_report}")
+      message(FATAL_ERROR "Project 'ppl_detection' specifies '${idir}' as an include dir, which is not found.  It does neither exist as an absolute directory nor in '/home/airpocart/airpocart_ws/src/ppl_detection_local/${idir}'.  ${_report}")
     endif()
     _list_append_unique(ppl_detection_INCLUDE_DIRS ${include})
   endforeach()
@@ -154,7 +154,7 @@ foreach(library ${libraries})
     set(lib_path "")
     set(lib "${library}-NOTFOUND")
     # since the path where the library is found is returned we have to iterate over the paths manually
-    foreach(path /home/airpocart/catkin_ws/devel/lib;/home/airpocart/catkin_ws/devel/lib;/opt/ros/melodic/lib)
+    foreach(path /home/airpocart/airpocart_ws/devel/lib;/home/airpocart/airpocart_ws/devel/lib;/opt/ros/melodic/lib)
       find_library(lib ${library}
         PATHS ${path}
         NO_DEFAULT_PATH NO_CMAKE_FIND_ROOT_PATH)

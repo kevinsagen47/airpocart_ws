@@ -1,4 +1,4 @@
-prefix=/home/airpocart/catkin_ws/install
+prefix=/home/airpocart/airpocart_ws/install
 
 Name: realsense2_camera
 Description: Description of realsense2_camera

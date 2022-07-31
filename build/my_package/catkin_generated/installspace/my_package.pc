@@ -1,4 +1,4 @@
-prefix=/home/airpocart/catkin_ws/install
+prefix=/home/airpocart/airpocart_ws/install
 
 Name: my_package
 Description: Description of my_package

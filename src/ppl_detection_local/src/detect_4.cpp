@@ -281,7 +281,7 @@ full_sub_ = n_.subscribe<pcl::PointCloud<pcl::PointXYZ> > ("/camera/depth_regist
 		      }
             //ROS_INFO("%d", cloud_no);
             //ROS_INFO("%f", prev_z);
-            ROS_INFO("Node is Up")
+            ROS_INFO("Node is Up");
 	         //*/
            //ROS_DEBUG("Hello 2%s", "World");
            //ROS_DEBUG("Hello %s", "World");

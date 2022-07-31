@@ -43,10 +43,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/airpocart/catkin_ws/src
+CMAKE_SOURCE_DIR = /home/airpocart/airpocart_ws/src
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/airpocart/catkin_ws/build
+CMAKE_BINARY_DIR = /home/airpocart/airpocart_ws/build
 
 # Utility rule file for clean_test_results_realsense2_description.
 
@@ -54,7 +54,7 @@ CMAKE_BINARY_DIR = /home/airpocart/catkin_ws/build
 include realsense-ros-development/realsense2_description/CMakeFiles/clean_test_results_realsense2_description.dir/progress.make
 
 realsense-ros-development/realsense2_description/CMakeFiles/clean_test_results_realsense2_description:
-	cd /home/airpocart/catkin_ws/build/realsense-ros-development/realsense2_description && /usr/bin/python2 /opt/ros/melodic/share/catkin/cmake/test/remove_test_results.py /home/airpocart/catkin_ws/build/test_results/realsense2_description
+	cd /home/airpocart/airpocart_ws/build/realsense-ros-development/realsense2_description && /usr/bin/python2 /opt/ros/melodic/share/catkin/cmake/test/remove_test_results.py /home/airpocart/airpocart_ws/build/test_results/realsense2_description
 
 clean_test_results_realsense2_description: realsense-ros-development/realsense2_description/CMakeFiles/clean_test_results_realsense2_description
 clean_test_results_realsense2_description: realsense-ros-development/realsense2_description/CMakeFiles/clean_test_results_realsense2_description.dir/build.make
@@ -67,10 +67,10 @@ realsense-ros-development/realsense2_description/CMakeFiles/clean_test_results_r
 .PHONY : realsense-ros-development/realsense2_description/CMakeFiles/clean_test_results_realsense2_description.dir/build
 
 realsense-ros-development/realsense2_description/CMakeFiles/clean_test_results_realsense2_description.dir/clean:
-	cd /home/airpocart/catkin_ws/build/realsense-ros-development/realsense2_description && $(CMAKE_COMMAND) -P CMakeFiles/clean_test_results_realsense2_description.dir/cmake_clean.cmake
+	cd /home/airpocart/airpocart_ws/build/realsense-ros-development/realsense2_description && $(CMAKE_COMMAND) -P CMakeFiles/clean_test_results_realsense2_description.dir/cmake_clean.cmake
 .PHONY : realsense-ros-development/realsense2_description/CMakeFiles/clean_test_results_realsense2_description.dir/clean
 
 realsense-ros-development/realsense2_description/CMakeFiles/clean_test_results_realsense2_description.dir/depend:
-	cd /home/airpocart/catkin_ws/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/airpocart/catkin_ws/src /home/airpocart/catkin_ws/src/realsense-ros-development/realsense2_description /home/airpocart/catkin_ws/build /home/airpocart/catkin_ws/build/realsense-ros-development/realsense2_description /home/airpocart/catkin_ws/build/realsense-ros-development/realsense2_description/CMakeFiles/clean_test_results_realsense2_description.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/airpocart/airpocart_ws/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/airpocart/airpocart_ws/src /home/airpocart/airpocart_ws/src/realsense-ros-development/realsense2_description /home/airpocart/airpocart_ws/build /home/airpocart/airpocart_ws/build/realsense-ros-development/realsense2_description /home/airpocart/airpocart_ws/build/realsense-ros-development/realsense2_description/CMakeFiles/clean_test_results_realsense2_description.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : realsense-ros-development/realsense2_description/CMakeFiles/clean_test_results_realsense2_description.dir/depend
 

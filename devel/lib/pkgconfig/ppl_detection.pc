@@ -1,8 +1,8 @@
-prefix=/home/airpocart/catkin_ws/devel
+prefix=/home/airpocart/airpocart_ws/devel
 
 Name: ppl_detection
 Description: Description of ppl_detection
 Version: 0.0.4
-Cflags: -I/home/airpocart/catkin_ws/devel/include -I/home/airpocart/catkin_ws/src/ppl_detection_catkinized/include
+Cflags: -I/home/airpocart/airpocart_ws/devel/include -I/home/airpocart/airpocart_ws/src/ppl_detection_local/include
 Libs: -L${prefix}/lib 
 Requires: message_runtime

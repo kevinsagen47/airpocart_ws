@@ -1,8 +1,8 @@
-# Install script for directory: /home/airpocart/catkin_ws/src/realsense-ros-development/realsense2_description
+# Install script for directory: /home/airpocart/airpocart_ws/src/realsense-ros-development/realsense2_description
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "/home/airpocart/catkin_ws/install")
+  set(CMAKE_INSTALL_PREFIX "/home/airpocart/airpocart_ws/install")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -38,26 +38,26 @@ if(NOT DEFINED CMAKE_CROSSCOMPILING)
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "/home/airpocart/catkin_ws/build/realsense-ros-development/realsense2_description/catkin_generated/installspace/realsense2_description.pc")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "/home/airpocart/airpocart_ws/build/realsense-ros-development/realsense2_description/catkin_generated/installspace/realsense2_description.pc")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/realsense2_description/cmake" TYPE FILE FILES
-    "/home/airpocart/catkin_ws/build/realsense-ros-development/realsense2_description/catkin_generated/installspace/realsense2_descriptionConfig.cmake"
-    "/home/airpocart/catkin_ws/build/realsense-ros-development/realsense2_description/catkin_generated/installspace/realsense2_descriptionConfig-version.cmake"
+    "/home/airpocart/airpocart_ws/build/realsense-ros-development/realsense2_description/catkin_generated/installspace/realsense2_descriptionConfig.cmake"
+    "/home/airpocart/airpocart_ws/build/realsense-ros-development/realsense2_description/catkin_generated/installspace/realsense2_descriptionConfig-version.cmake"
     )
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/realsense2_description" TYPE FILE FILES "/home/airpocart/catkin_ws/src/realsense-ros-development/realsense2_description/package.xml")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/realsense2_description" TYPE FILE FILES "/home/airpocart/airpocart_ws/src/realsense-ros-development/realsense2_description/package.xml")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/realsense2_description" TYPE DIRECTORY FILES
-    "/home/airpocart/catkin_ws/src/realsense-ros-development/realsense2_description/launch"
-    "/home/airpocart/catkin_ws/src/realsense-ros-development/realsense2_description/meshes"
-    "/home/airpocart/catkin_ws/src/realsense-ros-development/realsense2_description/rviz"
-    "/home/airpocart/catkin_ws/src/realsense-ros-development/realsense2_description/urdf"
+    "/home/airpocart/airpocart_ws/src/realsense-ros-development/realsense2_description/launch"
+    "/home/airpocart/airpocart_ws/src/realsense-ros-development/realsense2_description/meshes"
+    "/home/airpocart/airpocart_ws/src/realsense-ros-development/realsense2_description/rviz"
+    "/home/airpocart/airpocart_ws/src/realsense-ros-development/realsense2_description/urdf"
     )
 endif()
 

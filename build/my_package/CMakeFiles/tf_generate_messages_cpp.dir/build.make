@@ -43,10 +43,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/airpocart/catkin_ws/src
+CMAKE_SOURCE_DIR = /home/airpocart/airpocart_ws/src
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/airpocart/catkin_ws/build
+CMAKE_BINARY_DIR = /home/airpocart/airpocart_ws/build
 
 # Utility rule file for tf_generate_messages_cpp.
 
@@ -63,10 +63,10 @@ my_package/CMakeFiles/tf_generate_messages_cpp.dir/build: tf_generate_messages_c
 .PHONY : my_package/CMakeFiles/tf_generate_messages_cpp.dir/build
 
 my_package/CMakeFiles/tf_generate_messages_cpp.dir/clean:
-	cd /home/airpocart/catkin_ws/build/my_package && $(CMAKE_COMMAND) -P CMakeFiles/tf_generate_messages_cpp.dir/cmake_clean.cmake
+	cd /home/airpocart/airpocart_ws/build/my_package && $(CMAKE_COMMAND) -P CMakeFiles/tf_generate_messages_cpp.dir/cmake_clean.cmake
 .PHONY : my_package/CMakeFiles/tf_generate_messages_cpp.dir/clean
 
 my_package/CMakeFiles/tf_generate_messages_cpp.dir/depend:
-	cd /home/airpocart/catkin_ws/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/airpocart/catkin_ws/src /home/airpocart/catkin_ws/src/my_package /home/airpocart/catkin_ws/build /home/airpocart/catkin_ws/build/my_package /home/airpocart/catkin_ws/build/my_package/CMakeFiles/tf_generate_messages_cpp.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/airpocart/airpocart_ws/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/airpocart/airpocart_ws/src /home/airpocart/airpocart_ws/src/my_package /home/airpocart/airpocart_ws/build /home/airpocart/airpocart_ws/build/my_package /home/airpocart/airpocart_ws/build/my_package/CMakeFiles/tf_generate_messages_cpp.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : my_package/CMakeFiles/tf_generate_messages_cpp.dir/depend
 
