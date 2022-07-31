@@ -33,9 +33,9 @@ pass: adlinkros
 
 
 
-Launch ROS realsense node
-<option 1> roslaunch realsense2_camera rs_rgbd.launch
-<option 2> roslaunch realsense2_camera lite.launch
+Launch ROS realsense node<br>
+option 1: roslaunch realsense2_camera rs_rgbd.launch
+option 2: roslaunch realsense2_camera lite.launch
 
 Run People Tracking
 rosrun ppl_detection detect_4
