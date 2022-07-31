@@ -281,10 +281,11 @@ full_sub_ = n_.subscribe<pcl::PointCloud<pcl::PointXYZ> > ("/camera/depth_regist
 		      }
             //ROS_INFO("%d", cloud_no);
             //ROS_INFO("%f", prev_z);
+            ROS_INFO("Node is Up")
 	         //*/
            //ROS_DEBUG("Hello 2%s", "World");
-           ROS_DEBUG("Hello %s", "World");
-           ROS_DEBUG_STREAM("Hello " << "World");
+           //ROS_DEBUG("Hello %s", "World");
+           //ROS_DEBUG_STREAM("Hello " << "World");
            bool tracked = false;
            int tracking_no = 0;
            for(int l = 0; l < max_tracker_no; l++)
