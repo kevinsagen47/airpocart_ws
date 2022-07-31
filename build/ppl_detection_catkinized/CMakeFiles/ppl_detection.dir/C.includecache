@@ -1,0 +1,26 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/airpocart/catkin_ws/src/ppl_detection_catkinized/src/ply.h
+stdio.h
+-
+stddef.h
+-
+
+/home/airpocart/catkin_ws/src/ppl_detection_catkinized/src/plyfile.c
+stdio.h
+-
+stdlib.h
+-
+math.h
+-
+string.h
+-
+ply.h
+/home/airpocart/catkin_ws/src/ppl_detection_catkinized/src/ply.h
+

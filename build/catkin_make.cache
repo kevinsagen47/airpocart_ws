@@ -1,0 +1,2 @@
+my_package:ppl_detection_catkinized:realsense-ros-development/realsense2_camera:realsense-ros-development/realsense2_description:robot_localization
+-DCATKIN_DEVEL_PREFIX=/home/airpocart/catkin_ws/devel -DCMAKE_INSTALL_PREFIX=/home/airpocart/catkin_ws/install -G Unix Makefiles

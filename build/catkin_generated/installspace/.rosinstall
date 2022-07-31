@@ -1,0 +1,2 @@
+- setup-file:
+    local-name: /home/airpocart/catkin_ws/install/setup.sh
