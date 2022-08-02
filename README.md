@@ -1,6 +1,6 @@
 # airpocart_ws
 
-##SETUP 
+## SETUP 
 ### WiFi <br>
 連兩個router 都可以<br>
 AIpocart B36 是DHCP (master)<br>
