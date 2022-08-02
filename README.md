@@ -54,15 +54,15 @@ pass: adlinkros<br>
 ### Launch ROS realsense node<br>
 Complete Launch: 
 ```sh
-roslaunch realsense2_camera rs_rgbd.launch<br>
+roslaunch realsense2_camera rs_rgbd.launch
 ```
 Lite package:
 ```sh
-roslaunch realsense2_camera lite.launch<br>
+roslaunch realsense2_camera lite.launch
 ```
 ### Run People Tracking<br>
 ```sh
-rosrun ppl_detection detect_4<br>
+rosrun ppl_detection detect_4
 ```
 
 ## Run Airpocart GUI
