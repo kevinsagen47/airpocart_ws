@@ -11,18 +11,18 @@ SSID: AIpocart TECO pass: Airpocart1<br>
 
 ### Environment
 Check your IP Address
-'''sh
+```sh
 ifconfig
-'''
+```
 Open bashrc
-'''sh
+```sh
 vim ~/.bashrc
-'''
+```
 Paste in bashrc
-'''sh
+```sh
 export ROS_MASTER_URI=http://192.168.0.11:11311
 export ROS_IP=192.168.0.<ur IP Address>
-'''
+```
 
 ## Remote Access<br>
 
@@ -53,24 +53,24 @@ pass: adlinkros<br>
 
 ### Launch ROS realsense node<br>
 Complete Launch: 
-'''sh
+```sh
 roslaunch realsense2_camera rs_rgbd.launch<br>
-'''
+```
 Lite package:
-'''sh
+```sh
 roslaunch realsense2_camera lite.launch<br>
-'''
+```
 ### Run People Tracking<br>
-'''sh
+```sh
 rosrun ppl_detection detect_4<br>
-'''
+```
 
 ## Run Airpocart GUI
 Navigate to directory<br>
 Make sure environment is configured<br>
-'''sh
+```sh
  cd airpocart_ws/scripts/user_interface/
  python3 interface.py
-'''
+```
 
  
