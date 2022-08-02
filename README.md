@@ -1,5 +1,7 @@
 # airpocart_ws
-1.WiFi <br>
+
+<!-- SETUP -->
+### WiFi <br>
 連兩個router 都可以<br>
 AIpocart B36 是DHCP (master)<br>
 AIpocart TECO (機器人上面的） 是 client<br>
@@ -7,27 +9,28 @@ AIpocart TECO (機器人上面的） 是 client<br>
 SSID: AIpocart B36   pass: Airpocart1<br>
 SSID: AIpocart TECO pass: Airpocart1<br>
 
-2. SSH<br>
+### Remote Access<br>
 
+## SSH
 Jetson<br>
 public: ssh airpocart@140.113.151.157<br>
 local: ssh airpocart@192.168.0.101<br>
 pass: airpocart<br>
 
-TECO<br>
+TECO IPC<br>
 local: ssh ros@192.168.0.11<br>
 pass: adlinkros<br>
 
 
-3. xRDP<br>
+## xRDP<br>
 Jetson: 140.113.151.157<br>
 pass: airpocart<br>
 
-4. VNC:<br>
+## VNC:<br>
 TECO: 192.168.0.11<br>
 pass: adlinkros<br>
 
-5. TECO UI<br>
+## TECO Website<br>
 192.168.0.11<br>
 
 
