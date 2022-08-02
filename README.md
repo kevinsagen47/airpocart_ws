@@ -28,12 +28,22 @@ export ROS_IP=192.168.0.<ur IP Address>
 
 ### SSH
 Jetson<br>
-public: ssh airpocart@140.113.151.157<br>
-local: ssh airpocart@192.168.0.101<br>
+
+Local (-X means foward X11 graphics to client)
+```sh
+ssh -X airpocart@192.168.0.101<br>
+```
+Public 
+```sh
+ssh -X airpocart@140.113.151.157<br>
+```
 pass: airpocart<br>
 
 TECO IPC<br>
-local: ssh ros@192.168.0.11<br>
+Local
+```sh
+ssh ros@192.168.0.11<br>
+```
 pass: adlinkros<br>
 
 
