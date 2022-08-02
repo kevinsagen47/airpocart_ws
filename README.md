@@ -1,6 +1,6 @@
 # airpocart_ws
 
-<!-- SETUP -->
+##SETUP 
 ### WiFi <br>
 連兩個router 都可以<br>
 AIpocart B36 是DHCP (master)<br>
@@ -8,6 +8,21 @@ AIpocart TECO (機器人上面的） 是 client<br>
 
 SSID: AIpocart B36   pass: Airpocart1<br>
 SSID: AIpocart TECO pass: Airpocart1<br>
+
+### Environment
+Check your IP Address
+'''sh
+ifconfig
+'''
+Open bashrc
+'''sh
+vim ~/.bashrc
+'''
+Paste in bashrc
+'''sh
+export ROS_MASTER_URI=http://192.168.0.11:11311
+export ROS_IP=192.168.0.<ur IP Address>
+'''
 
 ## Remote Access<br>
 
@@ -49,3 +64,13 @@ roslaunch realsense2_camera lite.launch<br>
 '''sh
 rosrun ppl_detection detect_4<br>
 '''
+
+##Run Airpocart GUI
+Navigate to directory
+Make sure environment is configured<br>
+'''sh
+ cd airpocart_ws/scripts/user_interface/
+ python3 interface.py
+'''
+
+ 
