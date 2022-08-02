@@ -31,18 +31,18 @@ Jetson<br>
 
 Local (-X means foward X11 graphics to client)
 ```sh
-ssh -X airpocart@192.168.0.101<br>
+ssh -X airpocart@192.168.0.101
 ```
 Public 
 ```sh
-ssh -X airpocart@140.113.151.157<br>
+ssh -X airpocart@140.113.151.157
 ```
 pass: airpocart<br>
 
 TECO IPC<br>
 Local
 ```sh
-ssh ros@192.168.0.11<br>
+ssh ros@192.168.0.11
 ```
 pass: adlinkros<br>
 
