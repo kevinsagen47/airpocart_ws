@@ -82,5 +82,13 @@ Make sure environment is configured<br>
  cd airpocart_ws/scripts/user_interface/
  python3 interface.py
 ```
+
+Jetson Nano Commit 
+Account:
+'''sh
+kevinsagen47
+'''
+password
+'''sh
 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
- 
+'''
