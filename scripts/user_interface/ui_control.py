@@ -32,16 +32,11 @@ class MyWidget(QWidget):
         self.page.move(600,0)
         
         # 關閉程式按鈕
-        self.shut_button = QPushButton('shut down', self)
-        self.shut_button.move(1100,50)
-        self.shut_button.resize(300,300)
+        self.shut_button = QPushButton('關閉程式', self)
+        self.shut_button.move(50,750)
+        self.shut_button.resize(300,120)
         self.shut_button.setShortcut('Ctrl+C')
         self.shut_button.clicked.connect(QCoreApplication.instance().quit)
-        
-        # 顯示閒置狀態
-        self.idle_btn = QPushButton('idle',self)
-        self.idle_btn.move(1100,150)
-        self.idle_btn.clicked.connect(self.idle)       
         
         # 遙控按鈕
                 
@@ -66,19 +61,19 @@ class MyWidget(QWidget):
         self.rightback_btn.resize(size,size)
         self.stop_btn.resize(200,200)
         
-        self.leftfront_btn.move(300,150)
-        self.front_btn.move(500,150)
-        self.rightfront_btn.move(700,150)
-        self.left_btn.move(300,350)
-        self.right_btn.move(700,350)
-        self.leftback_btn.move(300,550)
-        self.back_btn.move(500,550)
-        self.rightback_btn.move(700,550)        
-        self.stop_btn.move(450,300)
+        self.leftfront_btn.move(800,150)
+        self.front_btn.move(1000,150)
+        self.rightfront_btn.move(1200,150)
+        self.left_btn.move(800,350)
+        self.right_btn.move(1200,350)
+        self.leftback_btn.move(800,550)
+        self.back_btn.move(1000,550)
+        self.rightback_btn.move(1200,550)        
+        self.stop_btn.move(950,300)
         
         self.speed_btn = QPushButton('High speed',self)
         self.speed_btn.resize(200,200)
-        self.speed_btn.move(450,300)
+        self.speed_btn.move(950,300)
         self.speed_btn.clicked.connect(self.speed)
         self.multi_speed = 1
         self.leftfront_btn.pressed.connect(lambda:self.walk('lf'))
@@ -109,7 +104,7 @@ class MyWidget(QWidget):
         # (Text) 時間標籤
         self.time_label = QLabel(self)
         self.time_label.setFont(QFont('Arial',20))
-        self.time_label.move(1000,0)
+        self.time_label.move(1400,0)
         self.time_label.setText(time.ctime())
         threading._start_new_thread(self.time_update,())
 
@@ -120,27 +115,23 @@ class MyWidget(QWidget):
         # (Button) 返回主畫面
         self.home = QPushButton(self)
         self.home.clicked.connect(self.idle)
-        self.home.move(1100,200)
+        self.home.move(50,50)
         self.home.setText("返回主畫面")
         
         
         self.pub = rospy.Publisher('cmd_vel',Twist,queue_size=1)
-        rospy.init_node('interface')
-        
+        try:
+            rospy.init_node('interface')
+        except:
+            print("ROS master is offline")
         ##        Idle/Default         ##
 
         # (Text) 開始文字
-        '''
-        self.start_label = QLabel(self)
-        self.start_label.setText("按 一 下 開 始 操 作")
-        #self.start_label.setFont(QFont('Ariel',35))
-        self.start_label.setFont(QFont('Times New Roman',35))
-        self.start_label.move(450,650)
-        '''
+        
         self.start_label = QLabel(self)
         pixmap = QPixmap('Image/start_text.png')
         self.start_label.setPixmap(pixmap)
-        self.start_label.move(300,650)
+        self.start_label.move(600,700)
         self.start_label.resize(800,90)
 
         
@@ -167,37 +158,25 @@ class MyWidget(QWidget):
         # (Button) 控制 選擇
         self.opt_chg = QPushButton(self)
         self.opt_chg.setText("控制")
-        self.opt_chg.move(750,550)
-        self.opt_chg.resize(300,150)
-        self.opt_chg.clicked.connect(self.charging)
+        self.opt_chg.move(900,200)
+        self.opt_chg.resize(450,450)
+        self.opt_chg.clicked.connect(self.remoting)
         
         #################################
         
         self.idle()
-
-    # (測試) 模式選單
-    def changemode(self):        
-        if self.option.currentText() == 'Navigation':            
-            self.navigation()
-        elif self.option.currentText() == 'Following':            
-            self.following()
-        elif self.option.currentText() == 'Charging':            
-            self.charging()            
-        elif self.option.currentText() == 'Remoting':            
-            self.remoting()
-            
 
         
     # (顯示) 閒置畫面
     def idle(self):
         self.all_clear()
         self.page.setText('閒置頁面')
-        self.option.setCurrentIndex(0)
         self.showImage()
         self.st_btn.setVisible(True)
         self.start_label.setVisible(True)
-        self.home.move(1100,200)
-        self.home.resize(50,20)
+        
+        self.home.move(50,50)
+        self.home.resize(200,200)
         self.RoV = 0
         self.RoW = 0
         twist = Twist()
@@ -212,6 +191,10 @@ class MyWidget(QWidget):
         self.all_clear()
         self.page.setText('選擇頁面')
         self.opt_chg.setVisible(True)
+        self.shut_button.setVisible(True)
+        
+        self.home.move(50,50)
+        self.home.setVisible(True)
 
 
     # (顯示) 遙控畫面
@@ -229,6 +212,8 @@ class MyWidget(QWidget):
         #self.stop_btn.setVisible(True)
         self.speed_btn.setVisible(True)
         self.speed_btn.setText('High speed')
+        self.home.setVisible(True)
+        self.shut_button.setVisible(True)
         print('Remoting mode running')
 
     
@@ -245,34 +230,13 @@ class MyWidget(QWidget):
         self.stop_btn.setVisible(False)
         self.speed_btn.setVisible(False)
         self.img.setVisible(False)
-        self.opt_nav.setVisible(False)
-        self.opt_fol.setVisible(False)
         self.opt_chg.setVisible(False)
         self.st_btn.setVisible(False)
         self.start_label.setVisible(False)
-        self.explain_nav.setVisible(False)
-        self.explain_fol.setVisible(False)
-        self.location_type.setVisible(False)
-        self.map.setVisible(False)
-        for n in self.hito:
-            n.setVisible(False)
-        for n in self.cafe:
-            n.setVisible(False)
-        for n in self.shop:
-            n.setVisible(False)
-        for n in self.toilet:
-            n.setVisible(False)
-        for n in self.other:
-            n.setVisible(False)        
-        for n in self.score:
-            n.setVisible(False)
-        for n in self.extra:
-            n.setVisible(False)
-        for n in self.distn:
-            n.setVisible(False)
-        self.pin.setVisible(False)
-        self.nav_btn.setVisible(False)
-
+        self.shut_button.setVisible(False)
+        self.home.setVisible(False)
+        
+        
     
     def speed(self):
         if self.multi_speed == 1:
@@ -281,6 +245,7 @@ class MyWidget(QWidget):
         else:
             self.multi_speed = 1
             self.speed_btn.setText('High speed')
+    
     # (控制) 遙控模式
     def walk(self,key):
         v_s = 0.25
@@ -319,7 +284,10 @@ class MyWidget(QWidget):
         twist.linear.x = self.RoV
         twist.angular.z = self.RoW
         print('speed:%s\tturn:%s'%(self.RoV,self.RoW))
-        self.pub.publish(twist)
+        try:
+            self.pub.publish(twist)
+        except:
+            print("ROS master is offline")
     # (圖片) 閒置圖片
     def showImage(self):
         self.movie = QMovie("Image/anya3.gif")
@@ -338,8 +306,8 @@ class MyWidget(QWidget):
     def showImage_battery(self):
         pixmap = QPixmap('Image/battery_charge.png')
         self.battery.setPixmap(pixmap)
-        self.battery.move(1240,5)
-        self.battery.resize(35,18)
+        self.battery.move(1800,5)
+        self.battery.resize(60,30)
         self.battery.setScaledContents(True)
         self.battery.raise_()
         self.battery.setVisible(True)
