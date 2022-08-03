@@ -304,7 +304,7 @@ class MyWidget(QWidget):
         
     # (圖片) 電池
     def showImage_battery(self):
-        pixmap = QPixmap('/airpocart_ws/scripts/user_interface/Image/battery_charge.png')
+        pixmap = QPixmap('~/airpocart_ws/scripts/user_interface/Image/battery_charge.png')
         self.battery.setPixmap(pixmap)
         self.battery.move(1800,5)
         self.battery.resize(60,30)
