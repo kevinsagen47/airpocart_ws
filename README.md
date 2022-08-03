@@ -85,10 +85,10 @@ Make sure environment is configured<br>
 
 Jetson Nano Commit 
 Account:
-'''sh
+```sh
 kevinsagen47
-'''
+```
 password
-'''sh
+```sh
 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
-'''
+```
