@@ -129,7 +129,7 @@ class MyWidget(QWidget):
         # (Text) 開始文字
         
         self.start_label = QLabel(self)
-        pixmap = QPixmap('Image/start_text.png')
+        pixmap = QPixmap('~/airpocart_ws/scripts/user_interface/Image/start_text.png')
         self.start_label.setPixmap(pixmap)
         self.start_label.move(600,700)
         self.start_label.resize(800,90)
@@ -290,7 +290,7 @@ class MyWidget(QWidget):
             print("ROS master is offline")
     # (圖片) 閒置圖片
     def showImage(self):
-        self.movie = QMovie("./Image/anya3.gif")
+        self.movie = QMovie("~/airpocart_ws/scripts/user_interface/Image/anya3.gif")
         self.img.setMovie(self.movie)
         self.movie.start()        
         #pixmap = QPixmap('Image/anya.png')        
