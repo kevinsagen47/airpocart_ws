@@ -129,7 +129,8 @@ class MyWidget(QWidget):
         # (Text) 開始文字
         
         self.start_label = QLabel(self)
-        pixmap = QPixmap('/home/airpocart/airpocart_ws/scripts/user_interface/Image/start_text.png')
+        #pixmap = QPixmap('/home/airpocart/airpocart_ws/scripts/user_interface/Image/start_text.png')
+        pixmap = QPixmap('./Image/start_text.png')
         self.start_label.setPixmap(pixmap)
         self.start_label.move(600,700)
         self.start_label.resize(800,90)
