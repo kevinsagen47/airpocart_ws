@@ -3,6 +3,7 @@ import os
 import cv2
 import time
 import threading
+from front_following_v2 import *
 from geometry_msgs.msg import Twist
 import rospy
 from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QPushButton, QComboBox, QGraphicsOpacityEffect
@@ -230,6 +231,11 @@ class MyWidget(QWidget):
         
         ##         Following           ##
         
+        self.follow_on_btn = QPushButton('Following',self)
+        self.follow_off_btn = QPushButton('Stop',self)
+        
+        self.follow_on_btn.clicked.connect(lambda:self.follow_start(1))
+        self.follow_off_btn.clicked.connect(lambda:self.follow_start(0))
         
         #################################
         
@@ -549,7 +555,7 @@ class MyWidget(QWidget):
         self.map_place_y = 60
         self.mapsize_x = 1800
         self.mapsize_y = 1000
-        self.home.move(70,1060)
+        self.home.move(70,1100)
         self.home.resize(200,50)
 
         self.showImage_map()
@@ -559,6 +565,15 @@ class MyWidget(QWidget):
         self.all_clear()
         self.page.setText('跟隨畫面')
         self.showImage(0.5)
+        self.follow_on_btn.setVisible(True)
+        self.follow_off_btn.setVisible(True)
+        self.follow_on_btn.move(75,75)
+        self.follow_off_btn.move(950,75)
+        
+        self.follow_on_btn.resize(800,800)
+        self.follow_off_btn.resize(800,800)
+        self.home.move(70,1100)
+        self.home.resize(200,50)
 
     # (顯示) 充電畫面
     def charging(self):
@@ -660,7 +675,8 @@ class MyWidget(QWidget):
             n.setVisible(False)
         self.pin.setVisible(False)
         self.nav_btn.setVisible(False)
-    
+        self.follow_on_btn.setVisible(False)
+        self.follow_off_btn.setVisible(False)
     # (顯示) 各式選擇
     def show_type(self,type_ch):
         
@@ -894,7 +910,9 @@ class MyWidget(QWidget):
     def measure_distance(self,location):
         return '大約2分鐘到達'
         
-
+    # (跟隨) 前跟隨模式
+    def follow_start(self,on=1):
+        follower(self.pub,on)
     
 if __name__ == '__main__':
     app = QApplication(sys.argv)
