@@ -337,7 +337,7 @@ class MyWidget(QWidget):
         self.opt_chg.move(1600,800)
         self.opt_nav.resize(800,600)
         self.opt_fol.resize(800,600)        
-        self.opt_chg.resize(250,150)
+        self.opt_chg.resize(250,250)
         
         self.opt_nav.raise_()
         self.opt_fol.raise_()
@@ -358,14 +358,16 @@ class MyWidget(QWidget):
         self.nav_img.resize(800,600)
         self.fol_img.resize(800,600)
         self.chg_img.move(1600,800)
-        self.chg_img.resize(250,150)
+        self.chg_img.resize(250,250)
         
         self.explain_nav.setText("點我一下看說明")
-        self.explain_fol.setText("點我一下看說明")        
+        self.explain_nav.setFont(QFont('Ariel',10*self.font_size))
+        self.explain_fol.setText("點我一下看說明")
+        self.explain_fol.setFont(QFont('Ariel',10*self.font_size))
         self.explain_nav.move(400,700)
         self.explain_fol.move(1275,700)
-        self.explain_nav.resize(250,30)
-        self.explain_fol.resize(250,30)
+        self.explain_nav.resize(250,50)
+        self.explain_fol.resize(250,50)
 
 
     # (顯示) 導航畫面1
@@ -383,7 +385,7 @@ class MyWidget(QWidget):
         self.comment_label1.setVisible(True)
         
         self.map_place_x = 400
-        self.map_place_y = 45
+        self.map_place_y = 60
         self.mapsize_x = 1400
         self.mapsize_y = 1000
 
@@ -410,7 +412,7 @@ class MyWidget(QWidget):
         
         x = 50
         y = 300
-        itv = 110
+        itv = 130
 
         for i in range(len(self.hito)):
             self.hito[i].move(x,y+itv*i)
@@ -554,7 +556,7 @@ class MyWidget(QWidget):
         self.other[2].clicked.connect(lambda:self.location_choice(18))
         self.other[3].clicked.connect(lambda:self.location_choice(19))
         
-        self.nav_btn.move(50,800)
+        self.nav_btn.move(50,900)
         self.nav_btn.resize(100,100)
         self.nav_btn.setText('開始\n導航')
         self.nav_btn.setFont(QFont('Ariel',10*self.font_size))
@@ -566,7 +568,7 @@ class MyWidget(QWidget):
         self.all_clear()
         self.page.setText('導航畫面2')        
         self.map_place_x = 60
-        self.map_place_y = 45
+        self.map_place_y = 60
         self.mapsize_x = 1800
         self.mapsize_y = 1000
 
@@ -818,7 +820,7 @@ class MyWidget(QWidget):
     def showImage_battery(self):
         pixmap = QPixmap(self.path+'Image/battery_5.png')
         self.battery.setPixmap(pixmap)
-        self.battery.move(1850,5)
+        self.battery.move(1845,5)
         self.battery.resize(60,30)
         self.battery.setScaledContents(True)
         self.battery.raise_()
