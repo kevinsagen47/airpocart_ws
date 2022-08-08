@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 import sys
 import os
 import cv2
@@ -119,7 +121,7 @@ class MyWidget(QWidget):
 
         # (Text) 時間標籤
         self.time_label = QLabel(self)
-        self.time_label.setFont(QFont('Arial',20))
+        self.time_label.setFont(QFont('Arial',10))
         self.time_label.move(1000,0)
         self.time_label.setText(time.ctime())
         threading._start_new_thread(self.time_update,())
@@ -832,16 +834,23 @@ class MyWidget(QWidget):
     def measure_distance(self,location):
         return '大約2分鐘到達'
         
-'''
+
     
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     screen = app.primaryScreen()
+    max_x = screen.size().width()                  #(1920)  (1280)
+    max_y = screen.size().height()                 #(1080)  (800)
+    ava_x = screen.availableGeometry().width()     #(1858)  (1280)
+    ava_y = screen.availableGeometry().height()    #(996)   (800)
+    
+    print(max_x,max_y)
+    print(ava_x,ava_y)
     w = MyWidget()
-    #w.showFullScreen()
-    w.show()
+    w.showFullScreen()
+    #w.show()
     sys.exit(app.exec_())
-'''
+
    
    
  # app : system

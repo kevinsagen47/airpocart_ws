@@ -56,18 +56,6 @@ CMAKE_BINARY_DIR = /home/airpocart/airpocart_ws/build
 #=============================================================================
 # Targets provided globally by CMake.
 
-# Special rule for the target install/local
-install/local: preinstall
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
-	/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
-.PHONY : install/local
-
-# Special rule for the target install/local
-install/local/fast: preinstall/fast
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
-	/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
-.PHONY : install/local/fast
-
 # Special rule for the target edit_cache
 edit_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
@@ -89,6 +77,18 @@ test:
 test/fast: test
 
 .PHONY : test/fast
+
+# Special rule for the target install/local
+install/local: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
+	/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+.PHONY : install/local
+
+# Special rule for the target install/local
+install/local/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
+	/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+.PHONY : install/local/fast
 
 # Special rule for the target list_install_components
 list_install_components:
@@ -196,6 +196,21 @@ train: ppl_detection_local/CMakeFiles/train.dir/rule
 train/fast:
 	cd /home/airpocart/airpocart_ws/build && $(MAKE) -f ppl_detection_local/CMakeFiles/train.dir/build.make ppl_detection_local/CMakeFiles/train.dir/build
 .PHONY : train/fast
+
+# Convenience name for target.
+ppl_detection_local/CMakeFiles/lite_detection.dir/rule:
+	cd /home/airpocart/airpocart_ws/build && $(MAKE) -f CMakeFiles/Makefile2 ppl_detection_local/CMakeFiles/lite_detection.dir/rule
+.PHONY : ppl_detection_local/CMakeFiles/lite_detection.dir/rule
+
+# Convenience name for target.
+lite_detection: ppl_detection_local/CMakeFiles/lite_detection.dir/rule
+
+.PHONY : lite_detection
+
+# fast build rule for target.
+lite_detection/fast:
+	cd /home/airpocart/airpocart_ws/build && $(MAKE) -f ppl_detection_local/CMakeFiles/lite_detection.dir/build.make ppl_detection_local/CMakeFiles/lite_detection.dir/build
+.PHONY : lite_detection/fast
 
 # Convenience name for target.
 ppl_detection_local/CMakeFiles/detect_4.dir/rule:
@@ -566,6 +581,33 @@ src/kinect_detect.cpp.s:
 	cd /home/airpocart/airpocart_ws/build && $(MAKE) -f ppl_detection_local/CMakeFiles/kinect_detect.dir/build.make ppl_detection_local/CMakeFiles/kinect_detect.dir/src/kinect_detect.cpp.s
 .PHONY : src/kinect_detect.cpp.s
 
+src/lite_detection.o: src/lite_detection.cpp.o
+
+.PHONY : src/lite_detection.o
+
+# target to build an object file
+src/lite_detection.cpp.o:
+	cd /home/airpocart/airpocart_ws/build && $(MAKE) -f ppl_detection_local/CMakeFiles/lite_detection.dir/build.make ppl_detection_local/CMakeFiles/lite_detection.dir/src/lite_detection.cpp.o
+.PHONY : src/lite_detection.cpp.o
+
+src/lite_detection.i: src/lite_detection.cpp.i
+
+.PHONY : src/lite_detection.i
+
+# target to preprocess a source file
+src/lite_detection.cpp.i:
+	cd /home/airpocart/airpocart_ws/build && $(MAKE) -f ppl_detection_local/CMakeFiles/lite_detection.dir/build.make ppl_detection_local/CMakeFiles/lite_detection.dir/src/lite_detection.cpp.i
+.PHONY : src/lite_detection.cpp.i
+
+src/lite_detection.s: src/lite_detection.cpp.s
+
+.PHONY : src/lite_detection.s
+
+# target to generate assembly for a file
+src/lite_detection.cpp.s:
+	cd /home/airpocart/airpocart_ws/build && $(MAKE) -f ppl_detection_local/CMakeFiles/lite_detection.dir/build.make ppl_detection_local/CMakeFiles/lite_detection.dir/src/lite_detection.cpp.s
+.PHONY : src/lite_detection.cpp.s
+
 src/pca.o: src/pca.cpp.o
 
 .PHONY : src/pca.o
@@ -707,11 +749,12 @@ help:
 	@echo "... all (the default if no target is provided)"
 	@echo "... clean"
 	@echo "... depend"
-	@echo "... install/local"
 	@echo "... edit_cache"
 	@echo "... test"
 	@echo "... predict"
 	@echo "... train"
+	@echo "... install/local"
+	@echo "... lite_detection"
 	@echo "... detect_4"
 	@echo "... ppl_detection"
 	@echo "... ppl_detection_genpy"
@@ -743,6 +786,9 @@ help:
 	@echo "... src/kinect_detect.o"
 	@echo "... src/kinect_detect.i"
 	@echo "... src/kinect_detect.s"
+	@echo "... src/lite_detection.o"
+	@echo "... src/lite_detection.i"
+	@echo "... src/lite_detection.s"
 	@echo "... src/pca.o"
 	@echo "... src/pca.i"
 	@echo "... src/pca.s"

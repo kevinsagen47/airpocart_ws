@@ -7,7 +7,4 @@
 # new environment variables
 
 # modified environment variables
-export LD_LIBRARY_PATH='/opt/ros/melodic/lib:/usr/local/cuda-10.2/lib64:/usr/local/cuda-10.2/lib64'
-export PKG_CONFIG_PATH='/opt/ros/melodic/lib/pkgconfig'
 export PWD='/home/airpocart/airpocart_ws/build'
-export PYTHONPATH='/opt/ros/melodic/lib/python2.7/dist-packages'
