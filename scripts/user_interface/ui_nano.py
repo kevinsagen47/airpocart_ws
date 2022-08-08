@@ -506,32 +506,6 @@ class MyWidget(QWidget):
             self.extra[i].setText(self.extra_comment(i)+'\n'+self.measure_distance(i))
             self.extra[i].setFont(QFont('Ariel',10*self.font_size))
         
-        '''
-        self.extra[0].setText('速食店'+self.measure_distance(0))
-        self.extra[1].setText('男/女/親子/殘障')
-        self.extra[2].setText('失物招領、班機查詢等')
-        self.extra[3].setText('免稅店')
-        self.extra[4].setText('備註')
-        self.extra[5].setText('備註')
-        self.extra[6].setText('備註')
-        self.extra[7].setText('備註')
-        self.extra[8].setText('備註')
-        self.extra[9].setText('備註')
-        self.extra[10].setText('備註')
-        self.extra[11].setText('備註')
-        self.extra[12].setText('備註')
-        self.extra[13].setText('備註')
-        self.extra[14].setText('備註')
-        self.extra[15].setText('備註')
-        self.extra[16].setText('備註')
-        self.extra[17].setText('備註')
-        self.extra[18].setText('備註')
-        self.extra[19].setText('備註')
-        '''
-        '''
-        for n in self.distn:
-            n.setText(self.measure_distance(n))
-        '''
         for n in self.score[:4]:
             n.setVisible(True)
         for n in self.distn[:4]:
@@ -575,6 +549,8 @@ class MyWidget(QWidget):
         self.map_place_y = 60
         self.mapsize_x = 1800
         self.mapsize_y = 1000
+        self.home.move(70,1060)
+        self.home.resize(200,50)
 
         self.showImage_map()
         
