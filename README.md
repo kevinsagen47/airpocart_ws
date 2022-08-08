@@ -93,7 +93,7 @@ Make sure environment is configured<br>
  python3 interface.py
 ```
 
-Jetson Nano Commit 
+## Jetson Nano Commit Git
 Account:
 ```sh
 kevinsagen47
