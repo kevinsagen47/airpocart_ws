@@ -22,7 +22,7 @@ class MyWidget(QWidget):
     def initUI(self):
         self.setWindowTitle('User Interface')
         self.setGeometry(0,0,1920,1200)
-        self.ros_on = False
+        self.ros_on = True
         #self.path = './'
         self.path = '/home/airpocart/airpocart_ws/scripts/user_interface/'
        
@@ -100,7 +100,7 @@ class MyWidget(QWidget):
         self.start_label.move(450,650)
         '''
         self.start_label = QLabel(self)
-        pixmap = QPixmap('Image/start_text.png')
+        pixmap = QPixmap(self.path+'Image/start_text.png')
         self.start_label.setPixmap(pixmap)
         self.start_label.move(675,1000)
         self.start_label.resize(800,90)
@@ -785,7 +785,7 @@ class MyWidget(QWidget):
         
     # (圖片) 閒置圖片
     def showImage(self, trp=1):
-        self.movie = QMovie("./Image/anya3.gif")
+        self.movie = QMovie(self.path+"Image/anya3.gif")
         self.img.setMovie(self.movie)
         self.movie.start()        
         #pixmap = QPixmap('Image/anya.png')        
@@ -802,7 +802,7 @@ class MyWidget(QWidget):
         
     # (圖片) 電池
     def showImage_battery(self):
-        pixmap = QPixmap('Image/battery_charge.png')
+        pixmap = QPixmap(self.path+'Image/battery_5.png')
         self.battery.setPixmap(pixmap)
         self.battery.move(1850,5)
         self.battery.resize(60,30)
@@ -812,7 +812,7 @@ class MyWidget(QWidget):
 
     # (圖片) 地圖
     def showImage_map(self):
-        pixmap = QPixmap('Image/sample_map.png')  #(2010,1340)
+        pixmap = QPixmap(self.path+'Image/sample_map.png')  #(2010,1340)
         self.imagesize_x = pixmap.width()
         self.imagesize_y = pixmap.height()
         
@@ -855,7 +855,7 @@ class MyWidget(QWidget):
 
     def show_mouse_move(self, event):
         #print(f'[show_mouse_move] {event.x()} {event.y()}')
-        pixmap = QPixmap('Image/sample_map.png')
+        pixmap = QPixmap(self.path+'Image/sample_map.png')
         
         v = 0.3  #滑動速度
         # 地圖滑動
