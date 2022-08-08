@@ -3,8 +3,8 @@ import os
 import cv2
 import time
 import threading
-#from geometry_msgs.msg import Twist
-#import rospy
+from geometry_msgs.msg import Twist
+import rospy
 from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QPushButton, QComboBox, QGraphicsOpacityEffect
 from PyQt5.QtGui import QIcon, QImage, QPixmap, QFont, QMovie
 from PyQt5.QtCore import pyqtSlot, QCoreApplication, QSize
@@ -83,6 +83,7 @@ class MyWidget(QWidget):
 
         if self.ros_on:
             try:
+                print("ROS master is online")
                 self.pub = rospy.Publisher('cmd_vel',Twist,queue_size=1)
                 rospy.init_node('interface')
             except:
