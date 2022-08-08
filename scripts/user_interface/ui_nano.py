@@ -65,7 +65,7 @@ class MyWidget(QWidget):
         # (Text) 時間標籤
         self.time_label = QLabel(self)
         self.time_label.setFont(QFont('Arial',18*self.font_size))
-        self.time_label.move(1350,0)
+        self.time_label.move(1300,0)
         self.time_label.setText(time.ctime())
         threading._start_new_thread(self.time_update,())
 
@@ -377,7 +377,7 @@ class MyWidget(QWidget):
         self.location_type.setVisible(True)
         self.location_type.setCurrentIndex(0)
         self.location_type.resize(250,60)
-        self.location_type.move(50,200)
+        self.location_type.move(50,220)
         self.comment_label1.setText('請選擇導航點')
         self.comment_label1.setFont(QFont('Ariel',10*self.font_size))
         self.comment_label1.move(50,170)
@@ -412,7 +412,7 @@ class MyWidget(QWidget):
         
         x = 50
         y = 320
-        itv = 130
+        itv = 180
 
         for i in range(len(self.hito)):
             self.hito[i].move(x,y+itv*i)
@@ -501,7 +501,13 @@ class MyWidget(QWidget):
         for n in self.score:
             n.setFont(QFont('Ariel',10*self.font_size))
         
-        self.extra[0].setText('速食店')
+        
+        for i in range(len(self.extra)):
+            self.extra[i].setText(self.extra_comment(i)+'\n'+self.meature_distance(i))
+            self.extra[i].setFont(QFont('Ariel',10*self.font_size))
+        
+        '''
+        self.extra[0].setText('速食店'+self.measure_distance(0))
         self.extra[1].setText('男/女/親子/殘障')
         self.extra[2].setText('失物招領、班機查詢等')
         self.extra[3].setText('免稅店')
@@ -521,13 +527,11 @@ class MyWidget(QWidget):
         self.extra[17].setText('備註')
         self.extra[18].setText('備註')
         self.extra[19].setText('備註')
-        
-        for n in self.extra:
-            n.setFont(QFont('Ariel',10*self.font_size))
-        
+        '''
+        '''
         for n in self.distn:
             n.setText(self.measure_distance(n))
-        
+        '''
         for n in self.score[:4]:
             n.setVisible(True)
         for n in self.distn[:4]:
@@ -820,8 +824,8 @@ class MyWidget(QWidget):
     def showImage_battery(self):
         pixmap = QPixmap(self.path+'Image/battery_5.png')
         self.battery.setPixmap(pixmap)
-        self.battery.move(1840,5)
-        self.battery.resize(65,30)
+        self.battery.move(1820,5)
+        self.battery.resize(85,40)
         self.battery.setScaledContents(True)
         self.battery.raise_()
         self.battery.setVisible(True)
@@ -907,6 +911,10 @@ class MyWidget(QWidget):
                     self.pin.setVisible(False)
             else:
                 self.pin.setVisible(False)
+    # (備註) 導航點備註
+    def extra_comment(self,location=0):
+        com = ['速食店','男/女/親子/殘障','失物招領、班機查詢','免稅店','備註','備註','備註','備註','備註','備註','備註','備註','備註','備註','備註','備註','備註','備註','備註','備註']
+        return com[location]
     # (運算) 計算到達時間
     def measure_distance(self,location):
         return '大約2分鐘到達'
