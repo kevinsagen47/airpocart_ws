@@ -71,8 +71,18 @@ Lite package:
 roslaunch realsense2_camera lite.launch
 ```
 ### Run People Tracking<br>
+Terminal 1
+```sh
+roslaunch realsense2_camera lite.launch
+```
+Terminal 2
 ```sh
 rosrun ppl_detection detect_4
+```
+Terminal 3
+```sh
+cd airpocart_ws/scripts/
+python front_follwing.py
 ```
 
 ## Run Airpocart GUI
@@ -83,7 +93,7 @@ Make sure environment is configured<br>
  python3 interface.py
 ```
 
-Jetson Nano Commit 
+## Jetson Nano Commit Git
 Account:
 ```sh
 kevinsagen47

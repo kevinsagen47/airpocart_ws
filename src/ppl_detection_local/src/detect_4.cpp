@@ -231,7 +231,7 @@ full_sub_ = n_.subscribe<pcl::PointCloud<pcl::PointXYZ> > ("/camera/depth_regist
      int cloud_no = 0;
      int orb = 0;
      double prev_z = 10.0;
-     int closest = 0;
+     int closest = -1;
      for(int a = 0; a < obj_no; a++)
      {        
            for(int l = 0; l < max_tracker_no; l++)
@@ -281,7 +281,7 @@ full_sub_ = n_.subscribe<pcl::PointCloud<pcl::PointXYZ> > ("/camera/depth_regist
 		      }
             //ROS_INFO("%d", cloud_no);
             //ROS_INFO("%f", prev_z);
-            ROS_INFO("Node is Up");
+            
 	         //*/
            //ROS_DEBUG("Hello 2%s", "World");
            //ROS_DEBUG("Hello %s", "World");
@@ -405,21 +405,38 @@ full_sub_ = n_.subscribe<pcl::PointCloud<pcl::PointXYZ> > ("/camera/depth_regist
            cloud_no++;
         }
      }
-     closest_cloud.points.resize(1);
-     closest_cloud.points[0].x =  pos_cloud.points[closest].x;
-     closest_cloud.points[0].y =  pos_cloud.points[closest].y;
-     closest_cloud.points[0].z =  pos_cloud.points[closest].z;
-     
-     closest_pub_.publish(closest_cloud);
-     std_msgs::Float32MultiArray closest_array;
-     closest_array.data.clear();
-     closest_array.data.push_back(pos_cloud.points[closest].x);
-     closest_array.data.push_back(pos_cloud.points[closest].y);
-     closest_array.data.push_back(pos_cloud.points[closest].z);
-     vector_pub_.publish(closest_array);
+     if(closest==-1){
+         closest_cloud.points.resize(1);
+         closest_cloud.points[0].x =  -1;
+         closest_cloud.points[0].y =  -1;
+         closest_cloud.points[0].z =  -1;
+         
+         closest_pub_.publish(closest_cloud);
+         std_msgs::Float32MultiArray closest_array;
+         closest_array.data.clear();
+         closest_array.data.push_back(-1);
+         closest_array.data.push_back(-1);
+         closest_array.data.push_back(-1);
+         vector_pub_.publish(closest_array);
+     }
+     else{
+         closest_cloud.points.resize(1);
+         closest_cloud.points[0].x =  pos_cloud.points[closest].x;
+         closest_cloud.points[0].y =  pos_cloud.points[closest].y;
+         closest_cloud.points[0].z =  pos_cloud.points[closest].z;
+         
+         closest_pub_.publish(closest_cloud);
+         std_msgs::Float32MultiArray closest_array;
+         closest_array.data.clear();
+         closest_array.data.push_back(pos_cloud.points[closest].x);
+         closest_array.data.push_back(pos_cloud.points[closest].y);
+         closest_array.data.push_back(pos_cloud.points[closest].z);
+         vector_pub_.publish(closest_array);
+     }
      //int i_;
      //for(i_ = 0; i_ < 3; i_ ++){
      // ROS_INFO("%f",closest_array.at(i_));}
+     pos_pub_.publish(pos_cloud);
      people_pub_.publish(people);
      count++;
      begin = ros::Time::now();
@@ -435,11 +452,13 @@ int main(int argc,char** argv)
   // Load svm model
   std::string model_string = ros::package::getPath("ppl_detection") + "/svm_models/" + g_model_name + ".model";
   g_model = svm_load_model((char*)model_string.c_str());
-
+  ROS_INFO("Node is Up");
   KinectDetect lstopc(n);
+  
   ros::spin();
   
   svm_free_and_destroy_model(&g_model);
+  
   ros::shutdown();
   
   return 0;

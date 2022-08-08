@@ -166,11 +166,12 @@
 /home/airpocart/airpocart_ws/build/realsense-ros-development/realsense2_camera/CMakeFiles/_realsense2_camera_generate_messages_check_deps_IMUInfo.dir
 /home/airpocart/airpocart_ws/build/realsense-ros-development/realsense2_camera/CMakeFiles/_realsense2_camera_generate_messages_check_deps_Extrinsics.dir
 /home/airpocart/airpocart_ws/build/realsense-ros-development/realsense2_camera/CMakeFiles/realsense2_camera_generate_messages_cpp.dir
-/home/airpocart/airpocart_ws/build/ppl_detection_local/CMakeFiles/install/local.dir
 /home/airpocart/airpocart_ws/build/ppl_detection_local/CMakeFiles/edit_cache.dir
 /home/airpocart/airpocart_ws/build/ppl_detection_local/CMakeFiles/test.dir
 /home/airpocart/airpocart_ws/build/ppl_detection_local/CMakeFiles/predict.dir
 /home/airpocart/airpocart_ws/build/ppl_detection_local/CMakeFiles/train.dir
+/home/airpocart/airpocart_ws/build/ppl_detection_local/CMakeFiles/install/local.dir
+/home/airpocart/airpocart_ws/build/ppl_detection_local/CMakeFiles/lite_detection.dir
 /home/airpocart/airpocart_ws/build/ppl_detection_local/CMakeFiles/detect_4.dir
 /home/airpocart/airpocart_ws/build/ppl_detection_local/CMakeFiles/ppl_detection.dir
 /home/airpocart/airpocart_ws/build/ppl_detection_local/CMakeFiles/ppl_detection_genpy.dir

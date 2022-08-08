@@ -1741,6 +1741,19 @@ train/fast:
 .PHONY : train/fast
 
 #=============================================================================
+# Target rules for targets named lite_detection
+
+# Build rule for target.
+lite_detection: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 lite_detection
+.PHONY : lite_detection
+
+# fast build rule for target.
+lite_detection/fast:
+	$(MAKE) -f ppl_detection_local/CMakeFiles/lite_detection.dir/build.make ppl_detection_local/CMakeFiles/lite_detection.dir/build
+.PHONY : lite_detection/fast
+
+#=============================================================================
 # Target rules for targets named detect_4
 
 # Build rule for target.
@@ -2147,6 +2160,7 @@ help:
 	@echo "... realsense2_camera_generate_messages_cpp"
 	@echo "... predict"
 	@echo "... train"
+	@echo "... lite_detection"
 	@echo "... detect_4"
 	@echo "... ppl_detection"
 	@echo "... ppl_detection_genpy"

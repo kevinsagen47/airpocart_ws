@@ -82,12 +82,21 @@ add_executable(detect_4 src/detect_4.cpp)
 add_dependencies(detect_4
     ppl_detection_generate_messages_cpp
 )
-
 target_link_libraries(detect_4
     ppl_detection
     ${catkin_LIBRARIES}
     ${PCL_LIBRARIES}
 )
+add_executable(lite_detection src/lite_detection.cpp)
+add_dependencies(lite_detection
+    ppl_detection_generate_messages_cpp
+)
+target_link_libraries(lite_detection
+    ppl_detection
+    ${catkin_LIBRARIES}
+    ${PCL_LIBRARIES}
+)
+
 
 add_executable(train 
     src/train.cpp
