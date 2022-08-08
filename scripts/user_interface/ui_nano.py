@@ -215,7 +215,7 @@ class MyWidget(QWidget):
         
         # (Image) 位置指針
         self.pin = QLabel(self)
-        pixmap = QPixmap('Image/pin.png') #(252,370)
+        pixmap = QPixmap(self.path+'Image/pin.png') #(252,370)
         self.pin.setPixmap(pixmap)
         self.pin.resize(25,37)
         self.pin.setScaledContents(True)
@@ -334,10 +334,10 @@ class MyWidget(QWidget):
         
         self.opt_nav.move(75,75)
         self.opt_fol.move(950,75)
-        self.opt_chg.move(1600,800)
-        self.opt_nav.resize(800,600)
-        self.opt_fol.resize(800,600)        
-        self.opt_chg.resize(250,250)
+        self.opt_chg.move(1700,900)
+        self.opt_nav.resize(800,800)
+        self.opt_fol.resize(800,800)        
+        self.opt_chg.resize(150,150)
         
         self.opt_nav.raise_()
         self.opt_fol.raise_()
@@ -355,17 +355,17 @@ class MyWidget(QWidget):
 
         self.nav_img.move(75,75)
         self.fol_img.move(950,75)
-        self.nav_img.resize(800,600)
-        self.fol_img.resize(800,600)
-        self.chg_img.move(1600,800)
-        self.chg_img.resize(250,250)
+        self.nav_img.resize(800,800)
+        self.fol_img.resize(800,800)
+        self.chg_img.move(1700,900)
+        self.chg_img.resize(150,150)
         
         self.explain_nav.setText("點我一下看說明")
         self.explain_nav.setFont(QFont('Ariel',10*self.font_size))
         self.explain_fol.setText("點我一下看說明")
         self.explain_fol.setFont(QFont('Ariel',10*self.font_size))
-        self.explain_nav.move(400,700)
-        self.explain_fol.move(1275,700)
+        self.explain_nav.move(400,800)
+        self.explain_fol.move(1275,800)
         self.explain_nav.resize(250,50)
         self.explain_fol.resize(250,50)
 
@@ -820,8 +820,8 @@ class MyWidget(QWidget):
     def showImage_battery(self):
         pixmap = QPixmap(self.path+'Image/battery_5.png')
         self.battery.setPixmap(pixmap)
-        self.battery.move(1845,5)
-        self.battery.resize(60,30)
+        self.battery.move(1840,5)
+        self.battery.resize(65,30)
         self.battery.setScaledContents(True)
         self.battery.raise_()
         self.battery.setVisible(True)
