@@ -912,7 +912,8 @@ class MyWidget(QWidget):
         
     # (跟隨) 前跟隨模式
     def follow_start(self,on=1):
-        follower(self.pub,on)
+        threading._start_new_thread(follower,(self.pub,on))
+        #follower(self.pub,on)
     
 if __name__ == '__main__':
     app = QApplication(sys.argv)
