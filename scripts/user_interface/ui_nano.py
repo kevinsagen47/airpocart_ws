@@ -23,9 +23,9 @@ class MyWidget(QWidget):
         self.setWindowTitle('User Interface')
         self.setGeometry(0,0,1920,1200)
         self.ros_on = True
-        #self.path = './'
-        self.path = '/home/airpocart/airpocart_ws/scripts/user_interface/'
-        self.font_size=1
+        self.path = './'
+        #self.path = '/home/airpocart/airpocart_ws/scripts/user_interface/'
+        self.font_size = 1
         
         ##        Only for test       ##
         
@@ -64,7 +64,7 @@ class MyWidget(QWidget):
 
         # (Text) 時間標籤
         self.time_label = QLabel(self)
-        self.time_label.setFont(QFont('Arial',30))
+        self.time_label.setFont(QFont('Arial',10*self.font_size))
         self.time_label.move(1400,0)
         self.time_label.setText(time.ctime())
         threading._start_new_thread(self.time_update,())
@@ -162,12 +162,6 @@ class MyWidget(QWidget):
         # (Image?) 地圖
         self.map = QLabel(self)
 
-        #self.map_place_x = 275
-        #self.map_place_y = 40
-        
-        #self.mapsize_x = 1000
-        #self.mapsize_y = 740
-
         # ***由定位給***  現在位置
         self.maplocation_x = 0
         self.maplocation_y = 0
@@ -184,7 +178,7 @@ class MyWidget(QWidget):
             
         self.location_type.addItems(loc_type)
 
-        self.location_type.resize(200,30)
+        self.location_type.resize(250,50)
         self.location_type.move(50,150)
                 
         self.location_type.currentIndexChanged.connect(lambda:self.show_type(self.location_type.currentIndex()))
@@ -379,9 +373,9 @@ class MyWidget(QWidget):
         self.page.setText('導航頁面1')        
         self.location_type.setVisible(True)
         self.location_type.setCurrentIndex(0)
-        self.map_place_x = 275
+        self.map_place_x = 300
         self.map_place_y = 45
-        self.mapsize_x = 1550
+        self.mapsize_x = 1400
         self.mapsize_y = 1000
 
         self.showImage_map()
@@ -391,8 +385,8 @@ class MyWidget(QWidget):
         self.home.move(10,10)
         self.home.resize(100,100)
 
-        size_x = 70
-        size_y = 30
+        size_x = 100
+        size_y = 50
 
         for n in self.hito:
             n.resize(size_x,size_y)
@@ -407,7 +401,7 @@ class MyWidget(QWidget):
         
         x = 50
         y = 230
-        itv = 80
+        itv = 100
 
         for i in range(len(self.hito)):
             self.hito[i].move(x,y+itv*i)
@@ -447,6 +441,8 @@ class MyWidget(QWidget):
         self.other[1].setText('寄放物品')
         self.other[2].setText('吸菸區')
         self.other[3].setText('哺乳室')
+        
+        self.hito[0].setFont(QFont('Ariel',10*self.font_size))
 
         self.real_loc = []
         self.real_loc.append([100,100])   #熱門1
@@ -490,7 +486,10 @@ class MyWidget(QWidget):
         self.score[17].setText('評分：★★★★☆')
         self.score[18].setText('評分：★★★★☆')
         self.score[19].setText('評分：★★★★☆')
-
+        
+        for n in self.score:
+            n.setFont(QFont('Ariel',10*self.font_size))
+        
         self.extra[0].setText('速食店')
         self.extra[1].setText('男/女/親子/殘障')
         self.extra[2].setText('失物招領、班機查詢等')
@@ -511,7 +510,10 @@ class MyWidget(QWidget):
         self.extra[17].setText('備註')
         self.extra[18].setText('備註')
         self.extra[19].setText('備註')
-
+        
+        for n in self.extra:
+            n.setFont(QFont('Ariel',10*self.font_size))
+        
         for n in self.distn:
             n.setText(self.measure_distance(n))
         
@@ -543,9 +545,10 @@ class MyWidget(QWidget):
         self.other[2].clicked.connect(lambda:self.location_choice(18))
         self.other[3].clicked.connect(lambda:self.location_choice(19))
         
-        self.nav_btn.move(50,600)
-        self.nav_btn.resize(50,50)
+        self.nav_btn.move(50,800)
+        self.nav_btn.resize(100,100)
         self.nav_btn.setText('開始\n導航')
+        self.nav_btn.setFont(QFont('Ariel',10*self.font_size))
         self.nav_btn.clicked.connect(self.navigation_2)
         
 
@@ -613,7 +616,7 @@ class MyWidget(QWidget):
 
         self.multi_speed = 1
         self.speed_label.setText('低速模式')
-        self.speed_label.setFont(QFont('Ariel',30))
+        self.speed_label.setFont(QFont('Ariel',20*self.font_size))
         self.speed_label.move(650,570)
         self.speed_label.resize(300,150)
         print('Remoting mode running')
