@@ -23,7 +23,8 @@ class MyWidget(QWidget):
         self.setWindowTitle('User Interface')
         self.setGeometry(0,0,1920,1200)
         self.ros_on = False
-        self.path = './'
+        #self.path = './'
+        self.path = '/home/airpocart/airpocart_ws/scripts/user_interface/'
        
         
         ##        Only for test       ##
