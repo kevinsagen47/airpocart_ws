@@ -912,6 +912,11 @@ class MyWidget(QWidget):
         
     # (跟隨) 前跟隨模式
     def follow_start(self,on=1):
+        if on == 1:
+            self.follow_on_btn.setEnabled(False)
+        else:
+            self.follow_on_btn.setEnabled(True)
+        
         threading._start_new_thread(follower,(self.pub,on))
         #follower(self.pub,on)
     
