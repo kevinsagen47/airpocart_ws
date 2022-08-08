@@ -64,7 +64,7 @@ class MyWidget(QWidget):
 
         # (Text) 時間標籤
         self.time_label = QLabel(self)
-        self.time_label.setFont(QFont('Arial',12*self.font_size))
+        self.time_label.setFont(QFont('Arial',15*self.font_size))
         self.time_label.move(1400,0)
         self.time_label.setText(time.ctime())
         threading._start_new_thread(self.time_update,())
@@ -379,9 +379,10 @@ class MyWidget(QWidget):
         self.comment_label1.setText('請選擇導航點')
         self.comment_label1.setFont(QFont('Ariel',10*self.font_size))
         self.comment_label1.move(50,150)
+        self.comment_label1.resize(150,40)
         self.comment_label1.setVisible(True)
         
-        self.map_place_x = 300
+        self.map_place_x = 400
         self.map_place_y = 45
         self.mapsize_x = 1400
         self.mapsize_y = 1000
@@ -423,9 +424,9 @@ class MyWidget(QWidget):
             self.other[i].move(x,y+itv*i)
 
         for i in range(len(self.score)):
-            self.score[i].move(x+size_x+10,y+itv*(i%4)-3)
+            self.score[i].move(x+size_x+10,y+itv*(i%4)-5)
         for i in range(len(self.distn)):
-            self.distn[i].move(x+size_x+10,y+itv*(i%4)+16)
+            self.distn[i].move(x+size_x+10,y+itv*(i%4)+18)
         for i in range(len(self.extra)):
             self.extra[i].move(x+10,y+size_y+itv*(i%4)+7)
         
@@ -657,6 +658,7 @@ class MyWidget(QWidget):
         self.explain_nav.setVisible(False)
         self.explain_fol.setVisible(False)
         self.location_type.setVisible(False)
+        self.comment_label1.setVisible(False)
         self.map.setVisible(False)
         for n in self.hito:
             n.setVisible(False)
