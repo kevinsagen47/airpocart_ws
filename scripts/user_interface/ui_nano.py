@@ -503,7 +503,7 @@ class MyWidget(QWidget):
         
         
         for i in range(len(self.extra)):
-            self.extra[i].setText(self.extra_comment(i)+'\n'+self.meature_distance(i))
+            self.extra[i].setText(self.extra_comment(i)+'\n'+self.measure_distance(i))
             self.extra[i].setFont(QFont('Ariel',10*self.font_size))
         
         '''
