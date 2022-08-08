@@ -364,8 +364,8 @@ class MyWidget(QWidget):
         self.explain_nav.setFont(QFont('Ariel',10*self.font_size))
         self.explain_fol.setText("點我一下看說明")
         self.explain_fol.setFont(QFont('Ariel',10*self.font_size))
-        self.explain_nav.move(400,800)
-        self.explain_fol.move(1275,800)
+        self.explain_nav.move(400,900)
+        self.explain_fol.move(1275,900)
         self.explain_nav.resize(250,50)
         self.explain_fol.resize(250,50)
 
@@ -426,7 +426,7 @@ class MyWidget(QWidget):
             self.other[i].move(x,y+itv*i)
 
         for i in range(len(self.score)):
-            self.score[i].move(x+size_x+10,y+itv*(i%4)-8)
+            self.score[i].move(x+size_x+10,y+itv*(i%4)-3)
         for i in range(len(self.distn)):
             self.distn[i].move(x+size_x+10,y+itv*(i%4)+18)
         for i in range(len(self.extra)):
@@ -477,26 +477,26 @@ class MyWidget(QWidget):
         self.real_loc.append([50,50])   #其他3
         self.real_loc.append([50,50])   #其他4
 
-        self.score[0].setText('評分：★★★★★')
-        self.score[1].setText('評分：★★★★★')
-        self.score[2].setText('評分：★★★★★')
-        self.score[3].setText('評分：★★★★★')
-        self.score[4].setText('評分：★★★★★')
-        self.score[5].setText('評分：★★★★★')
-        self.score[6].setText('評分：★★★★★')
-        self.score[7].setText('評分：★★★★★')
-        self.score[8].setText('評分：★★★★★')
-        self.score[9].setText('評分：★★★★★')
-        self.score[10].setText('評分：★★★★☆')
-        self.score[11].setText('評分：★★★★☆')
-        self.score[12].setText('評分：★★★★☆')
-        self.score[13].setText('評分：★★★★☆')
-        self.score[14].setText('評分：★★★★☆')
-        self.score[15].setText('評分：★★★★☆')
-        self.score[16].setText('評分：★★★★☆')
-        self.score[17].setText('評分：★★★★☆')
-        self.score[18].setText('評分：★★★★☆')
-        self.score[19].setText('評分：★★★★☆')
+        self.score[0].setText('★★★★★')
+        self.score[1].setText('★★★★★')
+        self.score[2].setText('★★★★★')
+        self.score[3].setText('★★★★★')
+        self.score[4].setText('★★★★★')
+        self.score[5].setText('★★★★★')
+        self.score[6].setText('★★★★★')
+        self.score[7].setText('★★★★★')
+        self.score[8].setText('★★★★★')
+        self.score[9].setText('★★★★★')
+        self.score[10].setText('★★★★☆')
+        self.score[11].setText('★★★★☆')
+        self.score[12].setText('★★★★☆')
+        self.score[13].setText('★★★★☆')
+        self.score[14].setText('★★★★☆')
+        self.score[15].setText('★★★★☆')
+        self.score[16].setText('★★★★☆')
+        self.score[17].setText('★★★★☆')
+        self.score[18].setText('★★★★☆')
+        self.score[19].setText('★★★★☆')
         
         for n in self.score:
             n.setFont(QFont('Ariel',10*self.font_size))
@@ -560,7 +560,7 @@ class MyWidget(QWidget):
         self.other[2].clicked.connect(lambda:self.location_choice(18))
         self.other[3].clicked.connect(lambda:self.location_choice(19))
         
-        self.nav_btn.move(50,900)
+        self.nav_btn.move(50,1050)
         self.nav_btn.resize(100,100)
         self.nav_btn.setText('開始\n導航')
         self.nav_btn.setFont(QFont('Ariel',10*self.font_size))
@@ -854,7 +854,6 @@ class MyWidget(QWidget):
             try:
                 t = time.localtime()
                 mon = t.tm_mon
-                mon = 9
                 day = t.tm_mday
                 h = t.tm_hour
                 m = t.tm_min
