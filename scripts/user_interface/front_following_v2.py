@@ -98,7 +98,7 @@ def callback(data):
    #RoW=angular_control(data.data,RoW)  
    RoW= horizontal_angular_control(data.data,RoW)  
    print ("RoV: ",RoV," RoW: ", RoW)
-   publish_cmd_vel(RoV,RoW)
+   publish_cmd_vel(RoV,RoW,pub)
    
  
 def follower(pub,on=1):
@@ -109,7 +109,7 @@ def follower(pub,on=1):
       rospy.Subscriber("human_vector", Float32MultiArray, callback)
       rospy.spin()
    else:
-      publish_cmd_vel(0,0)
+      publish_cmd_vel(0,0,pub)
    
 
 if __name__ == '__main__':
