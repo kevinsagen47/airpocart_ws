@@ -23,8 +23,8 @@ class MyWidget(QWidget):
         self.setWindowTitle('User Interface')
         self.setGeometry(0,0,1920,1200)
         self.ros_on = True
-        self.path = './'
-        #self.path = '/home/airpocart/airpocart_ws/scripts/user_interface/'
+        #self.path = './'
+        self.path = '/home/airpocart/airpocart_ws/scripts/user_interface/'
         self.font_size = 1
         
         ##        Only for test       ##
@@ -64,7 +64,7 @@ class MyWidget(QWidget):
 
         # (Text) 時間標籤
         self.time_label = QLabel(self)
-        self.time_label.setFont(QFont('Arial',10*self.font_size))
+        self.time_label.setFont(QFont('Arial',12*self.font_size))
         self.time_label.move(1400,0)
         self.time_label.setText(time.ctime())
         threading._start_new_thread(self.time_update,())
@@ -171,16 +171,17 @@ class MyWidget(QWidget):
         self.map.mousePressEvent = self.show_mouse_press
         #self.map.mouseReleaseEvent = self.show_mouse_release
         self.map.mouseMoveEvent = self.show_mouse_move
-
+        
+        # (Label) 指示
+        self.comment_label1 = QLabel(self)
+        
         # (Combobox) 導航點類別選擇
         self.location_type = QComboBox(self)
         loc_type = ['熱門','餐廳','購物','盥洗室','其他']
             
         self.location_type.addItems(loc_type)
 
-        self.location_type.resize(250,50)
-        self.location_type.move(50,150)
-                
+        
         self.location_type.currentIndexChanged.connect(lambda:self.show_type(self.location_type.currentIndex()))
 
         # (Button) 導航點位置選擇        
@@ -373,6 +374,13 @@ class MyWidget(QWidget):
         self.page.setText('導航頁面1')        
         self.location_type.setVisible(True)
         self.location_type.setCurrentIndex(0)
+        self.location_type.resize(250,60)
+        self.location_type.move(50,200)
+        self.comment_label1.setText('請選擇導航點')
+        self.comment_label1.setFont(QFont('Ariel',10*self.font_size))
+        self.comment_label1.move(50,150)
+        self.comment_label1.setVisible(True)
+        
         self.map_place_x = 300
         self.map_place_y = 45
         self.mapsize_x = 1400
@@ -382,8 +390,8 @@ class MyWidget(QWidget):
         for n in self.hito:
             n.setVisible(True)
         
-        self.home.move(10,10)
-        self.home.resize(100,100)
+        self.home.move(12,12)
+        self.home.resize(150,150)
 
         size_x = 100
         size_y = 50
@@ -400,8 +408,8 @@ class MyWidget(QWidget):
             n.resize(size_x,size_y)
         
         x = 50
-        y = 230
-        itv = 100
+        y = 300
+        itv = 110
 
         for i in range(len(self.hito)):
             self.hito[i].move(x,y+itv*i)
@@ -415,11 +423,11 @@ class MyWidget(QWidget):
             self.other[i].move(x,y+itv*i)
 
         for i in range(len(self.score)):
-            self.score[i].move(x+size_x+10,y+itv*(i%4)-2)
+            self.score[i].move(x+size_x+10,y+itv*(i%4)-3)
         for i in range(len(self.distn)):
-            self.distn[i].move(x+size_x+10,y+itv*(i%4)+15)
+            self.distn[i].move(x+size_x+10,y+itv*(i%4)+16)
         for i in range(len(self.extra)):
-            self.extra[i].move(x+10,y+size_y+itv*(i%4)+5)
+            self.extra[i].move(x+10,y+size_y+itv*(i%4)+7)
         
         self.hito[0].setText('麥當勞')
         self.hito[1].setText('廁所')
