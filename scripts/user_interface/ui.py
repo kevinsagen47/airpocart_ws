@@ -3,16 +3,16 @@ import os
 import cv2
 import time
 import threading
-from geometry_msgs.msg import Twist
-import rospy
-#from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QPushButton, QComboBox, QGraphicsOpacityEffect
-#from PyQt5.QtGui import QIcon, QImage, QPixmap
-#from PyQt5.QtCore import pyqtSlot, QCoreApplication
+#from geometry_msgs.msg import Twist
+#import rospy
+from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QPushButton, QComboBox, QGraphicsOpacityEffect
+from PyQt5.QtGui import QIcon, QImage, QPixmap, QFont, QMovie
+from PyQt5.QtCore import pyqtSlot, QCoreApplication, QSize
 
-from PyQt5 import *
-from PyQt5.QtWidgets import *
-from PyQt5.QtGui import *
-from PyQt5.QtCore import *
+#from PyQt5 import *
+#from PyQt5.QtWidgets import *
+#from PyQt5.QtGui import *
+#from PyQt5.QtCore import *
 
 class MyWidget(QWidget):
     def __init__(self):
@@ -21,7 +21,9 @@ class MyWidget(QWidget):
     
     def initUI(self):
         self.setWindowTitle('User Interface')
-        self.setGeometry(0,0,1280,800)
+        self.setGeometry(0,0,1920,1200)
+        self.ros_on = False
+        self.path = './'
        
         
         ##        Only for test       ##
@@ -30,23 +32,23 @@ class MyWidget(QWidget):
         self.option = QComboBox(self)
         self.option.addItems(['Select Mode','Navigation','Following','Charging','Remoting'])
         self.option.setCurrentIndex(0)
-        self.option.move(1100,100)
+        self.option.move(1800,100)
         self.option.currentIndexChanged.connect(self.changemode)
 
         # 顯示畫面
         self.page = QLabel(self)
-        self.page.setText('閒置畫面')
-        self.page.move(600,0)
+        #self.page.setText('閒置畫面')
+        self.page.move(800,0)
         
         # 關閉程式按鈕
         self.shut_button = QPushButton('shut down', self)
-        self.shut_button.move(1100,50)
+        self.shut_button.move(1800,50)
         self.shut_button.setShortcut('Ctrl+C')
         self.shut_button.clicked.connect(QCoreApplication.instance().quit)
         
         # 顯示閒置狀態
         self.idle_btn = QPushButton('idle',self)
-        self.idle_btn.move(1100,150)
+        self.idle_btn.move(1800,150)
         self.idle_btn.clicked.connect(self.idle)       
         
         # 測試按鈕
@@ -54,73 +56,15 @@ class MyWidget(QWidget):
         #self.test_btn.move(50,100)
         #self.test_btn.clicked.connect(self.os_command)
         
-        # 遙控按鈕
-                
-        self.leftfront_btn = QPushButton('leftfront',self)
-        self.front_btn = QPushButton('front',self)
-        self.rightfront_btn = QPushButton('rightfront',self)
-        self.left_btn = QPushButton('left',self)
-        self.right_btn = QPushButton('right',self)
-        self.leftback_btn = QPushButton('leftback',self)
-        self.back_btn = QPushButton('back',self)
-        self.rightback_btn = QPushButton('rightback',self)
-        self.stop_btn = QPushButton('stop',self)
-              
-        size = 100
-        self.leftfront_btn.resize(size,size)
-        self.front_btn.resize(size,size)
-        self.rightfront_btn.resize(size,size)
-        self.left_btn.resize(size,size)
-        self.right_btn.resize(size,size)
-        self.leftback_btn.resize(size,size)
-        self.back_btn.resize(size,size)
-        self.rightback_btn.resize(size,size)
-        self.stop_btn.resize(200,200)
         
-        self.leftfront_btn.move(300,150)
-        self.front_btn.move(500,150)
-        self.rightfront_btn.move(700,150)
-        self.left_btn.move(300,350)
-        self.right_btn.move(700,350)
-        self.leftback_btn.move(300,550)
-        self.back_btn.move(500,550)
-        self.rightback_btn.move(700,550)        
-        self.stop_btn.move(450,300)
-        
-        self.speed_btn = QPushButton('High speed',self)
-        self.speed_btn.resize(200,200)
-        self.speed_btn.move(450,300)
-        self.speed_btn.clicked.connect(self.speed)
-        self.multi_speed = 1
-        self.leftfront_btn.pressed.connect(lambda:self.walk('lf'))
-        self.leftfront_btn.released.connect(lambda:self.walk('s'))
-        self.front_btn.pressed.connect(lambda:self.walk('f'))
-        self.front_btn.released.connect(lambda:self.walk('s'))
-        self.rightfront_btn.pressed.connect(lambda:self.walk('rf'))
-        self.rightfront_btn.released.connect(lambda:self.walk('s'))
-        self.left_btn.pressed.connect(lambda:self.walk('l'))
-        self.left_btn.released.connect(lambda:self.walk('s'))
-        self.right_btn.pressed.connect(lambda:self.walk('r'))
-        self.right_btn.released.connect(lambda:self.walk('s'))
-        self.leftback_btn.pressed.connect(lambda:self.walk('lb'))
-        self.leftback_btn.released.connect(lambda:self.walk('s'))
-        self.back_btn.pressed.connect(lambda:self.walk('b'))
-        self.back_btn.released.connect(lambda:self.walk('s'))
-        self.rightback_btn.pressed.connect(lambda:self.walk('rb'))
-        self.rightback_btn.released.connect(lambda:self.walk('s'))
-        
-        
-        self.stop_btn.clicked.connect(lambda:self.walk('s'))
-        self.RoV = 0.0
-        self.RoW = 0.0
         #################################
         
         ##        Always Visible       ##
 
         # (Text) 時間標籤
         self.time_label = QLabel(self)
-        self.time_label.setFont(QFont('Arial',20))
-        self.time_label.move(1000,0)
+        self.time_label.setFont(QFont('Arial',30))
+        self.time_label.move(1400,0)
         self.time_label.setText(time.ctime())
         threading._start_new_thread(self.time_update,())
 
@@ -131,12 +75,18 @@ class MyWidget(QWidget):
         # (Button) 返回主畫面
         self.home = QPushButton(self)
         self.home.clicked.connect(self.idle)
-        self.home.move(1100,200)
+        
         self.home.setText("返回主畫面")
         
-        
-        self.pub = rospy.Publisher('cmd_vel',Twist,queue_size=1)
-        rospy.init_node('interface')
+        # (Init) ros
+
+        if self.ros_on:
+            try:
+                self.pub = rospy.Publisher('cmd_vel',Twist,queue_size=1)
+                rospy.init_node('interface')
+            except:
+                self.ros_on = False
+                print("ROS master is offline")
         
         ##        Idle/Default         ##
 
@@ -151,17 +101,15 @@ class MyWidget(QWidget):
         self.start_label = QLabel(self)
         pixmap = QPixmap('Image/start_text.png')
         self.start_label.setPixmap(pixmap)
-        self.start_label.move(300,650)
+        self.start_label.move(675,1000)
         self.start_label.resize(800,90)
 
         
 
         # (Button) 開始按鈕
-        self.st_btn = QPushButton('start',self)
-        #self.st_btn.move(450,659)
-        #self.st_btn.resize(400,60)
+        self.st_btn = QPushButton('start',self)        
         self.st_btn.move(0,0)
-        self.st_btn.resize(1280,800)
+        self.st_btn.resize(1920,1200)
         op = QGraphicsOpacityEffect()
         op.setOpacity(0.01)     # 透明度 0~1
         self.st_btn.setGraphicsEffect(op)
@@ -175,36 +123,35 @@ class MyWidget(QWidget):
         ##        Option Page          ##
 
         # (Button) 導航/跟隨 選擇
+        
         self.opt_nav = QPushButton(self)
-        self.opt_fol = QPushButton(self)
-        #self.opt_nav.setText("Navigation")
-        self.opt_fol.setText("Following")
-        self.opt_nav.setFont(QFont('Arial',80))
-        self.opt_fol.setFont(QFont('Arial',80))
-        self.opt_nav.move(50,50)
-        self.opt_fol.move(600,50)
-        self.opt_nav.resize(500,400)
-        self.opt_fol.resize(500,400)
-        #self.opt_nav.setIcon(QIcon('navigation.jpeg'))
-        self.opt_nav.setIcon(QIcon('Image/navigator2.png'))
-        self.opt_nav.setIconSize(QSize(350,350))
+        self.opt_fol = QPushButton(self)        
+        
         self.opt_nav.clicked.connect(self.navigation)
         self.opt_fol.clicked.connect(self.following)
 
-        # (Button) 導航/跟隨 選擇
-        self.opt_chg = QPushButton(self)
-        self.opt_chg.setText("前往充電")
-        self.opt_chg.move(750,550)
-        self.opt_chg.resize(300,150)
+        self.nav_img = QLabel(self)
+        self.fol_img = QLabel(self)        
+        pixmap = QPixmap(self.path+'Image/navigator2.png')
+        self.nav_img.setPixmap(pixmap)
+        pixmap = QPixmap(self.path+'Image/navigator2.png')
+        self.fol_img.setPixmap(pixmap)
+        self.nav_img.setScaledContents(True)
+        self.fol_img.setScaledContents(True)
+
+        # (Button) 充電 選擇
+        self.opt_chg = QPushButton(self)        
         self.opt_chg.clicked.connect(self.charging)
+        self.chg_img = QLabel(self)
+        pixmap = QPixmap(self.path+'Image/charging.png')
+        self.chg_img.setPixmap(pixmap)        
+        self.chg_img.setScaledContents(True)
+
         
         # (Button) 導航/跟隨 說明
         self.explain_nav = QPushButton(self)
         self.explain_fol = QPushButton(self)
-        self.explain_nav.setText("點我一下看說明")
-        self.explain_fol.setText("點我一下看說明")        
-        self.explain_nav.move(250,460)
-        self.explain_fol.move(800,460)
+        
         
         #################################
         
@@ -213,11 +160,11 @@ class MyWidget(QWidget):
         # (Image?) 地圖
         self.map = QLabel(self)
 
-        self.map_place_x = 275
-        self.map_place_y = 40
+        #self.map_place_x = 275
+        #self.map_place_y = 40
         
-        self.mapsize_x = 1000
-        self.mapsize_y = 740
+        #self.mapsize_x = 1000
+        #self.mapsize_y = 740
 
         # ***由定位給***  現在位置
         self.maplocation_x = 0
@@ -291,7 +238,43 @@ class MyWidget(QWidget):
         
         ##          Remoting           ##
         
+        # 遙控按鈕
+                
+        self.leftfront_btn = QPushButton('leftfront',self)
+        self.front_btn = QPushButton('front',self)
+        self.rightfront_btn = QPushButton('rightfront',self)
+        self.left_btn = QPushButton('left',self)
+        self.right_btn = QPushButton('right',self)
+        self.leftback_btn = QPushButton('leftback',self)
+        self.back_btn = QPushButton('back',self)
+        self.rightback_btn = QPushButton('rightback',self)
+        self.stop_btn = QPushButton('stop',self)       
+        self.speed_btn = QPushButton('切換速度',self)
         
+        self.speed_btn.clicked.connect(self.speed)
+        self.multi_speed = 1
+        self.leftfront_btn.pressed.connect(lambda:self.walk('lf'))
+        self.leftfront_btn.released.connect(lambda:self.walk('s'))
+        self.front_btn.pressed.connect(lambda:self.walk('f'))
+        self.front_btn.released.connect(lambda:self.walk('s'))
+        self.rightfront_btn.pressed.connect(lambda:self.walk('rf'))
+        self.rightfront_btn.released.connect(lambda:self.walk('s'))
+        self.left_btn.pressed.connect(lambda:self.walk('l'))
+        self.left_btn.released.connect(lambda:self.walk('s'))
+        self.right_btn.pressed.connect(lambda:self.walk('r'))
+        self.right_btn.released.connect(lambda:self.walk('s'))
+        self.leftback_btn.pressed.connect(lambda:self.walk('lb'))
+        self.leftback_btn.released.connect(lambda:self.walk('s'))
+        self.back_btn.pressed.connect(lambda:self.walk('b'))
+        self.back_btn.released.connect(lambda:self.walk('s'))
+        self.rightback_btn.pressed.connect(lambda:self.walk('rb'))
+        self.rightback_btn.released.connect(lambda:self.walk('s'))
+
+        self.speed_label = QLabel(self)
+        
+        self.stop_btn.clicked.connect(lambda:self.walk('s'))
+        self.RoV = 0.0
+        self.RoW = 0.0
         #################################
 
         
@@ -319,40 +302,85 @@ class MyWidget(QWidget):
         self.all_clear()
         self.page.setText('閒置頁面')
         self.option.setCurrentIndex(0)
-        self.showImage()
+        self.showImage(1)
         self.st_btn.setVisible(True)
         self.start_label.setVisible(True)
-        self.home.move(1100,200)
+        self.home.move(1800,200)        
         self.home.resize(50,20)
         self.RoV = 0
         self.RoW = 0
-        twist = Twist()
-        twist.linear.x = self.RoV
-        twist.angular.z = self.RoW
         print('~~  Stop  ~~')
         print('speed:%s\tturn:%s'%(self.RoV,self.RoW))
-        self.pub.publish(twist)
-        
+        if self.ros_on:
+            twist = Twist()
+            twist.linear.x = self.RoV
+            twist.angular.z = self.RoW
+            
+            try:
+                self.pub.publish(twist)
+            except:
+                ros_on = False
+                print("ROS master is offline")
+            
     # (顯示) 選擇畫面
     def option_page(self):
         self.all_clear()
-        self.page.setText('選擇頁面')
+        self.page.setText('選擇頁面')        
         self.opt_nav.setVisible(True)
         self.opt_fol.setVisible(True)
         self.opt_chg.setVisible(True)
+        self.nav_img.setVisible(True)
+        self.fol_img.setVisible(True)
+        self.chg_img.setVisible(True)
         self.explain_nav.setVisible(True)
         self.explain_fol.setVisible(True)
+        
+        self.opt_nav.move(75,75)
+        self.opt_fol.move(950,75)
+        self.opt_chg.move(1600,800)
+        self.opt_nav.resize(800,600)
+        self.opt_fol.resize(800,600)        
+        self.opt_chg.resize(250,150)
+        
+        self.opt_nav.raise_()
+        self.opt_fol.raise_()
+        self.opt_chg.raise_()
+
+        op = QGraphicsOpacityEffect()
+        op.setOpacity(0.01)     # 透明度 0~1
+        self.opt_nav.setGraphicsEffect(op)
+        op = QGraphicsOpacityEffect()
+        op.setOpacity(0.01)     # 透明度 0~1
+        self.opt_fol.setGraphicsEffect(op)
+        op = QGraphicsOpacityEffect()
+        op.setOpacity(0.01)     # 透明度 0~1
+        self.opt_chg.setGraphicsEffect(op)
+
+        self.nav_img.move(75,75)
+        self.fol_img.move(950,75)
+        self.nav_img.resize(800,600)
+        self.fol_img.resize(800,600)
+        self.chg_img.move(1600,800)
+        self.chg_img.resize(250,150)
+        
+        self.explain_nav.setText("點我一下看說明")
+        self.explain_fol.setText("點我一下看說明")        
+        self.explain_nav.move(400,700)
+        self.explain_fol.move(1275,700)
+        self.explain_nav.resize(250,30)
+        self.explain_fol.resize(250,30)
+
 
     # (顯示) 導航畫面1
     def navigation(self):
         self.all_clear()
-        self.page.setText('導航頁面1')
+        self.page.setText('導航頁面1')        
         self.location_type.setVisible(True)
         self.location_type.setCurrentIndex(0)
         self.map_place_x = 275
-        self.map_place_y = 40
-        self.mapsize_x = 1400
-        self.mapsize_y = 740
+        self.map_place_y = 45
+        self.mapsize_x = 1550
+        self.mapsize_y = 1000
 
         self.showImage_map()
         for n in self.hito:
@@ -397,8 +425,6 @@ class MyWidget(QWidget):
         for i in range(len(self.extra)):
             self.extra[i].move(x+10,y+size_y+itv*(i%4)+5)
         
-        
-
         self.hito[0].setText('麥當勞')
         self.hito[1].setText('廁所')
         self.hito[2].setText('服務台')
@@ -514,19 +540,7 @@ class MyWidget(QWidget):
         self.other[1].clicked.connect(lambda:self.location_choice(17))
         self.other[2].clicked.connect(lambda:self.location_choice(18))
         self.other[3].clicked.connect(lambda:self.location_choice(19))
-        '''
-        for i in range(4):
-            self.cafe[i].clicked.connect(lambda:self.location_choice(i))
-
-        for i in range(4):
-            self.shop[i].clicked.connect(lambda:self.location_choice(4+i))
-
-        for i in range(4):
-            self.toilet[i].clicked.connect(lambda:self.location_choice(8+i))
-
-        for i in range(4):
-            self.other[i].clicked.connect(lambda:self.location_choice(12+i))
-        '''
+        
         self.nav_btn.move(50,600)
         self.nav_btn.resize(50,50)
         self.nav_btn.setText('開始\n導航')
@@ -536,27 +550,30 @@ class MyWidget(QWidget):
     # (顯示) 導航畫面2
     def navigation_2(self):
         self.all_clear()
-        self.page.setText('導航畫面2')
-        self.map_place_x = 30
-        self.map_place_y = 30
-        self.mapsize_x = 1220
-        self.mapsize_y = 740
+        self.page.setText('導航畫面2')        
+        self.map_place_x = 60
+        self.map_place_y = 45
+        self.mapsize_x = 1800
+        self.mapsize_y = 1000
 
         self.showImage_map()
+        
     # (顯示) 跟隨畫面
     def following(self):
         self.all_clear()
         self.page.setText('跟隨畫面')
+        self.showImage(0.5)
 
     # (顯示) 充電畫面
     def charging(self):
         self.all_clear()
         self.page.setText('充電頁面')
+        self.showImage(0.5)
 
     # (顯示) 遙控畫面
     def remoting(self):
         self.all_clear()
-        self.page.setText('遙控頁面')
+        self.page.setText('遙控頁面')        
         self.leftfront_btn.setVisible(True)
         self.front_btn.setVisible(True)
         self.rightfront_btn.setVisible(True)
@@ -567,7 +584,36 @@ class MyWidget(QWidget):
         self.rightback_btn.setVisible(True)
         #self.stop_btn.setVisible(True)
         self.speed_btn.setVisible(True)
-        self.speed_btn.setText('High speed')
+        self.speed_label.setVisible(True)
+        self.speed_btn.setText('切換速度')
+        size = 200
+        self.leftfront_btn.resize(size,size)
+        self.front_btn.resize(size,size)
+        self.rightfront_btn.resize(size,size)
+        self.left_btn.resize(size,size)
+        self.right_btn.resize(size,size)
+        self.leftback_btn.resize(size,size)
+        self.back_btn.resize(size,size)
+        self.rightback_btn.resize(size,size)
+        self.stop_btn.resize(320,150)
+        self.speed_btn.resize(320,150)
+        
+        self.leftfront_btn.move(300,150)
+        self.front_btn.move(620,150)
+        self.rightfront_btn.move(920,150)
+        self.left_btn.move(300,470)
+        self.right_btn.move(940,470)
+        self.leftback_btn.move(300,790)
+        self.back_btn.move(620,790)
+        self.rightback_btn.move(920,790)        
+        self.stop_btn.move(560,450)        
+        self.speed_btn.move(560,450)
+
+        self.multi_speed = 1
+        self.speed_label.setText('低速模式')
+        self.speed_label.setFont(QFont('Ariel',30))
+        self.speed_label.move(650,570)
+        self.speed_label.resize(300,150)
         print('Remoting mode running')
 
     
@@ -583,10 +629,16 @@ class MyWidget(QWidget):
         self.rightback_btn.setVisible(False)
         self.stop_btn.setVisible(False)
         self.speed_btn.setVisible(False)
-        self.img.setVisible(False)
+        self.speed_label.setVisible(False)
+        #self.img.setVisible(False)
+        self.showImage(0.2)
+        self.img.lower()
         self.opt_nav.setVisible(False)
         self.opt_fol.setVisible(False)
         self.opt_chg.setVisible(False)
+        self.nav_img.setVisible(False)
+        self.fol_img.setVisible(False)
+        self.chg_img.setVisible(False)
         self.st_btn.setVisible(False)
         self.start_label.setVisible(False)
         self.explain_nav.setVisible(False)
@@ -654,11 +706,6 @@ class MyWidget(QWidget):
         elif type_ch == 4:
             for n in self.other:
                 n.setVisible(True)
-    '''
-    # (選單) 選擇導航點類別
-    def changetype(self):
-        self.show_type(self.location_type.currentIndex())
-    ''' 
 
     # (導航) 選擇導航點
     def location_choice(self,loc):
@@ -681,10 +728,14 @@ class MyWidget(QWidget):
     def speed(self):
         if self.multi_speed == 1:
             self.multi_speed = 2
-            self.speed_btn.setText('Low speed')
+            self.speed_label.setText('中速模式')
+            
+        elif self.multi_speed == 2:
+            self.multi_speed = 2.5
+            self.speed_label.setText('高速模式')
         else:
             self.multi_speed = 1
-            self.speed_btn.setText('High speed')
+            self.speed_label.setText('低速模式')
     # (控制) 遙控模式
     def walk(self,key):
         v_s = 0.25
@@ -716,23 +767,33 @@ class MyWidget(QWidget):
             self.RoW = t
         if key == 's':
             self.RoV = 0.0
-            self.RoW = 0.0
-            #print(self.RoV,self.RoW)
-        
-        twist = Twist()
-        twist.linear.x = self.RoV
-        twist.angular.z = self.RoW
+            self.RoW = 0.0           
+
         print('speed:%s\tturn:%s'%(self.RoV,self.RoW))
-        self.pub.publish(twist)
+        if self.ros_on:
+            twist = Twist()
+            twist.linear.x = self.RoV
+            twist.angular.z = self.RoW
+            
+            try:
+                self.pub.publish(twist)
+            except:
+                self.ros_on = False
+                print("ROS master is offline")
+        
+        
     # (圖片) 閒置圖片
-    def showImage(self):
-        self.movie = QMovie("Image/anya3.gif")
+    def showImage(self, trp=1):
+        self.movie = QMovie("./Image/anya3.gif")
         self.img.setMovie(self.movie)
         self.movie.start()        
         #pixmap = QPixmap('Image/anya.png')        
         #self.img.setPixmap(pixmap)        
-        self.img.resize(1280,800)
+        self.img.resize(1920,1200)
         self.img.setScaledContents(True)
+        op = QGraphicsOpacityEffect()
+        op.setOpacity(trp)     # 透明度 0~1
+        self.img.setGraphicsEffect(op)
         self.img.move(0,0)
         self.img.lower()
         self.img.setVisible(True)
@@ -742,8 +803,8 @@ class MyWidget(QWidget):
     def showImage_battery(self):
         pixmap = QPixmap('Image/battery_charge.png')
         self.battery.setPixmap(pixmap)
-        self.battery.move(1240,5)
-        self.battery.resize(35,18)
+        self.battery.move(1850,5)
+        self.battery.resize(60,30)
         self.battery.setScaledContents(True)
         self.battery.raise_()
         self.battery.setVisible(True)
@@ -761,7 +822,7 @@ class MyWidget(QWidget):
         self.map.resize(self.mapsize_x,self.mapsize_y)
         
         #self.map.setScaledContents(True)
-        self.map.lower()
+        #self.map.lower()
         self.map.setVisible(True)
     
     # (更新) 更新時間
@@ -772,6 +833,7 @@ class MyWidget(QWidget):
             try:
                 t = time.localtime()
                 mon = t.tm_mon
+                mon = 9
                 day = t.tm_mday
                 h = t.tm_hour
                 m = t.tm_min
@@ -832,16 +894,23 @@ class MyWidget(QWidget):
     def measure_distance(self,location):
         return '大約2分鐘到達'
         
-'''
+
     
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     screen = app.primaryScreen()
     w = MyWidget()
-    #w.showFullScreen()
-    w.show()
+    max_x = screen.size().width()                #(1920)  (1280)
+    max_y = screen.size().height()                 #(1080)  (800)
+    ava_x = screen.availableGeometry().width()     #(1858)  (1280)
+    ava_y = screen.availableGeometry().height()    #(996)   (800)
+    print(max_x,max_y)
+    print(ava_x,ava_y)
+    w.showFullScreen()
+    #w.show()
     sys.exit(app.exec_())
-'''
+    
+
    
    
  # app : system
