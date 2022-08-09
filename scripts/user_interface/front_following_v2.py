@@ -113,7 +113,7 @@ def follower(pub1,on1=1):
    #pub = rospy.Publisher('cmd_vel', Twist, queue_size = 1)   
    print("on=============================================================",on)
    rospy.Subscriber("human_vector", Float32MultiArray, callback)
-   rospy.spin()
+   #rospy.spin()
    #rospy.rate.sleep(30)
       
    '''
