@@ -98,6 +98,7 @@ def callback(data):
    #RoW=angular_control(data.data,RoW)  
    RoW= horizontal_angular_control(data.data,RoW,on)  
    print ("RoV: ",RoV," RoW: ", RoW)
+   print("on=============================================================",on)
    publish_cmd_vel(RoV,RoW,pub)
    
  

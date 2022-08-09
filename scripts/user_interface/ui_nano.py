@@ -913,12 +913,14 @@ class MyWidget(QWidget):
         
     # (跟隨) 前跟隨模式
     def follow_start(self,on=1):
+        self.onn = []
+        self.onn[0] = on
         if on == 1:
             self.follow_on_btn.setEnabled(False)
         else:
             self.follow_on_btn.setEnabled(True)
         if self.follow_flag == False:
-            self.folw_th = threading._start_new_thread(follower,(self.pub,on))
+            self.folw_th = threading._start_new_thread(follower,(self.pub,self.onn[0]))
             self.follow_flag = True
             print("follow ONNNNNNNNNNNNNNNNNNNNNN")
         else:
