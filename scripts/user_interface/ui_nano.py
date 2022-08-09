@@ -922,7 +922,7 @@ class MyWidget(QWidget):
         else:
             self.follow_on_btn.setEnabled(True)
         if self.follow_flag == False:
-            threading.start_new_thread(follower,(self.pub,on))
+            threading._start_new_thread(follower,(self.pub,on))
             print("follow ONNNNNNNNNNNNNNNNNNNNNN")
         else:
             #threading.join()
