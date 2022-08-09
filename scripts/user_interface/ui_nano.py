@@ -24,9 +24,9 @@ class MyWidget(QWidget):
         self.setWindowTitle('User Interface')
         self.setGeometry(0,0,1920,1200)
         self.ros_on = True
-        self.path = './'
-        #self.path = '/home/airpocart/airpocart_ws/scripts/user_interface/'
-        self.font_size = 1.5
+        #self.path = './'
+        self.path = '/home/airpocart/airpocart_ws/scripts/user_interface/'
+        self.font_size = 1
         
         ##        Only for test       ##
         

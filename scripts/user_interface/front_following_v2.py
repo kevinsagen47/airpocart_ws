@@ -101,18 +101,19 @@ def callback(data):
    publish_cmd_vel(RoV,RoW,pub)
    
  
-def follower(pub,on=1):
-   #global pub
+def follower(pub1,on=1):
+   global pub
+   pub = pub1
    #rospy.init_node('front_following')
    #pub = rospy.Publisher('cmd_vel', Twist, queue_size = 1)   
-   '''
+   
    if on == 1:      
       rospy.Subscriber("human_vector", Float32MultiArray, callback)
       rospy.spin()
    else:
       publish_cmd_vel(0,0,pub1)
-   '''
-   publish_cmd_vel(on*0.2,0,pub)
+   
+   #publish_cmd_vel(on*0.2,0,pub)
 
 if __name__ == '__main__':
    rospy.init_node('front_following')
