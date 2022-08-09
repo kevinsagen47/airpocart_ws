@@ -927,6 +927,7 @@ class MyWidget(QWidget):
             self.follow_flag = True
             print("follow ONNNNNNNNNNNNNNNNNNNNNN")
         else:
+            threading.join()
             print("ON in UIIIIII",on)
         #follower(self.pub,on)
     
