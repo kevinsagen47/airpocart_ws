@@ -238,6 +238,8 @@ class MyWidget(QWidget):
         self.follow_off_btn.clicked.connect(lambda:self.follow_start(0))
         
         self.follow_flag = False
+        self.onn = []
+        self.onn.append(0)
         #################################
         
         ##          Remoting           ##
@@ -575,6 +577,7 @@ class MyWidget(QWidget):
         self.follow_off_btn.resize(800,800)
         self.home.move(70,1100)
         self.home.resize(200,50)
+        
 
     # (顯示) 充電畫面
     def charging(self):
@@ -913,7 +916,7 @@ class MyWidget(QWidget):
         
     # (跟隨) 前跟隨模式
     def follow_start(self,on=1):
-        self.onn = []
+        
         self.onn[0] = on
         if on == 1:
             self.follow_on_btn.setEnabled(False)
