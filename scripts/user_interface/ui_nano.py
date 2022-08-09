@@ -919,11 +919,11 @@ class MyWidget(QWidget):
             self.follow_on_btn.setEnabled(True)
         if self.follow_flag == False:
             self.folw_th = threading._start_new_thread(follower,(self.pub,on))
-            self.follow_flag == True
-            print("follow on")
+            self.follow_flag = True
+            print("follow ONNNNNNNNNNNNNNNNNNNNNN")
         else:
             self.folw_th.join()
-            print("follow update")
+            print("update")
         #follower(self.pub,on)
     
 if __name__ == '__main__':

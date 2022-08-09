@@ -30,9 +30,9 @@ def publish_cmd_vel(RoV,RoW,pub):
    pub.publish(twist)
 
 
-def velocity_control(data,RoV):
+def velocity_control(data,RoV,on):
    #global RoV,RoW
-   if (data[2]==-1 or data[2]>0.9):
+   if (data[2]==-1 or data[2]>0.9 or on==0):
       RoV=0
    elif data[2]<0.5:
       if(RoV>=max):
@@ -46,9 +46,9 @@ def velocity_control(data,RoV):
          RoV=RoV-0.05
    return RoV
 
-def angular_control(data,RoW):
+def angular_control(data,RoW,on):
    #global RoV,RoW
-   if (data[1]==-1 or (data[1]<0.08 and data[1]>-0.08) or  data[2]>0.9):
+   if (data[1]==-1 or (data[1]<0.08 and data[1]>-0.08) or  data[2]>0.9 or on==0):
       RoW=0
    elif data[1]<-0.03:
       RoW = 0.3
@@ -93,10 +93,10 @@ def horizontal_angular_control(data,RoW):
 def callback(data):
    global RoV,RoW
    
-   RoV=velocity_control(data.data,RoV)  
+   RoV=velocity_control(data.data,RoV,on)  
    #RoV = 0.0
    #RoW=angular_control(data.data,RoW)  
-   RoW= horizontal_angular_control(data.data,RoW)  
+   RoW= horizontal_angular_control(data.data,RoW,on)  
    print ("RoV: ",RoV," RoW: ", RoW)
    publish_cmd_vel(RoV,RoW,pub)
    
@@ -107,7 +107,7 @@ def follower(pub1,on1=1):
    on = on1
    #rospy.init_node('front_following')
    #pub = rospy.Publisher('cmd_vel', Twist, queue_size = 1)   
-   print(on)
+   print("on=============================================================",on)
    if on == 1:      
       rospy.Subscriber("human_vector", Float32MultiArray, callback)
       rospy.rate.sleep(30)
