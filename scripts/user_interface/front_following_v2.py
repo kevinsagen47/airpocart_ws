@@ -108,13 +108,16 @@ def follower(pub1,on1=1):
    #rospy.init_node('front_following')
    #pub = rospy.Publisher('cmd_vel', Twist, queue_size = 1)   
    print("on=============================================================",on)
+   rospy.Subscriber("human_vector", Float32MultiArray, callback)
+   rospy.spin()
+   #rospy.rate.sleep(30)
+      
+   '''
    if on == 1:      
-      rospy.Subscriber("human_vector", Float32MultiArray, callback)
-      rospy.rate.sleep(30)
       
    else:
       publish_cmd_vel(0,0,pub1)
-   
+   '''
    
 
 if __name__ == '__main__':
