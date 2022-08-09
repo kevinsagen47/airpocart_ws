@@ -112,7 +112,7 @@ def follower(pub,on=1):
    else:
       publish_cmd_vel(0,0,pub1)
    '''
-   publish_cmd_vel(on,0,pub)
+   publish_cmd_vel(on*0.2,0,pub)
 
 if __name__ == '__main__':
    rospy.init_node('front_following')
