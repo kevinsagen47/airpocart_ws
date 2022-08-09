@@ -30,8 +30,9 @@ def publish_cmd_vel(RoV,RoW,pub):
    pub.publish(twist)
 
 
-def velocity_control(data,RoV,on):
+def velocity_control(data,RoV):
    #global RoV,RoW
+   global on
    if (data[2]==-1 or data[2]>0.9 or on==0):
       RoV=0
    elif data[2]<0.5:
@@ -46,8 +47,9 @@ def velocity_control(data,RoV,on):
          RoV=RoV-0.05
    return RoV
 
-def angular_control(data,RoW,on):
+def angular_control(data,RoW):
    #global RoV,RoW
+   global on
    if (data[1]==-1 or (data[1]<0.08 and data[1]>-0.08) or  data[2]>0.9 or on==0):
       RoW=0
    elif data[1]<-0.03:
@@ -68,8 +70,9 @@ def angular_control(data,RoW,on):
       '''
    print (data[1:3]),
    return RoW
-def horizontal_angular_control(data,RoW,on):
+def horizontal_angular_control(data,RoW):
    #global RoV,RoW
+   global on
    if (data[0]==-1 or (data[0]<0.08 and data[0]>-0.08) or  data[2]>0.9 or on==0):
       RoW=0
    elif data[0]<-0.03:
@@ -93,10 +96,10 @@ def horizontal_angular_control(data,RoW,on):
 def callback(data):
    global RoV,RoW
    
-   RoV=velocity_control(data.data,RoV,on)  
+   RoV=velocity_control(data.data,RoV)  
    #RoV = 0.0
    #RoW=angular_control(data.data,RoW)  
-   RoW= horizontal_angular_control(data.data,RoW,on)  
+   RoW= horizontal_angular_control(data.data,RoW)  
    print ("RoV: ",RoV," RoW: ", RoW)
    print("on=============================================================",on)
    publish_cmd_vel(RoV,RoW,pub)
