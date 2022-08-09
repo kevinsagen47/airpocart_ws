@@ -924,11 +924,12 @@ class MyWidget(QWidget):
             self.follow_on_btn.setEnabled(True)
         if self.follow_flag == False:
             #self.folw_th = threading.start_new_thread(follower,(self.pub,self.onn[0]))
-            threading.Thread(follower,(self.pub,self.onn[0]))
+            threading.Thread(target=follower,args=(self.pub,self.onn[0],))
+            
             self.follow_flag = True
             print("follow ONNNNNNNNNNNNNNNNNNNNNN")
         else:
-            threading.join()
+            #threading.join()
             print("ON in UIIIIII",on)
         #follower(self.pub,on)
     
