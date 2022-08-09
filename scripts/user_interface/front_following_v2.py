@@ -105,7 +105,7 @@ def callback(data):
    publish_cmd_vel(RoV,RoW,pub)
    
  
-def follower(pub1,on1=1):
+def follower(pub1,on1):
    global pub,on
    pub = pub1
    on = on1
