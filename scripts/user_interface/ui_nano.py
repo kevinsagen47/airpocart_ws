@@ -237,6 +237,7 @@ class MyWidget(QWidget):
         self.follow_on_btn.clicked.connect(lambda:self.follow_start(1))
         self.follow_off_btn.clicked.connect(lambda:self.follow_start(0))
         
+        self.follow_flag = False
         #################################
         
         ##          Remoting           ##
@@ -916,8 +917,10 @@ class MyWidget(QWidget):
             self.follow_on_btn.setEnabled(False)
         else:
             self.follow_on_btn.setEnabled(True)
-        
-        threading._start_new_thread(follower,(self.pub,on))
+        if self.follow_flag == False:
+            folw_th = threading._start_new_thread(follower,(self.pub,on))
+        else:
+            folw_th.join()
         #follower(self.pub,on)
     
 if __name__ == '__main__':
