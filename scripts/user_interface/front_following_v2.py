@@ -68,9 +68,9 @@ def angular_control(data,RoW,on):
       '''
    print (data[1:3]),
    return RoW
-def horizontal_angular_control(data,RoW):
+def horizontal_angular_control(data,RoW),on:
    #global RoV,RoW
-   if (data[0]==-1 or (data[0]<0.08 and data[0]>-0.08) or  data[2]>0.9):
+   if (data[0]==-1 or (data[0]<0.08 and data[0]>-0.08) or  data[2]>0.9 or on==0):
       RoW=0
    elif data[0]<-0.03:
       RoW = 0.3
