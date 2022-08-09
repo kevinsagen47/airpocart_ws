@@ -93,6 +93,11 @@ def horizontal_angular_control(data,RoW):
       '''
    print (data[0],"  ",data[2])
    return RoW
+
+def onoff(trigger):
+   global on
+   on = trigger
+   
 def callback(data):
    global RoV,RoW
    
@@ -111,7 +116,6 @@ def follower(pub1,on1):
    on = on1
    #rospy.init_node('front_following')
    #pub = rospy.Publisher('cmd_vel', Twist, queue_size = 1)   
-   print("on=============================================================",on)
    rospy.Subscriber("human_vector", Float32MultiArray, callback)
    #rospy.spin()
    #rospy.rate.sleep(30)
