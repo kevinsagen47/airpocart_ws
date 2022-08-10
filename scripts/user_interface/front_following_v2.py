@@ -7,14 +7,22 @@ import rospy
 #from rospy.numpy_msg import numpy_msg
 from std_msgs.msg import Float32MultiArray
 from geometry_msgs.msg import Twist
-
+import time
 RoV = 0.0
 RoW = 0.0
 max = 0.4
 min = -0.1
-
+z_buffer = [0.0,0.0,0.0]
 w_max = 0.64
 w_min = -1*w_max
+
+
+def average_displacement(l): 
+    x1 = l[0]-l[1]
+    x2 = l[1]-l[2]
+    avg =(x2 +x1) /2.0
+    return avg
+
 def vels(speed,turn):
 	return "currently:\tspeed %s\tturn %s " % (speed,turn)
 
@@ -30,10 +38,10 @@ def publish_cmd_vel(RoV,RoW,pub):
    pub.publish(twist)
 
 
-def velocity_control(data,RoV):
+def velocity_control(data,RoV,rel):
    #global RoV,RoW
    global on
-   if (data[2]==-1 or data[2]>0.9 or on==0):
+   if (data[2]==-1 or data[2]>0.9 or on==0 or (rel<=-0.35 and data[2]>0.5)):
       RoV=0
    elif data[2]<0.5:
       if(RoV>=max):
@@ -94,26 +102,47 @@ def horizontal_angular_control(data,RoW):
    print (data[0],"  ",data[2])
    return RoW
 
+def estimate_velocity(data):
+   global last_stamp
+   if (data[2]!=-1.0 and data[2]<=1.2):
+      z_buffer.append(data[2])
+      z_buffer.pop(0)
+   else:
+      z_buffer.append(0.0)
+      z_buffer.pop(0)
+      #print "nope"
+   s = average_displacement(z_buffer)
+   t = time.time() - last_stamp
+   #print (t)
+   last_stamp = time.time()
+   return (s/t)
+
 def onoff(trigger):
    global on
    on = trigger
-   
+   if (on==0):
+      publish_cmd_vel(0,0,pub)
 def callback(data):
    global RoV,RoW
-   
-   RoV=velocity_control(data.data,RoV)  
+   human_velocity = estimate_velocity(data.data)#pos approching
+   rel_velocity = human_velocity - RoV
+   #print (round(rel_velocity,2), "  ",round(RoV,2)) #negative means robot too fast
+   RoV=velocity_control(data.data,RoV,rel_velocity) 
+   #RoV=velocity_control(data.data,RoV)  
    #RoV = 0.0
    #RoW=angular_control(data.data,RoW)  
    RoW= horizontal_angular_control(data.data,RoW)  
    print ("RoV: ",RoV," RoW: ", RoW)
    print("on=============================================================",on)
-   publish_cmd_vel(RoV,RoW,pub)
+   if(on==1):
+      publish_cmd_vel(RoV,RoW,pub)
    
  
 def follower(pub1,on1):
-   global pub,on
+   global pub,on, last_stamp
    pub = pub1
    on = on1
+   last_stamp = time.time()
    #rospy.init_node('front_following')
    #pub = rospy.Publisher('cmd_vel', Twist, queue_size = 1)   
    rospy.Subscriber("human_vector", Float32MultiArray, callback)
