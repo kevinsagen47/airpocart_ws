@@ -11,7 +11,7 @@ import time
 RoV = 0.0
 RoW = 0.0
 max = 0.4
-min = -0.1
+min = -0.2
 z_buffer = [0.0,0.0,0.0]
 w_max = 0.64
 w_min = -1*w_max
@@ -41,50 +41,28 @@ def publish_cmd_vel(RoV,RoW,pub):
 def velocity_control(data,RoV,rel):
    #global RoV,RoW
    global on
-   if (data[2]==-1 or data[2]>0.9 or on==0 or (rel<=-0.35 and data[2]>0.5)):
+   if (data[2]==-1 or data[2]>0.9 or on==0 or (rel<=-0.4 and data[2]>0.5) or (RoV<0 and data[2]<0.7)):
       RoV=0
    elif data[2]<0.5:
       if(RoV>=max):
          RoV=max
       else:
          RoV=RoV+0.05
-   elif data[2]>0.7:
+   elif data[2]>0.7  :
       if(RoV<=min):
          RoV=min
       else:
          RoV=RoV-0.05
    return RoV
 
-def angular_control(data,RoW):
-   #global RoV,RoW
-   global on
-   if (data[1]==-1 or (data[1]<0.08 and data[1]>-0.08) or  data[2]>0.9 or on==0):
-      RoW=0
-   elif data[1]<-0.03:
-      RoW = 0.3
-      '''
-      if(RoW>=w_max):
-         RoW=w_max
-      else:
-         RoW=RoW+0.05
-      '''
-   elif data[1]>0.03:
-      RoW = -0.3
-      '''
-      if(RoW<=w_min):
-         RoW=w_min
-      else:
-         RoW=RoW-0.05
-      '''
-   print (data[1:3]),
-   return RoW
+
 def horizontal_angular_control(data,RoW):
    #global RoV,RoW
    global on
-   if (data[0]==-1 or (data[0]<0.08 and data[0]>-0.08) or  data[2]>0.9 or on==0):
+   if (data[0]==-1 or (data[0]<0.08 and data[0]>-0.08) or  data[2]>1.1 or on==0):
       RoW=0
    elif data[0]<-0.03:
-      RoW = 0.3
+      RoW = 0.25
       '''
       if(RoW>=w_max):
          RoW=w_max
@@ -92,7 +70,7 @@ def horizontal_angular_control(data,RoW):
          RoW=RoW+0.05
       '''
    elif data[0]>0.03:
-      RoW = -0.3
+      RoW = -0.25
       '''
       if(RoW<=w_min):
          RoW=w_min
