@@ -3,9 +3,9 @@ import os
 import cv2
 import time
 import threading
-from front_following_v2 import *
-from geometry_msgs.msg import Twist
-import rospy
+#from front_following_v2 import *
+#from geometry_msgs.msg import Twist
+#import rospy
 from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QPushButton, QComboBox, QGraphicsOpacityEffect
 from PyQt5.QtGui import QIcon, QImage, QPixmap, QFont, QMovie
 from PyQt5.QtCore import pyqtSlot, QCoreApplication, QSize
@@ -23,10 +23,10 @@ class MyWidget(QWidget):
     def initUI(self):
         self.setWindowTitle('User Interface')
         self.setGeometry(0,0,1920,1200)
-        self.ros_on = True
-        #self.path = './'
-        self.path = '/home/airpocart/airpocart_ws/scripts/user_interface/'
-        self.font_size = 1
+        self.ros_on = False
+        self.path = './'
+        #self.path = '/home/airpocart/airpocart_ws/scripts/user_interface/'
+        self.font_size = 1.5
         
         ##        Only for test       ##
         
@@ -187,7 +187,7 @@ class MyWidget(QWidget):
         
         # (Combobox) 導航點類別選擇
         self.location_type = QComboBox(self)
-        loc_type = ['公共服務','娛樂','休息','藝文','其他']
+        loc_type = ['熱門','餐廳','購物','盥洗室','其他']
             
         self.location_type.addItems(loc_type)
 
@@ -406,18 +406,18 @@ class MyWidget(QWidget):
         self.page.setText('導航頁面1')        
         self.location_type.setVisible(True)
         self.location_type.setCurrentIndex(0)
-        self.location_type.resize(200,60)
-        self.location_type.move(250,100)
+        self.location_type.resize(250,60)
+        self.location_type.move(50,220)
         self.comment_label1.setText('請選擇導航點')
         self.comment_label1.setFont(QFont('Ariel',10*self.font_size))
-        self.comment_label1.move(250,65)
+        self.comment_label1.move(50,170)
         self.comment_label1.resize(200,40)
         self.comment_label1.setVisible(True)
         
-        self.map_place_x = 50
-        self.map_place_y = 320
-        self.mapsize_x = 1800
-        self.mapsize_y = 700
+        self.map_place_x = 400
+        self.map_place_y = 75
+        self.mapsize_x = 1400
+        self.mapsize_y = 1000
 
         self.showImage_map()
         for n in self.hito:
@@ -440,28 +440,28 @@ class MyWidget(QWidget):
         for n in self.other:
             n.resize(size_x,size_y)
         
-        x = 250
-        y = 180
-        itv = 300
+        x = 50
+        y = 320
+        itv = 180
 
         for i in range(len(self.hito)):
-            self.hito[i].move(x+itv*i,y)
+            self.hito[i].move(x,y+itv*i)
         for i in range(len(self.cafe)):
-            self.cafe[i].move(x+itv*i,y)
+            self.cafe[i].move(x,y+itv*i)
         for i in range(len(self.shop)):
-            self.shop[i].move(x+itv*i,y)
+            self.shop[i].move(x,y+itv*i)
         for i in range(len(self.toilet)):
-            self.toilet[i].move(x+itv*i,y)
+            self.toilet[i].move(x,y+itv*i)
         for i in range(len(self.other)):
-            self.other[i].move(x+itv*i,y)
+            self.other[i].move(x,y+itv*i)
 
         for i in range(len(self.score)):
-            self.score[i].move(x+size_x+10+itv*(i%4),y+5)
+            self.score[i].move(x+size_x+10,y+itv*(i%4)-3)
         for i in range(len(self.distn)):
-            self.distn[i].move(x+size_x+10+itv*(i%4),y+18)
+            self.distn[i].move(x+size_x+10,y+itv*(i%4)+18)
         for i in range(len(self.extra)):
-            self.extra[i].move(x+10+itv*(i%4),y+size_y+7)
-        '''
+            self.extra[i].move(x+10,y+size_y+itv*(i%4)+7)
+        
         self.hito[0].setText('麥當勞')
         self.hito[1].setText('廁所')
         self.hito[2].setText('服務台')
@@ -482,73 +482,52 @@ class MyWidget(QWidget):
         self.other[1].setText('寄放物品')
         self.other[2].setText('吸菸區')
         self.other[3].setText('哺乳室')
-        '''
-        self.hito[0].setText('諮詢服務台')
-        self.hito[1].setText('哺集乳室')
-        self.hito[2].setText('祈禱室')
-        self.hito[3].setText('手機充電區')
-        self.cafe[0].setText('運動公園')
-        self.cafe[1].setText('機場圖書館')
-        self.cafe[2].setText('電競體驗區')
-        self.cafe[3].setText('兒童遊樂區')
-        self.shop[0].setText('樂活離島候機室')
-        self.shop[1].setText('希望平溪候機室')
-        self.shop[2].setText('阿里山景觀休憩區')
-        self.shop[3].setText('空')
-        self.toilet[0].setText('客家文創園區')
-        self.toilet[1].setText('霹靂布袋戲館')
-        self.toilet[2].setText('藝文展演空間')
-        self.toilet[3].setText('原住民文化園區')
-        self.other[0].setText('空')
-        self.other[1].setText('空')
-        self.other[2].setText('空')
-        self.other[3].setText('空')
+        
         self.hito[0].setFont(QFont('Ariel',10*self.font_size))
 
         self.real_loc = []
-        self.real_loc.append([1880,550])   #熱門1
-        self.real_loc.append([1700,530])   #熱門2
-        self.real_loc.append([840,440])   #熱門3        
-        self.real_loc.append([1880,550])   #熱門4
-        self.real_loc.append([3500,150])   #餐廳1
-        self.real_loc.append([3150,420])   #餐廳2
-        self.real_loc.append([2600,150])   #餐廳3
-        self.real_loc.append([930,150])   #餐廳4
-        self.real_loc.append([3150,160])   #購物1
-        self.real_loc.append([2500,160])   #購物2
-        self.real_loc.append([580,155])   #購物3
-        self.real_loc.append([-1,-1])   #購物4
-        self.real_loc.append([1680,160])   #廁所1
-        self.real_loc.append([1300,160])   #廁所2
-        self.real_loc.append([980,420])   #廁所3
-        self.real_loc.append([500,250])   #廁所4
-        self.real_loc.append([-1,-1])   #其他1
-        self.real_loc.append([-1,-1])   #其他2
-        self.real_loc.append([-1,-1])   #其他3
-        self.real_loc.append([-1,-1])   #其他4
+        self.real_loc.append([100,100])   #熱門1
+        self.real_loc.append([150,150])   #熱門2
+        self.real_loc.append([200,200])   #熱門3        
+        self.real_loc.append([300,300])   #熱門4
+        self.real_loc.append([146,160.5])   #餐廳1
+        self.real_loc.append([546,429])   #餐廳2
+        self.real_loc.append([300,300])   #餐廳3
+        self.real_loc.append([400,400])   #餐廳4
+        self.real_loc.append([500,500])   #購物1
+        self.real_loc.append([600,600])   #購物2
+        self.real_loc.append([700,700])   #購物3
+        self.real_loc.append([800,800])   #購物4
+        self.real_loc.append([900,900])   #廁所1
+        self.real_loc.append([50,50])   #廁所2
+        self.real_loc.append([50,50])   #廁所3
+        self.real_loc.append([50,50])   #廁所4
+        self.real_loc.append([50,50])   #其他1
+        self.real_loc.append([50,50])   #其他2
+        self.real_loc.append([50,50])   #其他3
+        self.real_loc.append([50,50])   #其他4
 
-        '''
-        self.score[0].setText('Information')
-        self.score[1].setText('Breastfeeding Room')
-        self.score[2].setText('Prayer Room')
-        self.score[3].setText('Mobile Phone Charging Station')
-        self.score[4].setText('Sports Park')
-        self.score[5].setText('Airport Library')
-        self.score[6].setText('e-Sports Experience Center')
-        self.score[7].setText('Children Playground')
-        self.score[8].setText('LOHAS of outlying Island Waiting Lounge')
-        self.score[9].setText('Pingxi the Village of Hope Waiting Lounge')
-        self.score[10].setText('Resting Areas/Alisan')
-        self.score[11].setText(' ')
-        self.score[12].setText('iHakka Creative Park')
-        self.score[13].setText('Pili Puppet Legend')
-        self.score[14].setText('Art Exhibition / Gallery')
-        self.score[15].setText('Taiwan Indigenous Culture Park')
+        self.score[0].setText('★★★★★')
+        self.score[1].setText('★★★★★')
+        self.score[2].setText('★★★★★')
+        self.score[3].setText('★★★★★')
+        self.score[4].setText('★★★★★')
+        self.score[5].setText('★★★★★')
+        self.score[6].setText('★★★★★')
+        self.score[7].setText('★★★★★')
+        self.score[8].setText('★★★★★')
+        self.score[9].setText('★★★★★')
+        self.score[10].setText('★★★★☆')
+        self.score[11].setText('★★★★☆')
+        self.score[12].setText('★★★★☆')
+        self.score[13].setText('★★★★☆')
+        self.score[14].setText('★★★★☆')
+        self.score[15].setText('★★★★☆')
         self.score[16].setText('★★★★☆')
         self.score[17].setText('★★★★☆')
         self.score[18].setText('★★★★☆')
         self.score[19].setText('★★★★☆')
-        '''
+        
         for n in self.score:
             n.setFont(QFont('Ariel',10*self.font_size))
         
@@ -597,9 +576,9 @@ class MyWidget(QWidget):
         self.all_clear()
         self.page.setText('導航畫面2')        
         self.map_place_x = 60
-        self.map_place_y = 200
+        self.map_place_y = 60
         self.mapsize_x = 1800
-        self.mapsize_y = 724
+        self.mapsize_y = 1000
         self.home.move(70,1100)
         self.home.resize(200,50)
 
@@ -873,8 +852,8 @@ class MyWidget(QWidget):
     # (圖片) 地圖
     def showImage_map(self):
         #pixmap = QPixmap(self.path+'Image/sample_map.png')  #(2010,1340)
-        pixmap = QPixmap(self.path+'Image/terminal2_map_3_2.png')  #(8192,1549)
-        #pixmap = pixmap.scaled(8192, 1548)
+        pixmap = QPixmap(self.path+'Image/terminal2_map_2_2.png')  #(8192,1549)
+        pixmap = pixmap.scaled(8192, 1548)
         self.imagesize_x = pixmap.width()
         self.imagesize_y = pixmap.height()
         
@@ -917,9 +896,9 @@ class MyWidget(QWidget):
     def show_mouse_move(self, event):
         #print(f'[show_mouse_move] {event.x()} {event.y()}')
         #pixmap = QPixmap(self.path+'Image/sample_map.png')
-        pixmap = QPixmap(self.path+'Image/terminal2_map_3_2.png')  #(3701,554)
-        #pixmap = pixmap.scaled(8192, 1548)
-        v = 0.2  #滑動速度
+        pixmap = QPixmap(self.path+'Image/terminal2_map_2_2.png')  #(3701,554)
+        pixmap = pixmap.scaled(8192, 1548)
+        v = 0.3  #滑動速度
         # 地圖滑動
         self.maplocation_x += (self.start_press[0]-event.x())*v
         if self.maplocation_x <0:
@@ -955,29 +934,8 @@ class MyWidget(QWidget):
                 self.pin.setVisible(False)
     # (備註) 導航點備註
     def extra_comment(self,location=0):
-
-        #com = ['備註','備註','備註','備註','提供運動器材、免費淋浴間','多國書籍、上網服務、手機充電、ipad供旅客使用','備註','塗鴉白板、LEGO玩具','備註','備註','備註','備註','備註','備註','備註','備註','備註','備註','備註','備註']
-        com1 = ['Information',
-                'Breastfeeding Room',
-                'Prayer Room',
-                'Mobile Phone Charging Station',
-                'Sports Park\n提供運動器材、免費淋浴間',
-                'Airport Library\n多國書籍、上網服務、手機充電',
-                'e-Sports Experience Center',
-                'Children Playground\n塗鴉白板、LEGO玩具',
-                'LOHAS of outlying Island Waiting Lounge',
-                'Pingxi the Village of Hope Waiting Lounge',
-                'Resting Areas/Alisan',
-                ' ',
-                'iHakka Creative Park',
-                'Pili Puppet Legend',
-                'Art Exhibition / Gallery',
-                'Taiwan Indigenous Culture Park',
-                ' ',
-                ' ',
-                ' ',
-                ' ']
-        return com1[location]
+        com = ['速食店','男/女/親子/殘障','失物招領、班機查詢','免稅店','備註','備註','備註','備註','備註','備註','備註','備註','備註','備註','備註','備註','備註','備註','備註','備註']
+        return com[location]
     # (運算) 計算到達時間
     def measure_distance(self,location):
         return '大約2分鐘到達'
