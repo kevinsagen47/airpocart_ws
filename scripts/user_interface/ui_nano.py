@@ -102,9 +102,10 @@ class MyWidget(QWidget):
         self.start_label.move(450,650)
         '''
         self.start_label = QLabel(self)
-        pixmap = QPixmap(self.path+'Image/start_text.png')
+        pixmap = QPixmap(self.path+'Image/start_text_2.png')
         self.start_label.setPixmap(pixmap)
-        self.start_label.move(675,1000)
+        #self.start_label.move(675,1000)
+        self.start_label.move(675,550)
         self.start_label.resize(800,90)
 
         
@@ -119,7 +120,10 @@ class MyWidget(QWidget):
         self.st_btn.clicked.connect(self.option_page)
 
         # (Image) 背景圖案
+        self.img_idle = QLabel(self)
         self.img = QLabel(self)
+
+        
         
         #################################
         
@@ -135,9 +139,9 @@ class MyWidget(QWidget):
 
         self.nav_img = QLabel(self)
         self.fol_img = QLabel(self)        
-        pixmap = QPixmap(self.path+'Image/navigator2.png')
+        pixmap = QPixmap(self.path+'Image/map_icon_2.png')
         self.nav_img.setPixmap(pixmap)
-        pixmap = QPixmap(self.path+'Image/following_icon.png')
+        pixmap = QPixmap(self.path+'Image/fol_icon_3.png')
         self.fol_img.setPixmap(pixmap)
         self.nav_img.setScaledContents(True)
         self.fol_img.setScaledContents(True)
@@ -147,7 +151,8 @@ class MyWidget(QWidget):
         self.opt_rmt = QPushButton(self)
         self.opt_rmt.clicked.connect(self.remoting)
         self.rmt_img = QLabel(self)
-        pixmap = QPixmap(self.path+'Image/cart_kuso.jpg')
+        #pixmap = QPixmap(self.path+'Image/cart_kuso.jpg')
+        pixmap = QPixmap(self.path+'Image/remoting_icon.png')
         self.rmt_img.setPixmap(pixmap)
         self.rmt_img.setScaledContents(True)
 
@@ -155,7 +160,7 @@ class MyWidget(QWidget):
         self.opt_chg = QPushButton(self)        
         self.opt_chg.clicked.connect(self.charging)
         self.chg_img = QLabel(self)
-        pixmap = QPixmap(self.path+'Image/charging.png')
+        pixmap = QPixmap(self.path+'Image/charging_icon.png')
         self.chg_img.setPixmap(pixmap)        
         self.chg_img.setScaledContents(True)
 
@@ -317,11 +322,17 @@ class MyWidget(QWidget):
         self.all_clear()
         self.page.setText('閒置頁面')
         self.option.setCurrentIndex(0)
-        self.showImage(1)
+        self.img.setVisible(False)
+        self.img_idle.setVisible(True)
+        
+        self.showImage_idle()
+        
+        #self.showImage(1)
         self.st_btn.setVisible(True)
         self.start_label.setVisible(True)
         self.home.move(1800,200)        
         self.home.resize(50,20)
+        self.home.setVisible(False)
         self.RoV = 0
         self.RoW = 0
         print('~~  Stop  ~~')
@@ -630,7 +641,8 @@ class MyWidget(QWidget):
     # (顯示) 遙控畫面
     def remoting(self):
         self.all_clear()
-        self.page.setText('遙控頁面')        
+        self.page.setText('遙控頁面')
+        self.shut_button.setVisible(True)
         self.leftfront_btn.setVisible(True)
         self.front_btn.setVisible(True)
         self.rightfront_btn.setVisible(True)
@@ -676,6 +688,10 @@ class MyWidget(QWidget):
     
     # (顯示) 清除所有物件
     def all_clear(self):
+        self.option.setVisible(False)
+        self.page.setVisible(False)
+        self.shut_button.setVisible(False)
+        self.idle_btn.setVisible(False)
         self.leftfront_btn.setVisible(False)
         self.front_btn.setVisible(False)
         self.rightfront_btn.setVisible(False)
@@ -687,8 +703,9 @@ class MyWidget(QWidget):
         self.stop_btn.setVisible(False)
         self.speed_btn.setVisible(False)
         self.speed_label.setVisible(False)
+        #self.img_idle.setVisible(False)
         #self.img.setVisible(False)
-        self.showImage(0.1)
+        self.showImage(0.5)
         self.img.lower()
         self.opt_nav.setVisible(False)
         self.opt_fol.setVisible(False)
@@ -842,13 +859,28 @@ class MyWidget(QWidget):
                 self.ros_on = False
                 print("ROS master is offline")
         
-        
     # (圖片) 閒置圖片
+    def showImage_idle(self, trp=1):
+        pixmap = QPixmap('Image/background_image.png')        
+        self.img.setPixmap(pixmap)        
+        self.img.resize(1920,1200)
+        self.img.setScaledContents(True)
+        op = QGraphicsOpacityEffect()
+        op.setOpacity(trp)     # 透明度 0~1
+        self.img.setGraphicsEffect(op)
+        self.img.move(0,0)
+        self.img.lower()
+        self.img.setVisible(True)
+
+    
+    # (圖片) 背景圖片
     def showImage(self, trp=1):
         #self.movie = QMovie(self.path+"Image/anya3.gif")
         #self.img.setMovie(self.movie)
         #self.movie.start()        
-        pixmap = QPixmap('Image/airplane_background.jpg')
+        #pixmap = QPixmap('Image/background.png')
+        pixmap = QPixmap('Image/background_4.png')
+        #pixmap = QPixmap('Image/anya.png')
         self.img.setPixmap(pixmap)        
         self.img.resize(1920,1200)
         self.img.setScaledContents(True)
@@ -902,6 +934,7 @@ class MyWidget(QWidget):
                 s = t.tm_sec
                 #print("%02d:%02d:%02d %9s %2d"%(h,m,s,months[mon-1],day))
                 self.time_label.setText("%02d:%02d:%02d %9s %2d"%(h,m,s,months[mon-1],day))
+                
                 time.sleep(1)
             except Exception as ex:
                 print(ex)
