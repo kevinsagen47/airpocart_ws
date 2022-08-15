@@ -10,24 +10,22 @@ from geometry_msgs.msg import Twist
 import time
 RoV = 0.0
 RoW = 0.0
-max = 0.8
+max = 1.0
 min = -0.3
 z_buffer = [0.0,0.0,0.0]
 w_max = 0.5
 w_min = -1*w_max
 
 from simple_pid import PID
-pid = PID(0.8, 0.5, 0, setpoint=0.58)
-pid.output_limits = (-0.3, 0.8)
+pid = PID(0.8, 0.5, 0, setpoint=0.55)
+pid.output_limits = (min, max)
 pid.sample_time = 0.06
 
-angular_PI = PID(2, 1, 0.5, setpoint=0)
-angular_PI.output_limits = (w_min, w_max)
-angular_PI.sample_time = 0.06
 
-slow = 0.3
+#slow = 0.3
 normal = 0.5
 fast = 0.6
+current = normal
 soft_start = False
 def average_displacement(l): 
     x1 = l[0]-l[1]
@@ -70,36 +68,34 @@ def onoff(trigger):
    
    if (on==0):
       soft_start = False
-      pid = PID(0.8, 0.5, 0, setpoint=slow)
       publish_cmd_vel(0.0,0.0,pub)
 
-def PI_velocity_control(data,RoV):
-   global on
-   '''
-   if (RoW>normal):
-      pid = PID(0.8, 0.5, 0, setpoint=fast)
-   elif (RoW<=normal and RoW > slow):
-      pid = PID(0.8, 0.5, 0, setpoint=normal)
-   else:
-      pid = PID(0.8, 0.5, 0, setpoint=slow)
-   '''
-   if (data[2]==-1 or data[2]>1.2 or on==0): #or (rel<=-0.4 and data[2]>0.7) or (RoV<0 and data[2]<0.7)):
+def PI_velocity_control(data,RoV,rel):
+   global on, soft_start, pid
+   #pid = PID(0.8, 0.5, 0, setpoint=fast)
+   if (data[2]==-1 or data[2]>1.2 or on==0 or (rel<=-0.4 and data[2]>0.7 and RoV>0.7)): #or (rel<=-0.4 and data[2]>0.7) or (RoV<0 and data[2]<0.7)):
       RoV=0
       return RoV
-   else:
-      control = pid(data[2])
+   elif (soft_start == True):
+
+
+      if RoV<=0.4:
+         control = pid(data[2])
+         pid.output_limits = (min, 0.8)
+      else:
+         control = pid(data[2]-0.1)
+         pid.output_limits = (min, max)
       if(control>=max):
             RoV=max
       elif(RoV<=min):
             RoV=min
       return round(control,2)
-   '''
    else:
-      if (data[0]>0.5 or data[0]==-1):
+      if (data[2]>0.4):
          soft_start = True
-      else : 
-         RoW = 0.1
-   '''
+      else:
+         RoV = 0.2
+      return RoV
 
 def P_angular_control(data,RoW):
    #global RoV,RoW
@@ -135,7 +131,7 @@ def callback(data):
    rel_velocity = human_velocity - RoV
    #print (round(rel_velocity,2), "  ",round(RoV,2)) #negative means robot too fast
    #RoV=velocity_control(data.data,RoV,rel_velocity) 
-   RoV=PI_velocity_control(data.data,RoV) 
+   RoV=PI_velocity_control(data.data,RoV,rel_velocity) 
    #RoV=velocity_control(data.data,RoV)  
    #RoV = 0.0
    #RoW=angular_control(data.data,RoW)  
@@ -143,6 +139,7 @@ def callback(data):
    RoW= P_angular_control(data.data,RoW)  
    #RoW= PI_angular_control(data.data,RoW)  
    #print ("RoV: ",RoV," RoW: ", RoW)
+   print ("RoV: ",RoV)
    #print("on=============================================================",on)
    if(on==1):
       publish_cmd_vel(RoV,RoW,pub)
