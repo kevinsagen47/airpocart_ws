@@ -364,10 +364,10 @@ class MyWidget(QWidget):
         self.explain_nav.setVisible(False)
         self.explain_fol.setVisible(False)
         
-        self.opt_nav.move(75,120)
-        self.opt_fol.move(950,120)
-        self.opt_rmt.move(1530,1000)
-        self.opt_chg.move(1700,100)
+        self.opt_nav.move(75,100)
+        self.opt_fol.move(950,100)
+        self.opt_rmt.move(1530,950)
+        self.opt_chg.move(1700,950)
         self.opt_nav.resize(800,800)
         self.opt_fol.resize(800,800)
         self.opt_rmt.resize(120,150)
@@ -391,14 +391,14 @@ class MyWidget(QWidget):
         op.setOpacity(0.01)     # 透明度 0~1
         self.opt_chg.setGraphicsEffect(op)
 
-        self.nav_img.move(75,75)
-        self.fol_img.move(950,75)
+        self.nav_img.move(75,100)
+        self.fol_img.move(950,100)
         self.nav_img.resize(800,800)
         self.fol_img.resize(800,800)
 
-        self.rmt_img.move(1500,900)
-        self.rmt_img.resize(150,150)
-        self.chg_img.move(1700,900)
+        self.rmt_img.move(1530,950)
+        self.rmt_img.resize(120,150)
+        self.chg_img.move(1700,950)
         self.chg_img.resize(150,150)
         
         self.explain_nav.setText("點我一下看說明")
@@ -426,7 +426,7 @@ class MyWidget(QWidget):
         self.comment_label1.setVisible(True)
         
         self.map_place_x = 50
-        self.map_place_y = 390
+        self.map_place_y = 370
         self.mapsize_x = 1800
         self.mapsize_y = 700
 
@@ -435,6 +435,7 @@ class MyWidget(QWidget):
             n.setVisible(True)
         
         self.home.setVisible(True)
+        self.home.setText('返回主畫面\n Home')
         self.home.move(12,12)
         self.home.resize(150,150)
 
@@ -631,8 +632,9 @@ class MyWidget(QWidget):
         self.follow_on_btn.resize(800,800)
         self.follow_off_btn.resize(800,800)
         self.home.setVisible(True)
-        self.home.move(70,1100)
-        self.home.resize(200,50)
+        self.home.move(70,1040)
+        self.home.resize(200,120)
+        self.home.setText('返回主畫面\n  Home')
         
 
     # (顯示) 充電畫面
