@@ -24,8 +24,11 @@ pid.sample_time = 0.06
 angular_PI = PID(2, 1, 0.5, setpoint=0)
 angular_PI.output_limits = (w_min, w_max)
 angular_PI.sample_time = 0.06
-update_angular = time.time()
 
+slow = 0.3
+normal = 0.5
+fast = 0.6
+soft_start = False
 def average_displacement(l): 
     x1 = l[0]-l[1]
     x2 = l[1]-l[2]
@@ -46,50 +49,6 @@ def publish_cmd_vel(RoV,RoW,pub):
    #print(vels(speed,turn))
    pub.publish(twist)
 
-def horizontal_angular_control(data,RoW):
-   #global RoV,RoW
-   global on
-   if (data[0]==-1 or (data[0]<0.08 and data[0]>-0.08) or  data[2]>1.2 or on==0):
-      RoW=0
-   elif data[0]<-0.03:
-      RoW = 0.3
-      '''
-      if(RoW>=w_max):
-         RoW=w_max
-      else:
-         RoW=RoW+0.05
-      '''
-   elif data[0]>0.03:
-      RoW = -0.3
-      '''
-      if(RoW<=w_min):
-         RoW=w_min
-      else:
-         RoW=RoW-0.05
-      '''
-   print (data[0],"  ",data[2])
-   return RoW
-
-def velocity_control(data,RoV,rel):
-   #global RoV,RoW
-   global on
-   if (data[2]==-1 or data[2]>1.2 or on==0 or (rel<=-0.4 and data[2]>0.7) or (RoV<0 and data[2]<0.7)):
-      RoV=0
-   elif data[2]<0.5:
-      if(RoV>=max):
-         RoV=max
-      else:
-         if RoV<=0.7:
-            RoV=RoV+0.05
-         else:
-            RoV=RoV+0.01
-   elif data[2]>0.8  :
-      if(RoV<=min):
-         RoV=min
-      else:
-         RoV=RoV-0.05
-   return RoV
-
 def estimate_velocity(data):
    global last_stamp
    if (data[2]!=-1.0 and data[2]<=1.2):
@@ -105,15 +64,25 @@ def estimate_velocity(data):
    last_stamp = time.time()
    return (s/t)
 
-
 def onoff(trigger):
-   global on
+   global on, soft_start 
    on = trigger
+   
    if (on==0):
-      publish_cmd_vel(0,0,pub)
+      soft_start = False
+      pid = PID(0.8, 0.5, 0, setpoint=slow)
+      publish_cmd_vel(0.0,0.0,pub)
 
 def PI_velocity_control(data,RoV):
    global on
+   '''
+   if (RoW>normal):
+      pid = PID(0.8, 0.5, 0, setpoint=fast)
+   elif (RoW<=normal and RoW > slow):
+      pid = PID(0.8, 0.5, 0, setpoint=normal)
+   else:
+      pid = PID(0.8, 0.5, 0, setpoint=slow)
+   '''
    if (data[2]==-1 or data[2]>1.2 or on==0): #or (rel<=-0.4 and data[2]>0.7) or (RoV<0 and data[2]<0.7)):
       RoV=0
       return RoV
@@ -124,66 +93,40 @@ def PI_velocity_control(data,RoV):
       elif(RoV<=min):
             RoV=min
       return round(control,2)
-
-def PI_angular_control(data,RoW):
-   global on
-   if (data[0]==-1 or data[2]>1.2 or on==0 or (data[0]-0.03<0.05 and data[0]-0.03>-0.05)): #or (rel<=-0.4 and data[2]>0.7) or (RoV<0 and data[2]<0.7)):
-      RoW=0
-      return RoW
+   '''
    else:
-      control = angular_PI(round(data[0]-0.03,2))
-      if(control>=w_max):
-            RoW=w_max
-      elif(RoV<=w_min):
-            RoW=w_min
-      return round(control,2)
-
+      if (data[0]>0.5 or data[0]==-1):
+         soft_start = True
+      else : 
+         RoW = 0.1
+   '''
 
 def P_angular_control(data,RoW):
    #global RoV,RoW
-   global on, update_angular
+   global on, soft_start
    offset = -0.03
    middle = data[0]-0.02
-
-   if ((time.time() - update_angular)>0.06):
-      update_angular = time.time()
+   x = 0.7
+   if (x>0.6):
       if (data[0]==-1 or (middle<0.08 and middle>-0.08) or  data[2]>1.2 or on==0):
-         RoW=0
-      elif middle<-0.03 :
-         if(RoW<0.3):
-               RoW=0.3
+         RoW=0.0
+      elif middle<=-0.03 :
+         if(RoW<=0.2):
+               RoW=0.2
          if(RoW>=w_max):
                RoW=w_max
          else:
-            RoW=RoW+0.01
-         '''
-         if middle>-0.09:
-            RoW = 0.2
-         else:
-            if(RoW>=w_max):
-               RoW=w_max
-            else:
-               RoW=RoW+0.05
-         '''
+            RoW=RoW+0.02
 
-      elif middle>0.03:
-         if(RoW>-0.3):
-               RoW=-0.3
+      elif middle>=0.03:
+         if(RoW>=-0.2):
+               RoW=-0.2
          if(RoW<=w_min):
                RoW=w_min
          else:
-            RoW=RoW-0.01
-         '''
-         if middle<0.09:
-            RoW = -0.2
-         else:
-            if(RoW<=w_min):
-               RoW=w_min
-            else:
-               RoW=RoW-0.05
-         '''
-         
-      print (data[0],"  ",data[2])
+            RoW=RoW-0.02
+   
+      #print (data[0],"  ",data[2])
       return RoW
 
 def callback(data):
@@ -199,8 +142,8 @@ def callback(data):
    #RoW= horizontal_angular_control(data.data,RoW)  
    RoW= P_angular_control(data.data,RoW)  
    #RoW= PI_angular_control(data.data,RoW)  
-   print ("RoV: ",RoV," RoW: ", RoW)
-   print("on=============================================================",on)
+   #print ("RoV: ",RoV," RoW: ", RoW)
+   #print("on=============================================================",on)
    if(on==1):
       publish_cmd_vel(RoV,RoW,pub)
    
@@ -213,16 +156,7 @@ def follower(pub1,on1):
    
    #rospy.init_node('front_following')
    #pub = rospy.Publisher('cmd_vel', Twist, queue_size = 1)   
-   rospy.Subscriber("human_vector", Float32MultiArray, callback)
-   #rospy.spin()
-   #rospy.rate.sleep(30)
-      
-   '''
-   if on == 1:      
-      
-   else:
-      publish_cmd_vel(0,0,pub1)
-   '''
+   rospy.Subscriber("human_vector", Float32MultiArray, callback)  
    
 
 if __name__ == '__main__':
