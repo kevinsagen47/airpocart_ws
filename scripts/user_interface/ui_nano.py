@@ -1,8 +1,10 @@
+#! /usr/bin/env python3
 import sys
 import os
 import cv2
 import time
 import threading
+#import rospy
 from front_following_v2 import *
 from geometry_msgs.msg import Twist
 import rospy

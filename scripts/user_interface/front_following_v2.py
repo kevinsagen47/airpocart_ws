@@ -1,13 +1,16 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
 #PKG = 'numpy_tutorial'
 #import roslib; roslib.load_manifest(PKG)
-
+import sys
+print (sys.version)
 import rospy
 #from rospy_tutorials.msg import Floats
 #from rospy.numpy_msg import numpy_msg
 from std_msgs.msg import Float32MultiArray
 from geometry_msgs.msg import Twist
 import time
+#import pyrosenv
+from std_msgs.msg import Bool
 RoV = 0.0
 RoW = 0.0
 max = 1.0
@@ -91,7 +94,7 @@ def PI_velocity_control(data,RoV,rel):
             RoV=min
       return round(control,2)
    else:
-      if (data[2]>0.4):
+      if (data[2]>0.5):
          soft_start = True
       else:
          RoV = 0.2
@@ -144,7 +147,13 @@ def callback(data):
    if(on==1):
       publish_cmd_vel(RoV,RoW,pub)
    
- 
+def obstacle_callback(data):
+   global obstacle
+   if data==True:
+      obstacle=True
+   else:
+      obstacle = False
+   print (data)
 def follower(pub1,on1):
    global pub,on, last_stamp
    pub = pub1
@@ -153,7 +162,8 @@ def follower(pub1,on1):
    
    #rospy.init_node('front_following')
    #pub = rospy.Publisher('cmd_vel', Twist, queue_size = 1)   
-   rospy.Subscriber("human_vector", Float32MultiArray, callback)  
+   rospy.Subscriber("human_vector", Float32MultiArray, callback)
+   #rospy.Subscriber("Obstacle_Stop_Flag", Bool, obstacle_callback)  
    
 
 if __name__ == '__main__':

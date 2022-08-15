@@ -6,6 +6,7 @@
 # testing this directory and lists subdirectories to be tested as well.
 subdirs("gtest")
 subdirs("realsense-ros-development/realsense2_description")
+subdirs("std_msgs")
 subdirs("my_package")
 subdirs("realsense-ros-development/realsense2_camera")
 subdirs("ppl_detection_local")

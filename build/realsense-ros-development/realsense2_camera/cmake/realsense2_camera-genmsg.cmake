@@ -2,7 +2,7 @@
 
 message(STATUS "realsense2_camera: 2 messages, 0 services")
 
-set(MSG_I_FLAGS "-Irealsense2_camera:/home/airpocart/airpocart_ws/src/realsense-ros-development/realsense2_camera/msg;-Isensor_msgs:/opt/ros/melodic/share/sensor_msgs/cmake/../msg;-Istd_msgs:/opt/ros/melodic/share/std_msgs/cmake/../msg;-Igeometry_msgs:/opt/ros/melodic/share/geometry_msgs/cmake/../msg")
+set(MSG_I_FLAGS "-Irealsense2_camera:/home/airpocart/airpocart_ws/src/realsense-ros-development/realsense2_camera/msg;-Isensor_msgs:/opt/ros/melodic/share/sensor_msgs/cmake/../msg;-Istd_msgs:/home/airpocart/airpocart_ws/src/std_msgs/msg;-Igeometry_msgs:/opt/ros/melodic/share/geometry_msgs/cmake/../msg")
 
 # Find all generators
 find_package(gencpp REQUIRED)
@@ -36,7 +36,7 @@ add_custom_target(_realsense2_camera_generate_messages_check_deps_${_filename}
 _generate_msg_cpp(realsense2_camera
   "/home/airpocart/airpocart_ws/src/realsense-ros-development/realsense2_camera/msg/Extrinsics.msg"
   "${MSG_I_FLAGS}"
-  "/opt/ros/melodic/share/std_msgs/cmake/../msg/Header.msg"
+  "/home/airpocart/airpocart_ws/src/std_msgs/msg/Header.msg"
   ${CATKIN_DEVEL_PREFIX}/${gencpp_INSTALL_DIR}/realsense2_camera
 )
 _generate_msg_cpp(realsense2_camera
@@ -77,7 +77,7 @@ list(APPEND ${PROJECT_NAME}_EXPORTED_TARGETS realsense2_camera_generate_messages
 _generate_msg_eus(realsense2_camera
   "/home/airpocart/airpocart_ws/src/realsense-ros-development/realsense2_camera/msg/Extrinsics.msg"
   "${MSG_I_FLAGS}"
-  "/opt/ros/melodic/share/std_msgs/cmake/../msg/Header.msg"
+  "/home/airpocart/airpocart_ws/src/std_msgs/msg/Header.msg"
   ${CATKIN_DEVEL_PREFIX}/${geneus_INSTALL_DIR}/realsense2_camera
 )
 _generate_msg_eus(realsense2_camera
@@ -118,7 +118,7 @@ list(APPEND ${PROJECT_NAME}_EXPORTED_TARGETS realsense2_camera_generate_messages
 _generate_msg_lisp(realsense2_camera
   "/home/airpocart/airpocart_ws/src/realsense-ros-development/realsense2_camera/msg/Extrinsics.msg"
   "${MSG_I_FLAGS}"
-  "/opt/ros/melodic/share/std_msgs/cmake/../msg/Header.msg"
+  "/home/airpocart/airpocart_ws/src/std_msgs/msg/Header.msg"
   ${CATKIN_DEVEL_PREFIX}/${genlisp_INSTALL_DIR}/realsense2_camera
 )
 _generate_msg_lisp(realsense2_camera
@@ -159,7 +159,7 @@ list(APPEND ${PROJECT_NAME}_EXPORTED_TARGETS realsense2_camera_generate_messages
 _generate_msg_nodejs(realsense2_camera
   "/home/airpocart/airpocart_ws/src/realsense-ros-development/realsense2_camera/msg/Extrinsics.msg"
   "${MSG_I_FLAGS}"
-  "/opt/ros/melodic/share/std_msgs/cmake/../msg/Header.msg"
+  "/home/airpocart/airpocart_ws/src/std_msgs/msg/Header.msg"
   ${CATKIN_DEVEL_PREFIX}/${gennodejs_INSTALL_DIR}/realsense2_camera
 )
 _generate_msg_nodejs(realsense2_camera
@@ -200,7 +200,7 @@ list(APPEND ${PROJECT_NAME}_EXPORTED_TARGETS realsense2_camera_generate_messages
 _generate_msg_py(realsense2_camera
   "/home/airpocart/airpocart_ws/src/realsense-ros-development/realsense2_camera/msg/Extrinsics.msg"
   "${MSG_I_FLAGS}"
-  "/opt/ros/melodic/share/std_msgs/cmake/../msg/Header.msg"
+  "/home/airpocart/airpocart_ws/src/std_msgs/msg/Header.msg"
   ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/realsense2_camera
 )
 _generate_msg_py(realsense2_camera

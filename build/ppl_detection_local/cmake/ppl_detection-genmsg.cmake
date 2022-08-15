@@ -2,7 +2,7 @@
 
 message(STATUS "ppl_detection: 2 messages, 0 services")
 
-set(MSG_I_FLAGS "-Ippl_detection:/home/airpocart/airpocart_ws/src/ppl_detection_local/msg;-Istd_msgs:/opt/ros/melodic/share/std_msgs/cmake/../msg;-Igeometry_msgs:/opt/ros/melodic/share/geometry_msgs/cmake/../msg;-Ivisualization_msgs:/opt/ros/melodic/share/visualization_msgs/cmake/../msg")
+set(MSG_I_FLAGS "-Ippl_detection:/home/airpocart/airpocart_ws/src/ppl_detection_local/msg;-Istd_msgs:/home/airpocart/airpocart_ws/src/std_msgs/msg;-Igeometry_msgs:/opt/ros/melodic/share/geometry_msgs/cmake/../msg;-Ivisualization_msgs:/opt/ros/melodic/share/visualization_msgs/cmake/../msg")
 
 # Find all generators
 find_package(gencpp REQUIRED)
@@ -42,7 +42,7 @@ _generate_msg_cpp(ppl_detection
 _generate_msg_cpp(ppl_detection
   "/home/airpocart/airpocart_ws/src/ppl_detection_local/msg/Tracker.msg"
   "${MSG_I_FLAGS}"
-  "/home/airpocart/airpocart_ws/src/ppl_detection_local/msg/Human.msg;/opt/ros/melodic/share/std_msgs/cmake/../msg/Header.msg"
+  "/home/airpocart/airpocart_ws/src/ppl_detection_local/msg/Human.msg;/home/airpocart/airpocart_ws/src/std_msgs/msg/Header.msg"
   ${CATKIN_DEVEL_PREFIX}/${gencpp_INSTALL_DIR}/ppl_detection
 )
 
@@ -83,7 +83,7 @@ _generate_msg_eus(ppl_detection
 _generate_msg_eus(ppl_detection
   "/home/airpocart/airpocart_ws/src/ppl_detection_local/msg/Tracker.msg"
   "${MSG_I_FLAGS}"
-  "/home/airpocart/airpocart_ws/src/ppl_detection_local/msg/Human.msg;/opt/ros/melodic/share/std_msgs/cmake/../msg/Header.msg"
+  "/home/airpocart/airpocart_ws/src/ppl_detection_local/msg/Human.msg;/home/airpocart/airpocart_ws/src/std_msgs/msg/Header.msg"
   ${CATKIN_DEVEL_PREFIX}/${geneus_INSTALL_DIR}/ppl_detection
 )
 
@@ -124,7 +124,7 @@ _generate_msg_lisp(ppl_detection
 _generate_msg_lisp(ppl_detection
   "/home/airpocart/airpocart_ws/src/ppl_detection_local/msg/Tracker.msg"
   "${MSG_I_FLAGS}"
-  "/home/airpocart/airpocart_ws/src/ppl_detection_local/msg/Human.msg;/opt/ros/melodic/share/std_msgs/cmake/../msg/Header.msg"
+  "/home/airpocart/airpocart_ws/src/ppl_detection_local/msg/Human.msg;/home/airpocart/airpocart_ws/src/std_msgs/msg/Header.msg"
   ${CATKIN_DEVEL_PREFIX}/${genlisp_INSTALL_DIR}/ppl_detection
 )
 
@@ -165,7 +165,7 @@ _generate_msg_nodejs(ppl_detection
 _generate_msg_nodejs(ppl_detection
   "/home/airpocart/airpocart_ws/src/ppl_detection_local/msg/Tracker.msg"
   "${MSG_I_FLAGS}"
-  "/home/airpocart/airpocart_ws/src/ppl_detection_local/msg/Human.msg;/opt/ros/melodic/share/std_msgs/cmake/../msg/Header.msg"
+  "/home/airpocart/airpocart_ws/src/ppl_detection_local/msg/Human.msg;/home/airpocart/airpocart_ws/src/std_msgs/msg/Header.msg"
   ${CATKIN_DEVEL_PREFIX}/${gennodejs_INSTALL_DIR}/ppl_detection
 )
 
@@ -206,7 +206,7 @@ _generate_msg_py(ppl_detection
 _generate_msg_py(ppl_detection
   "/home/airpocart/airpocart_ws/src/ppl_detection_local/msg/Tracker.msg"
   "${MSG_I_FLAGS}"
-  "/home/airpocart/airpocart_ws/src/ppl_detection_local/msg/Human.msg;/opt/ros/melodic/share/std_msgs/cmake/../msg/Header.msg"
+  "/home/airpocart/airpocart_ws/src/ppl_detection_local/msg/Human.msg;/home/airpocart/airpocart_ws/src/std_msgs/msg/Header.msg"
   ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/ppl_detection
 )
 

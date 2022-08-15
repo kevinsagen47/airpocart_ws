@@ -132,6 +132,7 @@ if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
   include("/home/airpocart/airpocart_ws/build/gtest/cmake_install.cmake")
   include("/home/airpocart/airpocart_ws/build/realsense-ros-development/realsense2_description/cmake_install.cmake")
+  include("/home/airpocart/airpocart_ws/build/std_msgs/cmake_install.cmake")
   include("/home/airpocart/airpocart_ws/build/my_package/cmake_install.cmake")
   include("/home/airpocart/airpocart_ws/build/realsense-ros-development/realsense2_camera/cmake_install.cmake")
   include("/home/airpocart/airpocart_ws/build/ppl_detection_local/cmake_install.cmake")
