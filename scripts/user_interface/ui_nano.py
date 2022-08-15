@@ -72,7 +72,7 @@ class MyWidget(QWidget):
 
         # (Image) 電量顯示
         self.battery = QLabel(self)
-        self.showImage_battery()
+        self.showImage_battery(1)
 
         # (Button) 返回主畫面
         self.home = QPushButton(self)
@@ -106,9 +106,7 @@ class MyWidget(QWidget):
         self.start_label.setPixmap(pixmap)
         #self.start_label.move(675,1000)
         self.start_label.move(675,550)
-        self.start_label.resize(800,90)
-
-        
+        self.start_label.resize(800,90)        
 
         # (Button) 開始按鈕
         self.st_btn = QPushButton('start',self)        
@@ -118,6 +116,7 @@ class MyWidget(QWidget):
         op.setOpacity(0.01)     # 透明度 0~1
         self.st_btn.setGraphicsEffect(op)
         self.st_btn.clicked.connect(self.option_page)
+
 
         # (Image) 背景圖案
         self.img_idle = QLabel(self)
@@ -168,6 +167,27 @@ class MyWidget(QWidget):
         # (Button) 導航/跟隨 說明
         self.explain_nav = QPushButton(self)
         self.explain_fol = QPushButton(self)
+
+        self.page_ex = 0
+        self.explain_fol.clicked.connect(self.explain)
+
+        # (Button/label) 說明
+        self.explain_next = QPushButton(self)
+        self.explain_next.clicked.connect(self.explain)
+        self.explain_img = QLabel(self)
+        pixmap = QPixmap(self.path+'Image/explain_icon_2.png')
+        self.explain_img.setPixmap(pixmap)
+        self.explain_img.setScaledContents(True)
+
+        self.black_img = QLabel(self)
+        self.black_img.resize(1920,1200)
+        pixmap = QPixmap(self.path+'Image/black_img.png')
+        self.black_img.setPixmap(pixmap)
+        self.black_img.setScaledContents(True)
+
+        self.explain_page = []
+        for i in range(11):
+            self.explain_page.append(QLabel(self))
         
         
         #################################
@@ -244,16 +264,25 @@ class MyWidget(QWidget):
         #################################
         
         ##         Following           ##
-        
+
+        self.follow_warning = QLabel(self)
+        self.follow_warning0 = QLabel(self)
+        self.running_icon = QLabel(self)
+                
         self.follow_on_btn = QPushButton('Following',self)
         self.follow_off_btn = QPushButton('Stop',self)
         
         self.follow_on_btn.clicked.connect(lambda:self.follow_start(1))
         self.follow_off_btn.clicked.connect(lambda:self.follow_start(0))
+
+        self.follow_on_icon = QLabel(self)
+        self.follow_on_icon_grey = QLabel(self)
+        self.follow_off_icon = QLabel(self)
         
         self.follow_flag = False
         self.onn = []
         self.onn.append(0)
+        
         #################################
         
         ##          Remoting           ##
@@ -298,6 +327,13 @@ class MyWidget(QWidget):
         #################################
 
         
+        
+        ##          Charging           ##
+
+        self.charging_text = QLabel(self)
+        
+        #################################
+        
         self.idle()
 
     # (測試) 終端機指令    
@@ -324,7 +360,7 @@ class MyWidget(QWidget):
         self.option.setCurrentIndex(0)
         self.img.setVisible(False)
         self.img_idle.setVisible(True)
-        
+        self.showImage_battery(0)        
         self.showImage_idle()
         self.time_label.setStyleSheet("color:white")
         #self.showImage(1)
@@ -362,7 +398,8 @@ class MyWidget(QWidget):
         self.rmt_img.setVisible(True)
         self.chg_img.setVisible(True)
         self.explain_nav.setVisible(False)
-        self.explain_fol.setVisible(False)
+        self.explain_fol.setVisible(True)
+        self.explain_img.setVisible(True)
         
         self.opt_nav.move(75,100)
         self.opt_fol.move(950,100)
@@ -400,15 +437,30 @@ class MyWidget(QWidget):
         self.rmt_img.resize(120,150)
         self.chg_img.move(1700,950)
         self.chg_img.resize(150,150)
-        
+
+        self.page_ex = 0
         self.explain_nav.setText("點我一下看說明")
         self.explain_nav.setFont(QFont('Ariel',10*self.font_size))
-        self.explain_fol.setText("點我一下看說明")
+        #self.explain_fol.setText("點我一下看說明")
         self.explain_fol.setFont(QFont('Ariel',10*self.font_size))
         self.explain_nav.move(400,900)
-        self.explain_fol.move(1200,900)
+        self.explain_fol.move(600,920)
+        self.explain_img.move(600,920)
         self.explain_nav.resize(250,50)
-        self.explain_fol.resize(250,50)
+        self.explain_fol.resize(610,169)        
+        self.explain_img.resize(610,169)
+        self.explain_fol.raise_()
+        op = QGraphicsOpacityEffect()
+        op.setOpacity(0.01)     # 透明度 0~1
+        self.explain_fol.setGraphicsEffect(op)
+
+
+        for i in range(len(self.explain_page)):
+            self.explain_page[i].resize(1136,711)
+            self.explain_page[i].move(392,245)
+            pixmap = QPixmap(self.path+'Image/explain_page%d.png'%(i+1))
+            self.explain_page[i].setPixmap(pixmap)
+            self.explain_page[i].setScaledContents(True)
 
 
     # (顯示) 導航畫面1
@@ -419,14 +471,14 @@ class MyWidget(QWidget):
         self.location_type.setCurrentIndex(0)
         self.location_type.resize(300,60)
         self.location_type.move(250,105)
-        self.comment_label1.setText('請選擇導航點')
+        self.comment_label1.setText('請選擇地點  Choose one location')
         self.comment_label1.setFont(QFont('Ariel',10*self.font_size))
         self.comment_label1.move(250,65)
         self.comment_label1.resize(200,40)
         self.comment_label1.setVisible(True)
         
         self.map_place_x = 50
-        self.map_place_y = 370
+        self.map_place_y = 350
         self.mapsize_x = 1800
         self.mapsize_y = 700
 
@@ -598,9 +650,9 @@ class MyWidget(QWidget):
         self.other[2].clicked.connect(lambda:self.location_choice(18))
         self.other[3].clicked.connect(lambda:self.location_choice(19))
         
-        self.nav_btn.move(50,1050)
-        self.nav_btn.resize(100,100)
-        self.nav_btn.setText('開始\n導航')
+        self.nav_btn.move(50,1080)
+        self.nav_btn.resize(100,80)
+        self.nav_btn.setText('放大\n地圖')
         self.nav_btn.setFont(QFont('Ariel',10*self.font_size))
         self.nav_btn.clicked.connect(self.navigation_2)
         
@@ -623,30 +675,98 @@ class MyWidget(QWidget):
     def following(self):
         self.all_clear()
         self.page.setText('跟隨畫面')
+        
+        pixmap = QPixmap(self.path+'Image/following_warning_0.png')        
+        self.follow_warning0.setPixmap(pixmap)
+        self.follow_warning0.resize(1359,304)
+        self.follow_warning0.move(300,150)
+        self.follow_warning0.setScaledContents(True)
+        self.follow_warning0.setVisible(True)
+        
+
+        pixmap = QPixmap(self.path+'Image/following_warning_4.png')        
+        self.follow_warning.setPixmap(pixmap)
+        self.follow_warning.resize(1359,304)
+        self.follow_warning.move(300,150)
+        self.follow_warning.setScaledContents(True)
+        
+        
+
+        #self.running_icon.setVisible(True)
+        self.running_icon.move(400,170)
+        
+        self.running_icon.resize(260,260)
+        self.movie = QMovie(self.path+"Image/processing.gif")
+        self.running_icon.setMovie(self.movie)
+        
+        
         self.showImage(0.5)
         self.follow_on_btn.setVisible(True)
         self.follow_off_btn.setVisible(True)
-        self.follow_on_btn.move(75,75)
-        self.follow_off_btn.move(950,75)
-        
+        self.follow_on_btn.move(75,450)
+        self.follow_off_btn.move(950,450)        
         self.follow_on_btn.resize(800,800)
         self.follow_off_btn.resize(800,800)
+
+        op = QGraphicsOpacityEffect()
+        op.setOpacity(0.01)     # 透明度 0~1
+        self.follow_on_btn.setGraphicsEffect(op)
+        op = QGraphicsOpacityEffect()
+        op.setOpacity(0.01)     # 透明度 0~1
+        self.follow_off_btn.setGraphicsEffect(op)
+        self.follow_on_btn.raise_()
+        self.follow_off_btn.raise_()
+
+        self.follow_on_icon.setVisible(True)
+        self.follow_off_icon.setVisible(True)
+        
+        pixmap = QPixmap(self.path+'Image/start_icon.png')        
+        self.follow_on_icon.setPixmap(pixmap)
+        self.follow_on_icon.setScaledContents(True)
+        
+        pixmap = QPixmap(self.path+'Image/stop_icon.png')        
+        self.follow_off_icon.setPixmap(pixmap)
+        self.follow_off_icon.setScaledContents(True)
+
+        pixmap = QPixmap(self.path+'Image/start_icon_grey.png')        
+        self.follow_on_icon_grey.setPixmap(pixmap)
+        self.follow_on_icon_grey.setScaledContents(True)
+        
+        self.follow_on_icon.move(75,450)
+        self.follow_on_icon_grey.move(75,450)
+        self.follow_off_icon.move(950,450)
+        
+        self.follow_on_icon.resize(800,800)
+        self.follow_on_icon_grey.resize(800,800)
+        self.follow_off_icon.resize(800,800)
+        
         self.home.setVisible(True)
-        self.home.move(70,1040)
-        self.home.resize(200,120)
+        self.home.move(70,70)
+        self.home.resize(180,120)
         self.home.setText('返回主畫面\n  Home')
         
 
     # (顯示) 充電畫面
     def charging(self):
         self.all_clear()
-        self.page.setText('充電頁面')
+        self.page.setText('充電頁面')        
         self.home.setVisible(True)
-        self.home.move(100,100)
-        self.home.resize(500,500)
+        self.charging_text.setVisible(True)
+        
+        pixmap = QPixmap(self.path+'Image/charging_text.png')        
+        self.charging_text.setPixmap(pixmap)
+        self.charging_text.resize(1190,317)
+        self.charging_text.move(200,150)
+        self.charging_text.setScaledContents(True)
+        self.home.setText("返回主畫面\n Return to Home")
+        self.home.setFont(QFont("Arial",30*self.font_size))
+        self.home.move(200,550)
+        self.home.resize(1200,500)
         self.shut_button.setVisible(True)
-        self.shut_button.move(800,100)
-        self.shut_button.resize(500,500)
+        self.shut_button.move(1600,1000)
+        self.shut_button.resize(200,120)
+        self.shut_button.setText("關閉程式\n\n\n請勿點擊\nDon't touch")
+        self.shut_button.setFont(QFont("Arial",8*self.font_size))
         self.showImage(0.5)
 
     # (顯示) 遙控畫面
@@ -709,6 +829,9 @@ class MyWidget(QWidget):
         self.page.setVisible(False)
         self.shut_button.setVisible(False)
         self.idle_btn.setVisible(False)
+        self.home.setEnabled(True)
+        self.home.setFont(QFont("Arial",12*self.font_size))
+        self.showImage_battery(1)
         self.time_label.setStyleSheet("color:black")
         self.leftfront_btn.setVisible(False)
         self.front_btn.setVisible(False)
@@ -733,6 +856,11 @@ class MyWidget(QWidget):
         self.fol_img.setVisible(False)
         self.rmt_img.setVisible(False)
         self.chg_img.setVisible(False)
+        self.explain_img.setVisible(False)
+        self.black_img.setVisible(False)
+        self.explain_next.setVisible(False)
+        for n in self.explain_page:
+            n.setVisible(False)        
         self.st_btn.setVisible(False)
         self.start_label.setVisible(False)
         self.explain_nav.setVisible(False)
@@ -760,6 +888,13 @@ class MyWidget(QWidget):
         self.nav_btn.setVisible(False)
         self.follow_on_btn.setVisible(False)
         self.follow_off_btn.setVisible(False)
+        self.follow_on_icon.setVisible(False)
+        self.follow_off_icon.setVisible(False)
+        self.follow_on_icon_grey.setVisible(False)
+        self.follow_warning.setVisible(False)
+        self.follow_warning0.setVisible(False)
+        self.running_icon.setVisible(False)
+        self.charging_text.setVisible(False)
     # (顯示) 各式選擇
     def show_type(self,type_ch):
         
@@ -911,8 +1046,11 @@ class MyWidget(QWidget):
         
         
     # (圖片) 電池
-    def showImage_battery(self):
-        pixmap = QPixmap(self.path+'Image/battery_5.png')
+    def showImage_battery(self, color=1):
+        if color == 1:
+            pixmap = QPixmap(self.path+'Image/battery_5.png')
+        else:
+            pixmap = QPixmap(self.path+'Image/battery_5_light.png')
         self.battery.setPixmap(pixmap)
         self.battery.move(1820,5)
         self.battery.resize(85,40)
@@ -937,7 +1075,39 @@ class MyWidget(QWidget):
         #self.map.setScaledContents(True)
         #self.map.lower()
         self.map.setVisible(True)
-    
+
+    # (說明) 顯示跟隨說明
+    def explain(self):
+        
+        if self.page_ex == 0:
+            #self.page_ex = 1
+            self.explain_next.setVisible(True)
+            self.black_img.setVisible(True)
+            op = QGraphicsOpacityEffect()
+            op.setOpacity(0.5)     # 透明度 0~1            
+            self.black_img.setGraphicsEffect(op)
+            self.black_img.raise_()
+            
+            self.explain_page[0].setVisible(True)
+            self.explain_page[0].raise_()
+        elif self.page_ex == 11:
+            self.page_ex = 0
+            self.explain_next.setVisible(False)
+            self.black_img.setVisible(False)
+            self.explain_page[10].setVisible(False)            
+            return
+        else:
+            self.explain_page[self.page_ex-1].setVisible(False)
+            self.explain_page[self.page_ex].setVisible(True)
+            self.explain_page[self.page_ex].raise_()
+        self.page_ex +=1
+        op = QGraphicsOpacityEffect()
+        op.setOpacity(0.01)     # 透明度 0~1
+        self.explain_next.setGraphicsEffect(op)
+        self.explain_next.resize(1920,1200)
+        self.explain_next.move(0,0)
+        self.explain_next.raise_()        
+            
     # (更新) 更新時間
     def time_update(self):
         months = ['January', 'February', 'March', 'April', 'May', 'June', 'July',
@@ -1032,20 +1202,36 @@ class MyWidget(QWidget):
     # (運算) 計算到達時間
     def measure_distance(self,location):
         return ''
-        
+
     # (跟隨) 前跟隨模式
     def follow_start(self,on=1):
-        onoff(on)
-        if on == 1:
+        onoff(on)        
+        if on == 1:            
+            self.running_icon.setVisible(True)
+            self.movie.start()
+            self.follow_warning.setVisible(True)
+            self.follow_warning0.setVisible(False)
             self.follow_on_btn.setEnabled(False)
+            self.follow_on_icon.setVisible(False)
+            self.follow_on_icon_grey.setVisible(True)
+            self.home.setEnabled(False)            
         else:
+            self.running_icon.setVisible(False)
+            self.movie.stop()
+            self.follow_warning.setVisible(False)
+            self.follow_warning0.setVisible(True)
             self.follow_on_btn.setEnabled(True)
+            self.follow_on_icon.setVisible(True)
+            self.follow_on_icon_grey.setVisible(False)
+            self.home.setEnabled(True)
         if self.follow_flag == False:
             threading._start_new_thread(follower,(self.pub,on))
             print("follow ONNNNNNNNNNNNNNNNNNNNNN")
         else:
             #threading.join()
             print("ON in UIIIIII",on)
+        
+        
         #follower(self.pub,on)
     
 if __name__ == '__main__':
