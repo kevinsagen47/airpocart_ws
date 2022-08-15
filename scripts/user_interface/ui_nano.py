@@ -24,8 +24,8 @@ class MyWidget(QWidget):
         self.setWindowTitle('User Interface')
         self.setGeometry(0,0,1920,1200)
         self.ros_on = True
-        #self.path = './'
-        self.path = '/home/airpocart/airpocart_ws/scripts/user_interface/'
+        self.path = './'
+        #self.path = '/home/airpocart/airpocart_ws/scripts/user_interface/'
         self.font_size = 1
         
         ##        Only for test       ##
@@ -66,7 +66,7 @@ class MyWidget(QWidget):
         # (Text) 時間標籤
         self.time_label = QLabel(self)
         self.time_label.setFont(QFont('Arial',18*self.font_size))
-        self.time_label.move(1300,0)
+        self.time_label.move(1000,0)
         self.time_label.setText(time.ctime())
         threading._start_new_thread(self.time_update,())
 
@@ -434,6 +434,7 @@ class MyWidget(QWidget):
         for n in self.hito:
             n.setVisible(True)
         
+        self.home.setVisible(True)
         self.home.move(12,12)
         self.home.resize(150,150)
 
@@ -611,6 +612,7 @@ class MyWidget(QWidget):
         self.map_place_y = 200
         self.mapsize_x = 1800
         self.mapsize_y = 724
+        self.home.setVisible(True)
         self.home.move(70,1100)
         self.home.resize(200,50)
 
@@ -628,6 +630,7 @@ class MyWidget(QWidget):
         
         self.follow_on_btn.resize(800,800)
         self.follow_off_btn.resize(800,800)
+        self.home.setVisible(True)
         self.home.move(70,1100)
         self.home.resize(200,50)
         
@@ -636,6 +639,8 @@ class MyWidget(QWidget):
     def charging(self):
         self.all_clear()
         self.page.setText('充電頁面')
+        self.home.setVisible(True)
+        self.shut_button.setVisible(True)
         self.showImage(0.5)
 
     # (顯示) 遙控畫面
@@ -643,6 +648,8 @@ class MyWidget(QWidget):
         self.all_clear()
         self.page.setText('遙控頁面')
         self.shut_button.setVisible(True)
+        self.home.setVisible(True)
+        
         self.leftfront_btn.setVisible(True)
         self.front_btn.setVisible(True)
         self.rightfront_btn.setVisible(True)
@@ -861,7 +868,7 @@ class MyWidget(QWidget):
         
     # (圖片) 閒置圖片
     def showImage_idle(self, trp=1):
-        pixmap = QPixmap('Image/background_image.png')        
+        pixmap = QPixmap(self.path+'Image/background_image.png')        
         self.img.setPixmap(pixmap)        
         self.img.resize(1920,1200)
         self.img.setScaledContents(True)
@@ -879,7 +886,7 @@ class MyWidget(QWidget):
         #self.img.setMovie(self.movie)
         #self.movie.start()        
         #pixmap = QPixmap('Image/background.png')
-        pixmap = QPixmap('Image/background_4.png')
+        pixmap = QPixmap(self.path+'Image/background_4.png')
         #pixmap = QPixmap('Image/anya.png')
         self.img.setPixmap(pixmap)        
         self.img.resize(1920,1200)
