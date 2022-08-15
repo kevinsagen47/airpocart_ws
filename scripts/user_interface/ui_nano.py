@@ -454,7 +454,7 @@ class MyWidget(QWidget):
         
         x = 250
         y = 180
-        itv = 450
+        itv = 420
 
         for i in range(len(self.hito)):
             self.hito[i].move(x+itv*i,y)
@@ -1009,13 +1009,13 @@ class MyWidget(QWidget):
         com1 = ['Information',
                 'Breastfeeding Room',
                 'Prayer Room',
-                'Mobile Phone Charging Station',
+                'Phone Charging Station',
                 'Sports Park\n提供運動器材、免費淋浴間',
                 'Airport Library\n多國書籍、上網服務、手機充電',
                 'e-Sports Experience Center',
                 'Children Playground\n塗鴉白板、LEGO玩具',
-                'LOHAS of outlying Island Waiting Lounge',
-                'Pingxi the Village of Hope Waiting Lounge',
+                'LOHAS of outlying Island \nWaiting Lounge',
+                'Pingxi the Village of Hope \nWaiting Lounge',
                 'Resting Areas/Alisan',
                 ' ',
                 'iHakka Creative Park',
