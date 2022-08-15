@@ -426,7 +426,7 @@ class MyWidget(QWidget):
         self.comment_label1.setVisible(True)
         
         self.map_place_x = 50
-        self.map_place_y = 320
+        self.map_place_y = 390
         self.mapsize_x = 1800
         self.mapsize_y = 700
 
@@ -454,7 +454,7 @@ class MyWidget(QWidget):
         
         x = 250
         y = 180
-        itv = 420
+        itv = 400
 
         for i in range(len(self.hito)):
             self.hito[i].move(x+itv*i,y)
