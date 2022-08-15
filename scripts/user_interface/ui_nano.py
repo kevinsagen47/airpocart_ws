@@ -66,7 +66,7 @@ class MyWidget(QWidget):
         # (Text) 時間標籤
         self.time_label = QLabel(self)
         self.time_label.setFont(QFont('Arial',18*self.font_size))
-        self.time_label.move(1000,0)
+        self.time_label.move(800,0)
         self.time_label.setText(time.ctime())
         threading._start_new_thread(self.time_update,())
 
@@ -326,7 +326,7 @@ class MyWidget(QWidget):
         self.img_idle.setVisible(True)
         
         self.showImage_idle()
-        
+        self.time_label.setStyleSheet("color:white")
         #self.showImage(1)
         self.st_btn.setVisible(True)
         self.start_label.setVisible(True)
@@ -640,15 +640,23 @@ class MyWidget(QWidget):
         self.all_clear()
         self.page.setText('充電頁面')
         self.home.setVisible(True)
+        self.home.move(100,100)
+        self.home.resize(500,500)
         self.shut_button.setVisible(True)
+        self.shut_button.move(800,100)
+        self.shut_button.resize(500,500)
         self.showImage(0.5)
 
     # (顯示) 遙控畫面
     def remoting(self):
         self.all_clear()
         self.page.setText('遙控頁面')
-        self.shut_button.setVisible(True)
         self.home.setVisible(True)
+        self.home.move(1550,200)
+        self.home.resize(200,200)
+        self.shut_button.setVisible(True)
+        self.shut_button.move(1550,500)
+        self.shut_button.resize(200,200)
         
         self.leftfront_btn.setVisible(True)
         self.front_btn.setVisible(True)
@@ -699,6 +707,7 @@ class MyWidget(QWidget):
         self.page.setVisible(False)
         self.shut_button.setVisible(False)
         self.idle_btn.setVisible(False)
+        self.time_label.setStyleSheet("color:black")
         self.leftfront_btn.setVisible(False)
         self.front_btn.setVisible(False)
         self.rightfront_btn.setVisible(False)
