@@ -192,7 +192,7 @@ class MyWidget(QWidget):
         
         # (Combobox) 導航點類別選擇
         self.location_type = QComboBox(self)
-        loc_type = ['公共服務','娛樂','休息','藝文','其他']
+        loc_type = ['公共服務 Service','娛樂 Entertainment','休息 Rest','藝文 Art','其他 Other']
             
         self.location_type.addItems(loc_type)
 
@@ -361,16 +361,16 @@ class MyWidget(QWidget):
         self.fol_img.setVisible(True)
         self.rmt_img.setVisible(True)
         self.chg_img.setVisible(True)
-        self.explain_nav.setVisible(True)
-        self.explain_fol.setVisible(True)
+        self.explain_nav.setVisible(False)
+        self.explain_fol.setVisible(False)
         
-        self.opt_nav.move(75,75)
-        self.opt_fol.move(950,75)
-        self.opt_rmt.move(1500,900)
-        self.opt_chg.move(1700,900)
+        self.opt_nav.move(75,90)
+        self.opt_fol.move(950,90)
+        self.opt_rmt.move(1520,940)
+        self.opt_chg.move(1700,940)
         self.opt_nav.resize(800,800)
         self.opt_fol.resize(800,800)
-        self.opt_rmt.resize(150,150)
+        self.opt_rmt.resize(130,150)
         self.opt_chg.resize(150,150)
         
         self.opt_nav.raise_()
@@ -506,15 +506,15 @@ class MyWidget(QWidget):
         self.shop[0].setText('樂活離島候機室')
         self.shop[1].setText('希望平溪候機室')
         self.shop[2].setText('阿里山景觀休憩區')
-        self.shop[3].setText('空')
+        self.shop[3].setText('空 None')
         self.toilet[0].setText('客家文創園區')
         self.toilet[1].setText('霹靂布袋戲館')
         self.toilet[2].setText('藝文展演空間')
         self.toilet[3].setText('原住民文化園區')
-        self.other[0].setText('空')
-        self.other[1].setText('空')
-        self.other[2].setText('空')
-        self.other[3].setText('空')
+        self.other[0].setText('空 None')
+        self.other[1].setText('空 None')
+        self.other[2].setText('空 None')
+        self.other[3].setText('空 None')
         self.hito[0].setFont(QFont('Ariel',10*self.font_size))
 
         self.real_loc = []
@@ -1029,7 +1029,7 @@ class MyWidget(QWidget):
         return com1[location]
     # (運算) 計算到達時間
     def measure_distance(self,location):
-        return '大約2分鐘到達'
+        return ''
         
     # (跟隨) 前跟隨模式
     def follow_start(self,on=1):
