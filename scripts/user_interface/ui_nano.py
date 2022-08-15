@@ -438,7 +438,7 @@ class MyWidget(QWidget):
         self.home.move(12,12)
         self.home.resize(150,150)
 
-        size_x = 125
+        size_x = 250
         size_y = 50
 
         for n in self.hito:
@@ -454,7 +454,7 @@ class MyWidget(QWidget):
         
         x = 250
         y = 180
-        itv = 300
+        itv = 450
 
         for i in range(len(self.hito)):
             self.hito[i].move(x+itv*i,y)
