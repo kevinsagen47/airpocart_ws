@@ -44,6 +44,7 @@ set(CMAKE_CXX_TARGET_INCLUDE_PATH
   "/usr/include/libxml2"
   "/usr/include/jsoncpp"
   "/usr/include/tcl"
+  "/home/airpocart/airpocart_ws/src/std_msgs/include"
   "/opt/ros/melodic/include"
   "/opt/ros/melodic/share/xmlrpcpp/cmake/../../../include/xmlrpcpp"
   "/usr/include/eigen3"

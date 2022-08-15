@@ -873,8 +873,14 @@ sensor_msgs_DIR:PATH=/opt/ros/melodic/share/sensor_msgs/cmake
 //The directory containing a CMake configuration file for smclib.
 smclib_DIR:PATH=/opt/ros/melodic/share/smclib/cmake
 
+//Value Computed by CMake
+std_msgs_BINARY_DIR:STATIC=/home/airpocart/airpocart_ws/build/std_msgs
+
 //The directory containing a CMake configuration file for std_msgs.
-std_msgs_DIR:PATH=/opt/ros/melodic/share/std_msgs/cmake
+std_msgs_DIR:PATH=/home/airpocart/airpocart_ws/devel/share/std_msgs/cmake
+
+//Value Computed by CMake
+std_msgs_SOURCE_DIR:STATIC=/home/airpocart/airpocart_ws/src/std_msgs
 
 //The directory containing a CMake configuration file for std_srvs.
 std_srvs_DIR:PATH=/opt/ros/melodic/share/std_srvs/cmake
@@ -1058,7 +1064,7 @@ CMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_NM
 CMAKE_NM-ADVANCED:INTERNAL=1
 //number of local generators
-CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=8
+CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=9
 //ADVANCED property for variable: CMAKE_OBJCOPY
 CMAKE_OBJCOPY-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_OBJDUMP
