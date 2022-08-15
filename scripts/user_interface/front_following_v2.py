@@ -10,11 +10,17 @@ from geometry_msgs.msg import Twist
 import time
 RoV = 0.0
 RoW = 0.0
-max = 0.7
-min = -0.2
+max = 0.8
+min = -0.3
 z_buffer = [0.0,0.0,0.0]
 w_max = 0.64
 w_min = -1*w_max
+
+from simple_pid import PID
+pid = PID(0.95, 0.5, 0, setpoint=0.5)
+pid.output_limits = (-0.3, 0.8)
+pid.sample_time = 0.06
+
 
 
 def average_displacement(l): 
@@ -37,26 +43,6 @@ def publish_cmd_vel(RoV,RoW,pub):
    #print(vels(speed,turn))
    pub.publish(twist)
 
-
-def velocity_control(data,RoV,rel):
-   #global RoV,RoW
-   global on
-   if (data[2]==-1 or data[2]>1.2 or on==0 or (rel<=-0.4 and data[2]>0.7) or (RoV<0 and data[2]<0.7)):
-      RoV=0
-   elif data[2]<0.5:
-      if(RoV>=max):
-         RoV=max
-      else:
-         if RoV<=0.7:
-            RoV=RoV+0.05
-         else:
-            RoV=RoV+0.01
-   elif data[2]>0.8  :
-      if(RoV<=min):
-         RoV=min
-      else:
-         RoV=RoV-0.05
-   return RoV
 
 
 def horizontal_angular_control(data,RoW):
@@ -83,6 +69,30 @@ def horizontal_angular_control(data,RoW):
    print (data[0],"  ",data[2])
    return RoW
 
+
+
+def velocity_control(data,RoV,rel):
+   #global RoV,RoW
+   global on
+   if (data[2]==-1 or data[2]>1.2 or on==0 or (rel<=-0.4 and data[2]>0.7) or (RoV<0 and data[2]<0.7)):
+      RoV=0
+   elif data[2]<0.5:
+      if(RoV>=max):
+         RoV=max
+      else:
+         if RoV<=0.7:
+            RoV=RoV+0.05
+         else:
+            RoV=RoV+0.01
+   elif data[2]>0.8  :
+      if(RoV<=min):
+         RoV=min
+      else:
+         RoV=RoV-0.05
+   return RoV
+
+
+
 def estimate_velocity(data):
    global last_stamp
    if (data[2]!=-1.0 and data[2]<=1.2):
@@ -98,17 +108,33 @@ def estimate_velocity(data):
    last_stamp = time.time()
    return (s/t)
 
+
 def onoff(trigger):
    global on
    on = trigger
    if (on==0):
       publish_cmd_vel(0,0,pub)
+
+def PI_velocity_control(data,RoV):
+   global on
+   if (data[2]==-1 or data[2]>1.2 or on==0): #or (rel<=-0.4 and data[2]>0.7) or (RoV<0 and data[2]<0.7)):
+      RoV=0
+      return RoV
+   else:
+      control = pid(data[2])
+      if(control>=max):
+            RoV=max
+      elif(RoV<=min):
+            RoV=min
+      return round(control,2)
+
 def callback(data):
    global RoV,RoW
    human_velocity = estimate_velocity(data.data)#pos approching
    rel_velocity = human_velocity - RoV
    #print (round(rel_velocity,2), "  ",round(RoV,2)) #negative means robot too fast
    RoV=velocity_control(data.data,RoV,rel_velocity) 
+   RoV=PI_velocity_control(data.data,RoV) 
    #RoV=velocity_control(data.data,RoV)  
    #RoV = 0.0
    #RoW=angular_control(data.data,RoW)  
