@@ -491,7 +491,7 @@ class MyWidget(QWidget):
         self.home.setVisible(True)
         self.home.setText('返回主畫面\n Home')
         self.home.move(12,12)
-        self.home.resize(150,150)
+        self.home.resize(200,150)
 
         size_x = 250
         size_y = 50
@@ -767,7 +767,7 @@ class MyWidget(QWidget):
         self.shut_button.setVisible(True)
         self.shut_button.move(1600,1000)
         self.shut_button.resize(200,120)
-        self.shut_button.setText("關閉程式\n\n\n請勿點擊\nDon't touch")
+        self.shut_button.setText("關閉程式\n\n請勿點擊\nDon't touch")
         self.shut_button.setFont(QFont("Arial",8*self.font_size))
         self.showImage(0.5)
 
@@ -776,9 +776,10 @@ class MyWidget(QWidget):
         self.all_clear()
         self.page.setText('遙控頁面')
         self.home.setVisible(True)
-        self.home.move(1550,200)
-        self.home.resize(200,200)
+        self.home.move(1525,200)
+        self.home.resize(250,200)
         self.shut_button.setVisible(True)
+        self.shut_button.setText("關閉程式\n\n請勿點擊\nDon't touch")
         self.shut_button.move(1550,500)
         self.shut_button.resize(200,200)
         
