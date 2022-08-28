@@ -1,5 +1,19 @@
 #!/usr/bin/env python2
 import rospy
+from std_msgs.msg import Bool 
+def callback(data):
+   rospy.loginfo(rospy.get_caller_id() + "I heard %s", data.data)
+
+def listener():
+    rospy.init_node('listener', anonymous=True)
+    rospy.Subscriber("Obstacle_Stop_Flag", Bool, callback)
+    rospy.spin()
+
+if __name__ == '__main__':
+    listener()
+'''
+#!/usr/bin/env python
+import rospy
 import pcl
 import ros_numpy
 import sensor_msgs.point_cloud2 as pc2
@@ -20,6 +34,7 @@ def listener():
 if __name__ == '__main__':
     rospy.init_node("realsense_subscriber", anonymous=True)
     listener()
+'''
 '''
 from sensor_msgs.msg import PointCloud2, PointField
 import sensor_msgs.point_cloud2 as pc2

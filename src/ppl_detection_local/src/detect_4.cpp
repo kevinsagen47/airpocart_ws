@@ -275,7 +275,7 @@ full_sub_ = n_.subscribe<pcl::PointCloud<pcl::PointXYZ> > ("/camera/depth_regist
            pos_cloud.points[cloud_no].z = obj[a].pos_z;
            
            
-	         if (prev_z>obj[a].pos_z){
+	         if (prev_z>obj[a].pos_z && obj[a].pos_z>0.1) {
 		         closest = cloud_no;
 		         prev_z = obj[a].pos_z;	   
 		      }

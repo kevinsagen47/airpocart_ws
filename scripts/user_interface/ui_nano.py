@@ -5,7 +5,7 @@ import cv2
 import time
 import threading
 #import rospy
-from front_following_v2 import *
+from front_following_v2_slow import *
 from geometry_msgs.msg import Twist
 import rospy
 from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QPushButton, QComboBox, QGraphicsOpacityEffect

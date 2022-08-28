@@ -9,16 +9,17 @@ import rospy
 from std_msgs.msg import Float32MultiArray
 from geometry_msgs.msg import Twist
 import time
-#import pyrosenv
+import pyrosenv
 from std_msgs.msg import Bool
 RoV = 0.0
 RoW = 0.0
-max = 1.0
+max = 0.9
 min = -0.3
+max_depth = 1.4
 z_buffer = [0.0,0.0,0.0]
 w_max = 0.5
 w_min = -1*w_max
-
+obstacle = False
 from simple_pid import PID
 pid = PID(0.8, 0.5, 0, setpoint=0.55)
 pid.output_limits = (min, max)
@@ -52,7 +53,7 @@ def publish_cmd_vel(RoV,RoW,pub):
 
 def estimate_velocity(data):
    global last_stamp
-   if (data[2]!=-1.0 and data[2]<=1.2):
+   if (data[2]!=-1.0 and data[2]<=max_depth):
       z_buffer.append(data[2])
       z_buffer.pop(0)
    else:
@@ -74,13 +75,12 @@ def onoff(trigger):
       publish_cmd_vel(0.0,0.0,pub)
 
 def PI_velocity_control(data,RoV,rel):
-   global on, soft_start, pid
+   global on, soft_start, pid,obstacle
    #pid = PID(0.8, 0.5, 0, setpoint=fast)
-   if (data[2]==-1 or data[2]>1.2 or on==0 or (rel<=-0.4 and data[2]>0.7 and RoV>0.7)): #or (rel<=-0.4 and data[2]>0.7) or (RoV<0 and data[2]<0.7)):
+   if (data[2]==-1 or data[2]>max_depth or on==0 or (rel<=-0.4 and data[2]>0.7 and RoV>0.7)): #or (rel<=-0.4 and data[2]>0.7) or (RoV<0 and data[2]<0.7)):
       RoV=0
       return RoV
    elif (soft_start == True):
-
 
       if RoV<=0.4:
          control = pid(data[2])
@@ -88,10 +88,18 @@ def PI_velocity_control(data,RoV,rel):
       else:
          control = pid(data[2]-0.1)
          pid.output_limits = (min, max)
+      print ("lalalal", obstacle)
       if(control>=max):
-            RoV=max
+         RoV=max
       elif(RoV<=min):
-            RoV=min
+         RoV=min
+
+      if (obstacle == True):
+         if(control>=0.0):
+            control=0.0
+         elif(control<=min):
+            control=min
+            
       return round(control,2)
    else:
       if (data[2]>0.5):
@@ -104,10 +112,10 @@ def P_angular_control(data,RoW):
    #global RoV,RoW
    global on, soft_start
    offset = -0.03
-   middle = data[0]-0.02
+   middle = data[0]-0.03
    x = 0.7
    if (x>0.6):
-      if (data[0]==-1 or (middle<0.08 and middle>-0.08) or  data[2]>1.2 or on==0):
+      if (data[0]==-1 or (middle<0.08 and middle>-0.08) or  data[2]>max_depth or on==0):
          RoW=0.0
       elif middle<=-0.03 :
          if(RoW<=0.2):
@@ -128,41 +136,51 @@ def P_angular_control(data,RoW):
       #print (data[0],"  ",data[2])
       return RoW
 
-def callback(data):
-   global RoV,RoW
-   human_velocity = estimate_velocity(data.data)#pos approching
-   rel_velocity = human_velocity - RoV
-   #print (round(rel_velocity,2), "  ",round(RoV,2)) #negative means robot too fast
-   #RoV=velocity_control(data.data,RoV,rel_velocity) 
-   RoV=PI_velocity_control(data.data,RoV,rel_velocity) 
-   #RoV=velocity_control(data.data,RoV)  
-   #RoV = 0.0
-   #RoW=angular_control(data.data,RoW)  
-   #RoW= horizontal_angular_control(data.data,RoW)  
-   RoW= P_angular_control(data.data,RoW)  
-   #RoW= PI_angular_control(data.data,RoW)  
-   #print ("RoV: ",RoV," RoW: ", RoW)
-   print ("RoV: ",RoV)
-   #print("on=============================================================",on)
-   if(on==1):
-      publish_cmd_vel(RoV,RoW,pub)
+class Server:
+   def callback(self,data):
+      global RoV,RoW,obstacle
+      human_velocity = estimate_velocity(data.data)#pos approching
+      rel_velocity = human_velocity - RoV
+      #print (round(rel_velocity,2), "  ",round(RoV,2)) #negative means robot too fast
+      #RoV=velocity_control(data.data,RoV,rel_velocity) 
+      RoV=PI_velocity_control(data.data,RoV,rel_velocity) 
+      #RoV=velocity_control(data.data,RoV)  
+      #RoV = 0.0
+      #RoW=angular_control(data.data,RoW)  
+      #RoW= horizontal_angular_control(data.data,RoW)  
+      RoW= P_angular_control(data.data,RoW)  
+      #RoW= PI_angular_control(data.data,RoW)  
+      #print ("RoV: ",RoV," RoW: ", RoW)
+      #print ("RoV: ",RoV)
+      #print ("obs",obstacle)
+      #print("on=============================================================",on)
+      if(on==1):
+         publish_cmd_vel(RoV,RoW,pub)
    
-def obstacle_callback(data):
-   global obstacle
-   if data==True:
-      obstacle=True
-   else:
-      obstacle = False
-   print (data)
+   def obstacle_callback(self,data):
+      global obstacle
+      if (data.data==True):
+         obstacle=True
+      else:
+         obstacle = False
+      #print ("obstacle",obstacle)
+
 def follower(pub1,on1):
    global pub,on, last_stamp
    pub = pub1
    on = on1
    last_stamp = time.time()
    
-   #rospy.init_node('front_following')
-   #pub = rospy.Publisher('cmd_vel', Twist, queue_size = 1)   
-   rospy.Subscriber("human_vector", Float32MultiArray, callback)
+   server = Server()
+   
+   rospy.Subscriber("Obstacle_Stop_Flag", Bool, server.obstacle_callback)
+   rospy.Subscriber("human_vector", Float32MultiArray, server.callback)
+   
+   rospy.spin()  
+   #image_sub = message_filters.Subscriber('image', Image)
+   #info_sub = message_filters.Subscriber('camera_info', CameraInfo) 
+   #ts = message_filters.TimeSynchronizer([image_sub, info_sub], 10)
+   #ts.registerCallback(callback)
    #rospy.Subscriber("Obstacle_Stop_Flag", Bool, obstacle_callback)  
    
 
