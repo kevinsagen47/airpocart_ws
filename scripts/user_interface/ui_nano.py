@@ -1220,17 +1220,21 @@ class MyWidget(QWidget):
     
     # (回饋)
     def followering_error(self):
-        while self.on==1:
-            time.sleep(0.125)
-            if soft() == False:
-                self.follow_soft_icon.setVisible(True)
-            else:
-                self.follow_soft_icon.setVisible(False)
-            if person_detect() == False:
-                self.follow_error_icon.setVisible(True)
-                print("no person!!")
+        while True:
+            if self.on==True:
+                time.sleep(0.125)
+                if soft() == False:
+                    self.follow_soft_icon.setVisible(True)
+                else:
+                    self.follow_soft_icon.setVisible(False)
+                if person_detect() == False:
+                    self.follow_error_icon.setVisible(True)
+                    print("no person!!")
+                else:
+                    self.follow_error_icon.setVisible(False)
             else:
                 self.follow_error_icon.setVisible(False)
+                self.follow_soft_icon.setVisible(False)
         
     
     # (跟隨) 前跟隨模式
