@@ -17,7 +17,7 @@ print (sys.version)
 RoV = 0.0
 RoW = 0.0
 v_max = 0.6
-v_min = -0.3
+v_min = -0.2
 w_max = 0.5
 w_min = -1*w_max
 
@@ -26,7 +26,7 @@ z_buffer = [0.0,0.0,0.0]
 data_ff = [-1,-1,-1]
 obstacle = False
 
-pid = PID(0.8, 0.5, 0, setpoint=0.55)
+pid = PID(0.8, 0.5, 0.01, setpoint=0.55)
 pid.output_limits = (v_min, v_max)
 pid.sample_time = 0.06
 
@@ -147,7 +147,9 @@ def person_detect():
        return False
     else:
         return True
-
+def soft():
+    global soft_start
+    return soft_start
 
 class Server:
    def callback(self,data):

@@ -281,7 +281,7 @@ class MyWidget(QWidget):
         self.follow_off_icon = QLabel(self)
         
         self.follow_error_icon = QLabel(self)
-        
+        self.follow_soft_icon = QLabel(self)
         self.follow_flag = False
         self.onn = []
         self.onn.append(0)
@@ -749,6 +749,11 @@ class MyWidget(QWidget):
         self.follow_error_icon.setMovie(self.movie_err)
         self.movie_err.start()
         
+        self.follow_soft_icon.move(500,200)
+        self.follow_soft_icon.resize(800,600)
+        pixmap = QPixmap(self.path+'Image/anya2.png')
+        self.follow_soft_icon.setPixmap(pixmap)
+        
         self.home.setVisible(True)
         self.home.move(70,70)
         self.home.resize(180,120)
@@ -904,6 +909,7 @@ class MyWidget(QWidget):
         self.follow_warning.setVisible(False)
         self.follow_warning0.setVisible(False)
         self.follow_error_icon.setVisible(False)
+        self.follow_soft_icon.setVisible(False)
         self.running_icon.setVisible(False)
         self.charging_text.setVisible(False)
     # (顯示) 各式選擇
@@ -1216,6 +1222,11 @@ class MyWidget(QWidget):
     # (回饋)
     def followering_error(self,on):
         while on==1:
+            time.sleep(0.125)
+            if soft() == False:
+                self.follow_soft_icon.setVisible(True)
+            else:
+                self.follow_soft_icon.setVisible(False)
             if person_detect() == False:
                 self.follow_error_icon.setVisible(True)
                 print("no person!!")
