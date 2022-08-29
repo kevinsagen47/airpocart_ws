@@ -283,8 +283,7 @@ class MyWidget(QWidget):
         self.follow_error_icon = QLabel(self)
         self.follow_soft_icon = QLabel(self)
         self.follow_flag = False
-        self.onn = []
-        self.onn.append(0)
+        self.on = False
         
         #################################
         
@@ -1220,8 +1219,8 @@ class MyWidget(QWidget):
         return ''
     
     # (回饋)
-    def followering_error(self,on):
-        while on==1:
+    def followering_error(self):
+        while self.on==1:
             time.sleep(0.125)
             if soft() == False:
                 self.follow_soft_icon.setVisible(True)
@@ -1236,8 +1235,10 @@ class MyWidget(QWidget):
     
     # (跟隨) 前跟隨模式
     def follow_start(self,on=1):
-        onoff(on)        
-        if on == 1:            
+        onoff(on)
+        
+        if on == 1:
+            self.on = True            
             self.running_icon.setVisible(True)
             self.movie.start()
             self.follow_warning.setVisible(True)
@@ -1247,6 +1248,7 @@ class MyWidget(QWidget):
             self.follow_on_icon_grey.setVisible(True)
             self.home.setEnabled(False)            
         else:
+            self.on = False
             self.running_icon.setVisible(False)
             self.movie.stop()
             self.follow_warning.setVisible(False)
@@ -1259,7 +1261,7 @@ class MyWidget(QWidget):
             self.home.setEnabled(True)
         if self.follow_flag == False:
             threading._start_new_thread(follower,(self.pub,on))
-            threading._start_new_thread(self.followering_error,(on,))
+            threading._start_new_thread(self.followering_error,())
             print("follow ONNNNNNNNNNNNNNNNNNNNNN")
         else:
             #threading.join()
