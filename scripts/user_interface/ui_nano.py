@@ -1221,8 +1221,9 @@ class MyWidget(QWidget):
     # (回饋)
     def followering_error(self):
         while True:
+            time.sleep(0.125)
             if self.on==True:
-                time.sleep(0.125)
+                
                 if soft() == False:
                     self.follow_soft_icon.setVisible(True)
                 else:
