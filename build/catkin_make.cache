@@ -1,2 +1,2 @@
-my_package:ppl_detection_local:realsense-ros-development/realsense2_camera:realsense-ros-development/realsense2_description:std_msgs
+dynamic_tutorials:my_action_actionlib:my_dynparam_service:my_package:ppl_detection_local:realsense-ros-development/realsense2_camera:realsense-ros-development/realsense2_description:std_msgs:teco_msgs
 -DCATKIN_DEVEL_PREFIX=/home/airpocart/airpocart_ws/devel -DCMAKE_INSTALL_PREFIX=/home/airpocart/airpocart_ws/install -G Unix Makefiles

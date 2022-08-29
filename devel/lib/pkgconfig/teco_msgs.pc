@@ -1,0 +1,8 @@
+prefix=/home/airpocart/airpocart_ws/devel
+
+Name: teco_msgs
+Description: Description of teco_msgs
+Version: 0.0.0
+Cflags: -I/home/airpocart/airpocart_ws/devel/include
+Libs: -L${prefix}/lib 
+Requires: message_runtime geometry_msgs

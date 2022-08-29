@@ -1,0 +1,8 @@
+<launch>
+  <arg name="dwa_or_teb"  default="$(env PATH_PLANNING_TYPE)"/>
+  
+  <node pkg="my_action_actionlib" name="my_action_client" type="my_action_client" output="screen">
+    <param name="DWA_OR_TEB" value="$(arg dwa_or_teb)" />
+  </node>
+  
+</launch>
