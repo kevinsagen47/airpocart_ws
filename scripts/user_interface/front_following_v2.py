@@ -2,7 +2,6 @@
 #PKG = 'numpy_tutorial'
 #import roslib; roslib.load_manifest(PKG)
 import sys
-print (sys.version)
 import rospy
 #from rospy_tutorials.msg import Floats
 #from rospy.numpy_msg import numpy_msg
@@ -11,16 +10,22 @@ from geometry_msgs.msg import Twist
 import time
 import pyrosenv
 from std_msgs.msg import Bool
+from simple_pid import PID
+
+print (sys.version)
+
 RoV = 0.0
 RoW = 0.0
 max = 0.9
 min = -0.3
-max_depth = 1.4
-z_buffer = [0.0,0.0,0.0]
 w_max = 0.5
 w_min = -1*w_max
+
+max_depth = 1.4
+z_buffer = [0.0,0.0,0.0]
+
 obstacle = False
-from simple_pid import PID
+
 pid = PID(0.8, 0.5, 0, setpoint=0.55)
 pid.output_limits = (min, max)
 pid.sample_time = 0.06
