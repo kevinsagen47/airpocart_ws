@@ -16,18 +16,18 @@ print (sys.version)
 
 RoV = 0.0
 RoW = 0.0
-max = 0.9
-min = -0.3
+v_max = 0.6
+v_min = -0.3
 w_max = 0.5
 w_min = -1*w_max
 
 max_depth = 1.4
 z_buffer = [0.0,0.0,0.0]
-
+data_ff = [-1,-1,-1]
 obstacle = False
 
 pid = PID(0.8, 0.5, 0, setpoint=0.55)
-pid.output_limits = (min, max)
+pid.output_limits = (v_min, v_max)
 pid.sample_time = 0.06
 
 
@@ -89,21 +89,21 @@ def PI_velocity_control(data,RoV,rel):
 
       if RoV<=0.4:
          control = pid(data[2])
-         pid.output_limits = (min, 0.8)
+         pid.output_limits = (v_min, 0.8)
       else:
          control = pid(data[2]-0.1)
-         pid.output_limits = (min, max)
-      print ("lalalal", obstacle)
-      if(control>=max):
+         pid.output_limits = (v_min, v_max)
+      #print ("lalalal", obstacle)
+      if(control>=v_max):
          RoV=max
-      elif(RoV<=min):
+      elif(RoV<=v_min):
          RoV=min
 
       if (obstacle == True):
          if(control>=0.0):
             control=0.0
-         elif(control<=min):
-            control=min
+         elif(control<=v_min):
+            control=v_min
             
       return round(control,2)
    else:
@@ -141,9 +141,18 @@ def P_angular_control(data,RoW):
       #print (data[0],"  ",data[2])
       return RoW
 
+def person_detect():
+    global data_ff
+    if data_ff[2]==-1:
+       return False
+    else:
+        return True
+
+
 class Server:
    def callback(self,data):
-      global RoV,RoW,obstacle
+      global RoV,RoW,obstacle,data_ff
+      data_ff = data.data
       human_velocity = estimate_velocity(data.data)#pos approching
       rel_velocity = human_velocity - RoV
       #print (round(rel_velocity,2), "  ",round(RoV,2)) #negative means robot too fast

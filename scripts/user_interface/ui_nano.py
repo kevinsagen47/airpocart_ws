@@ -4,8 +4,8 @@ import os
 import cv2
 import time
 import threading
-#import rospy
-from front_following_v2_slow import *
+
+from front_following_v4 import *
 from geometry_msgs.msg import Twist
 import rospy
 from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QPushButton, QComboBox, QGraphicsOpacityEffect
@@ -26,11 +26,10 @@ class MyWidget(QWidget):
         self.setWindowTitle('User Interface')
         self.setGeometry(0,0,1920,1200)
         self.ros_on = True
-        #self.path = './'
-        self.path = '/home/airpocart/airpocart_ws/scripts/user_interface/'
+        self.path = './'
+        #self.path = '/home/airpocart/airpocart_ws/scripts/user_interface/'
         self.font_size = 1
-        
-        ##        Only for test       ##
+
         
         # 下拉式選單
         self.option = QComboBox(self)
@@ -280,6 +279,8 @@ class MyWidget(QWidget):
         self.follow_on_icon = QLabel(self)
         self.follow_on_icon_grey = QLabel(self)
         self.follow_off_icon = QLabel(self)
+        
+        self.follow_error_icon = QLabel(self)
         
         self.follow_flag = False
         self.onn = []
@@ -742,6 +743,12 @@ class MyWidget(QWidget):
         self.follow_on_icon_grey.resize(800,800)
         self.follow_off_icon.resize(800,800)
         
+        self.follow_error_icon.move(300,200)
+        self.follow_error_icon.resize(800,600)
+        self.movie_err = QMovie(self.path+"Image/anya3.gif")
+        self.follow_error_icon.setMovie(self.movie_err)
+        self.movie_err.start()
+        
         self.home.setVisible(True)
         self.home.move(70,70)
         self.home.resize(180,120)
@@ -896,6 +903,7 @@ class MyWidget(QWidget):
         self.follow_on_icon_grey.setVisible(False)
         self.follow_warning.setVisible(False)
         self.follow_warning0.setVisible(False)
+        self.follow_error_icon.setVisible(False)
         self.running_icon.setVisible(False)
         self.charging_text.setVisible(False)
     # (顯示) 各式選擇
@@ -1033,7 +1041,7 @@ class MyWidget(QWidget):
     def showImage(self, trp=1):
         #self.movie = QMovie(self.path+"Image/anya3.gif")
         #self.img.setMovie(self.movie)
-        #self.movie.start()        
+        #self.movie.start()
         #pixmap = QPixmap('Image/background.png')
         pixmap = QPixmap(self.path+'Image/background_4.png')
         #pixmap = QPixmap('Image/anya.png')
@@ -1180,8 +1188,7 @@ class MyWidget(QWidget):
     # (備註) 導航點備註
     def extra_comment(self,location=0):
 
-        #com = ['備註','備註','備註','備註','提供運動器材、免費淋浴間','多國書籍、上網服務、手機充電、ipad供旅客使用','備註','塗鴉白板、LEGO玩具','備註','備註','備註','備註','備註','備註','備註','備註','備註','備註','備註','備註']
-        com1 = ['Information',
+        com = ['Information',
                 'Breastfeeding Room',
                 'Prayer Room',
                 'Phone Charging Station',
@@ -1201,11 +1208,21 @@ class MyWidget(QWidget):
                 ' ',
                 ' ',
                 ' ']
-        return com1[location]
+        return com[location]
     # (運算) 計算到達時間
     def measure_distance(self,location):
         return ''
-
+    
+    # (回饋)
+    def followering_error(self,on):
+        while on==1:
+            if person_detect() == False:
+                self.follow_error_icon.setVisible(True)
+                print("no person!!")
+            else:
+                self.follow_error_icon.setVisible(False)
+        
+    
     # (跟隨) 前跟隨模式
     def follow_start(self,on=1):
         onoff(on)        
@@ -1226,9 +1243,11 @@ class MyWidget(QWidget):
             self.follow_on_btn.setEnabled(True)
             self.follow_on_icon.setVisible(True)
             self.follow_on_icon_grey.setVisible(False)
+            self.follow_error_icon.setVisible(False)
             self.home.setEnabled(True)
         if self.follow_flag == False:
             threading._start_new_thread(follower,(self.pub,on))
+            threading._start_new_thread(self.followering_error,(on,))
             print("follow ONNNNNNNNNNNNNNNNNNNNNN")
         else:
             #threading.join()
