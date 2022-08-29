@@ -1255,6 +1255,7 @@ class MyWidget(QWidget):
             self.follow_on_icon.setVisible(True)
             self.follow_on_icon_grey.setVisible(False)
             self.follow_error_icon.setVisible(False)
+            self.follow_soft_icon.setVisible(False)
             self.home.setEnabled(True)
         if self.follow_flag == False:
             threading._start_new_thread(follower,(self.pub,on))
