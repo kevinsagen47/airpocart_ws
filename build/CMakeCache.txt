@@ -683,6 +683,15 @@ diagnostic_updater_DIR:PATH=/opt/ros/melodic/share/diagnostic_updater/cmake
 //The directory containing a CMake configuration file for dynamic_reconfigure.
 dynamic_reconfigure_DIR:PATH=/opt/ros/melodic/share/dynamic_reconfigure/cmake
 
+//Value Computed by CMake
+dynamic_tutorials_BINARY_DIR:STATIC=/home/airpocart/airpocart_ws/build/dynamic_tutorials
+
+//The directory containing a CMake configuration file for dynamic_tutorials.
+dynamic_tutorials_DIR:PATH=/home/airpocart/airpocart_ws/devel/share/dynamic_tutorials/cmake
+
+//Value Computed by CMake
+dynamic_tutorials_SOURCE_DIR:STATIC=/home/airpocart/airpocart_ws/src/dynamic_tutorials
+
 //The directory containing a CMake configuration file for gencpp.
 gencpp_DIR:PATH=/opt/ros/melodic/share/gencpp/cmake
 
@@ -770,6 +779,21 @@ message_generation_DIR:PATH=/opt/ros/melodic/share/message_generation/cmake
 
 //The directory containing a CMake configuration file for message_runtime.
 message_runtime_DIR:PATH=/opt/ros/melodic/share/message_runtime/cmake
+
+//Value Computed by CMake
+my_action_actionlib_BINARY_DIR:STATIC=/home/airpocart/airpocart_ws/build/my_action_actionlib
+
+//Value Computed by CMake
+my_action_actionlib_SOURCE_DIR:STATIC=/home/airpocart/airpocart_ws/src/my_action_actionlib
+
+//Value Computed by CMake
+my_dynparam_service_BINARY_DIR:STATIC=/home/airpocart/airpocart_ws/build/my_dynparam_service
+
+//The directory containing a CMake configuration file for my_dynparam_service.
+my_dynparam_service_DIR:PATH=/home/airpocart/airpocart_ws/devel/share/my_dynparam_service/cmake
+
+//Value Computed by CMake
+my_dynparam_service_SOURCE_DIR:STATIC=/home/airpocart/airpocart_ws/src/my_dynparam_service
 
 //Value Computed by CMake
 my_package_BINARY_DIR:STATIC=/home/airpocart/airpocart_ws/build/my_package
@@ -884,6 +908,12 @@ std_msgs_SOURCE_DIR:STATIC=/home/airpocart/airpocart_ws/src/std_msgs
 
 //The directory containing a CMake configuration file for std_srvs.
 std_srvs_DIR:PATH=/opt/ros/melodic/share/std_srvs/cmake
+
+//Value Computed by CMake
+teco_msgs_BINARY_DIR:STATIC=/home/airpocart/airpocart_ws/build/teco_msgs
+
+//Value Computed by CMake
+teco_msgs_SOURCE_DIR:STATIC=/home/airpocart/airpocart_ws/src/teco_msgs
 
 //The directory containing a CMake configuration file for tf2.
 tf2_DIR:PATH=/opt/ros/melodic/share/tf2/cmake
@@ -1064,7 +1094,7 @@ CMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_NM
 CMAKE_NM-ADVANCED:INTERNAL=1
 //number of local generators
-CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=9
+CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=13
 //ADVANCED property for variable: CMAKE_OBJCOPY
 CMAKE_OBJCOPY-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_OBJDUMP

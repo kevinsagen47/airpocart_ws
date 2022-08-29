@@ -1,0 +1,8 @@
+\subsubsection usage Usage
+\verbatim
+<node name="my_action_actionlib" pkg="my_action_actionlib" type="my_action_actionlib">
+  <param name="auto_loop" type="bool" value="True" />
+  <param name="auto_loop_count" type="int" value="1" />
+</node>
+\endverbatim
+

@@ -1,0 +1,8 @@
+prefix=/home/airpocart/airpocart_ws/install
+
+Name: my_action_actionlib
+Description: Description of my_action_actionlib
+Version: 0.0.0
+Cflags: -I${prefix}/include
+Libs: -L${prefix}/lib 
+Requires: 
