@@ -12,6 +12,9 @@ destination=[0,1,2,3,4,5]
 destination[0]=[14,0.04,0.24,-0.25,0.97]
 destination[1]=[13,4.74,-2.65,-0.25,0.96]
 
+def get_location():
+    pass 
+
 def go_to(lala):
 
     client = actionlib.SimpleActionClient('move_base',MoveBaseAction)

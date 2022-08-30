@@ -657,10 +657,10 @@ class MyWidget(QWidget):
         self.other[2].clicked.connect(lambda:self.location_choice(18))
         self.other[3].clicked.connect(lambda:self.location_choice(19))
         
-        self.nav_btn.move(50,1000)
-        self.nav_btn.resize(100,80)
-        self.nav_btn.setText('放大\n地圖')
-        self.nav_btn.setFont(QFont('Ariel',10*self.font_size))
+        self.nav_btn.move(50,1050)
+        self.nav_btn.resize(400,100)
+        self.nav_btn.setText('開始導航\n Guide me!')
+        self.nav_btn.setFont(QFont('Ariel',15*self.font_size))
         self.nav_btn.clicked.connect(self.navigation_2)
         
 
@@ -674,7 +674,7 @@ class MyWidget(QWidget):
         self.mapsize_y = 724
         self.home.setVisible(True)
         self.home.move(70,1000)
-        self.home.resize(200,50)
+        self.home.resize(150,150)
         self.nav_start.setVisible(True)
         self.nav_start.move(350,1000)
         self.nav_start.resize(200,150)
