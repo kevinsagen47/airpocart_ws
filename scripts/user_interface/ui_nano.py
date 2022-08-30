@@ -705,10 +705,10 @@ class MyWidget(QWidget):
         self.showImage(0.5)
         self.follow_on_btn.setVisible(True)
         self.follow_off_btn.setVisible(True)
-        self.follow_on_btn.move(75,450)
+        self.follow_on_btn.move(90,450)
         self.follow_off_btn.move(950,450)        
-        self.follow_on_btn.resize(800,800)
-        self.follow_off_btn.resize(800,800)
+        self.follow_on_btn.resize(700,700)
+        self.follow_off_btn.resize(700,700)
 
         op = QGraphicsOpacityEffect()
         op.setOpacity(0.01)     # 透明度 0~1
@@ -734,13 +734,13 @@ class MyWidget(QWidget):
         self.follow_on_icon_grey.setPixmap(pixmap)
         self.follow_on_icon_grey.setScaledContents(True)
         
-        self.follow_on_icon.move(75,450)
-        self.follow_on_icon_grey.move(75,450)
+        self.follow_on_icon.move(90,450)
+        self.follow_on_icon_grey.move(90,450)
         self.follow_off_icon.move(950,450)
         
-        self.follow_on_icon.resize(800,800)
-        self.follow_on_icon_grey.resize(800,800)
-        self.follow_off_icon.resize(800,800)
+        self.follow_on_icon.resize(700,700)
+        self.follow_on_icon_grey.resize(700,700)
+        self.follow_off_icon.resize(700,700)
         
         self.follow_error_icon.move(300,200)
         self.follow_error_icon.resize(800,600)
