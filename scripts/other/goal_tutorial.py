@@ -11,12 +11,7 @@ def movebase_client():
     client.wait_for_server()
 
     goal = MoveBaseGoal()
-    '''
-    goal.cmdType = 1
-    goal.scriptName = "lab_door"
-    goal.startIndex = 0
-    '''
-    '''
+    #'''
     goal.target_pose.header.seq = 12
     goal.target_pose.header.frame_id = "map"
     goal.target_pose.header.stamp = rospy.Time.now()
