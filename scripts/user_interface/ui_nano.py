@@ -1291,7 +1291,7 @@ class MyWidget(QWidget):
     def navigation_start(self,loc=0):
         if self.navi_flag == False:
             self.navi_flag = True
-            threading._start_new_thread(door_client,())
+            threading._start_new_thread(go_to,(loc))
             
         
         
