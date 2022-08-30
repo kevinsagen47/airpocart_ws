@@ -7,6 +7,27 @@ from move_base_msgs.msg import MoveBaseAction, MoveBaseGoal
 #from my_action_actionlib.msg import MyActionGoal
 from actionlib_msgs.msg import GoalID, GoalStatusArray
 import time
+
+destination=[0,1,2,3,4,5]
+destination[0]=[14,0.04,0.24,-0.25,0.97]
+destination[1]=[13,4.74,-2.65,-0.25,0.96]
+
+def go_to(lala):
+
+    client = actionlib.SimpleActionClient('move_base',MoveBaseAction)
+    client.wait_for_server()
+
+    goal = MoveBaseGoal()
+    goal.target_pose.header.seq = destination[lala][0]
+    goal.target_pose.header.frame_id = "map"
+    goal.target_pose.header.stamp = rospy.Time.now()
+    goal.target_pose.pose.position.x = destination[lala][1]
+    goal.target_pose.pose.position.y = destination[lala][2]
+    goal.target_pose.pose.orientation.z = destination[lala][3]
+    goal.target_pose.pose.orientation.w = destination[lala][4]
+    #'''
+    client.send_goal(goal)
+
 def door_client():
 
     client = actionlib.SimpleActionClient('move_base',MoveBaseAction)
@@ -55,7 +76,6 @@ def cancel():
     cancel_msg = GoalID()
     cancel_pub.publish(cancel_msg)
 
-
 def callback(data):
    print (rospy.get_name(), "I heard %s"%str(data.data[1]))
  
@@ -66,14 +86,15 @@ def listener():
 
 if __name__ == '__main__':
     try:
-        rospy.init_node('movebase_client_py')
-        door_client()
+        rospy.init_node('movebase_client_pyy')
+        go_to(1)
         #charge_client()
-        print("done")
+        #charge_client()
+        #print("done")
         #time.sleep(8)
         #cancel()
         #print("cancelled")
-        listener()
+        #listener()
         
 
     except rospy.ROSInterruptException:
