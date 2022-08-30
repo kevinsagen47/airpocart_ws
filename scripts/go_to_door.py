@@ -9,15 +9,18 @@ from actionlib_msgs.msg import GoalID, GoalStatusArray
 import time
 
 destination=[0,1,2,3,4,5]
-destination[0]=[14,0.04,0.24,-0.25,0.97]
-destination[1]=[13,4.74,-2.65,-0.25,0.96]
+destination[0]=[20,0.04,0.24,-0.25,0.97]
+destination[1]=[21,4.74,-2.65,-0.25,0.96]
 
 def go_to(lala):
-
+    
     client = actionlib.SimpleActionClient('move_base',MoveBaseAction)
     client.wait_for_server()
 
     goal = MoveBaseGoal()
+    print(lala)
+    print(destination[lala])
+    
     goal.target_pose.header.seq = destination[lala][0]
     goal.target_pose.header.frame_id = "map"
     goal.target_pose.header.stamp = rospy.Time.now()
@@ -86,13 +89,15 @@ def listener():
 
 if __name__ == '__main__':
     try:
-        rospy.init_node('movebase_client_pyy')
-        go_to(1)
+        rospy.init_node('movebase_client_pyyy')
+        go_to(0)
         #charge_client()
-        #charge_client()
+        #door_client()
         #print("done")
-        #time.sleep(8)
-        #cancel()
+        time.sleep(5)
+        cancel()
+        time.sleep(5)
+        go_to(0)
         #print("cancelled")
         #listener()
         
@@ -100,7 +105,7 @@ if __name__ == '__main__':
     except rospy.ROSInterruptException:
         rospy.loginfo("Navigation test finished.")
 
-
+#rostopic pub /move_base/cancel actionlib_msgs/GoalID -- {}
 '''
 ###actionCommand
 

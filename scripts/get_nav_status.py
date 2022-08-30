@@ -8,7 +8,9 @@ import rospy
 from actionlib_msgs.msg import GoalID, GoalStatusArray
 
 def callback(data):
-   print (len(data.status_list))
+   #print (type(data.status_list[0]))
+   print (data.status_list[0].status)
+
  
 def listener():
    rospy.init_node('listener')

@@ -11,7 +11,7 @@ import time
 import pyrosenv
 from std_msgs.msg import Bool
 from simple_pid import PID
-
+from actionlib_msgs.msg import GoalID, GoalStatusArray
 print (sys.version)
 
 RoV = 0.0
@@ -180,6 +180,11 @@ class Server:
       else:
          obstacle = False
       #print ("obstacle",obstacle)
+   def nav_status_callback(data):
+      global nav_status
+      #print (type(data.status_list[0]))
+      #print (data.status_list[0].status)
+      nav_status = data.status_list[0].status
 
 def follower(pub1,on1):
    global pub,on, last_stamp
@@ -191,7 +196,7 @@ def follower(pub1,on1):
    
    rospy.Subscriber("Obstacle_Stop_Flag", Bool, server.obstacle_callback)
    rospy.Subscriber("human_vector", Float32MultiArray, server.callback)
-   
+   rospy.Subscriber("/move_base/status", GoalStatusArray, server.nav_status_callback)
    rospy.spin()  
    #image_sub = message_filters.Subscriber('image', Image)
    #info_sub = message_filters.Subscriber('camera_info', CameraInfo) 
