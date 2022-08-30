@@ -1291,9 +1291,15 @@ class MyWidget(QWidget):
     # (導航) 開始導航
     def navigation_start(self,loc=0):
         if self.navi_flag == False:
+            go_to(loc)
+            self.navi_flag = True
+        else:
+            cancel()
+        '''
+        if self.navi_flag == False:
             self.navi_flag = True
             threading._start_new_thread(go_to,(loc,))
-            
+        '''    
         
         
     
