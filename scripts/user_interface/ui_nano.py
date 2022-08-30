@@ -1077,7 +1077,7 @@ class MyWidget(QWidget):
     # (圖片) 地圖
     def showImage_map(self):
         #pixmap = QPixmap(self.path+'Image/sample_map.png')  #(2010,1340)
-        pixmap = QPixmap(self.path+'Image/terminal2_map_3_2.png')  #(8192,1549)
+        pixmap = QPixmap(self.path+'Image/terminal2_map_4_1.png')  #(8192,1549)
         #pixmap = pixmap.scaled(8192, 1548)
         self.imagesize_x = pixmap.width()
         self.imagesize_y = pixmap.height()
@@ -1154,7 +1154,7 @@ class MyWidget(QWidget):
     def show_mouse_move(self, event):
         #print(f'[show_mouse_move] {event.x()} {event.y()}')
         #pixmap = QPixmap(self.path+'Image/sample_map.png')
-        pixmap = QPixmap(self.path+'Image/terminal2_map_3_2.png')  #(3701,554)
+        pixmap = QPixmap(self.path+'Image/terminal2_map_4_1.png')  #(3701,554)
         #pixmap = pixmap.scaled(8192, 1548)
         v = 0.2  #滑動速度
         # 地圖滑動
