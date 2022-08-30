@@ -180,11 +180,14 @@ class Server:
       else:
          obstacle = False
       #print ("obstacle",obstacle)
-   def nav_status_callback(data):
+   def nav_status_callback(self,data):
       global nav_status
-      #print (type(data.status_list[0]))
-      #print (data.status_list[0].status)
+      #status 1 going to...
+      #status 2 cancelled
+      #status 3 success
+      #other : error
       nav_status = data.status_list[0].status
+      #print (data.status_list[0].status)
 
 def follower(pub1,on1):
    global pub,on, last_stamp
