@@ -6,6 +6,7 @@ import time
 import threading
 
 from front_following_v4 import *
+from navigation import *
 from geometry_msgs.msg import Twist
 import rospy
 from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QPushButton, QComboBox, QGraphicsOpacityEffect
@@ -260,6 +261,10 @@ class MyWidget(QWidget):
         # (Button) 確定導航
         self.nav_btn = QPushButton(self)
         
+        self.navi_flag = False
+        
+        ##  Page 2 ##
+        self.nav_start = QPushButton('START',self)
         
         
         #################################
@@ -670,7 +675,11 @@ class MyWidget(QWidget):
         self.home.setVisible(True)
         self.home.move(70,1100)
         self.home.resize(200,50)
-
+        self.nav_start.setVisible(True)
+        self.nav_start.move(200,1100)
+        self.nav_start.resize(200,150)
+        self.nav_start.clicked.connect(lambda:self.navigation_start(0))
+        
         self.showImage_map()
         
     # (顯示) 跟隨畫面
@@ -900,6 +909,7 @@ class MyWidget(QWidget):
             n.setVisible(False)
         self.pin.setVisible(False)
         self.nav_btn.setVisible(False)
+        self.nav_start.setVisible(False)
         self.follow_on_btn.setVisible(False)
         self.follow_off_btn.setVisible(False)
         self.follow_on_icon.setVisible(False)
@@ -1275,9 +1285,16 @@ class MyWidget(QWidget):
         else:
             #threading.join()
             print("ON in UIIIIII",on)
-        
-        
         #follower(self.pub,on)
+    
+    # (導航) 開始導航
+    def navigation_start(self,loc=0):
+        if self.navi_flag == False:
+            self.navi_flag = True
+            threading._start_new_thread(door_client,())
+            
+        
+        
     
 if __name__ == '__main__':
     app = QApplication(sys.argv)
