@@ -1295,6 +1295,7 @@ class MyWidget(QWidget):
             self.navi_flag = True
         else:
             cancel()
+            self.navi_flag = False
         '''
         if self.navi_flag == False:
             self.navi_flag = True
