@@ -79,7 +79,7 @@ class MyWidget(QWidget):
         # (Button) 返回主畫面
         self.home = QPushButton(self)
         self.home.clicked.connect(self.idle)
-        
+        self.home.setShortcut('Ctrl+D')
         self.home.setText("返回主畫面")
         
         # (Init) ros
@@ -657,7 +657,7 @@ class MyWidget(QWidget):
         self.other[2].clicked.connect(lambda:self.location_choice(18))
         self.other[3].clicked.connect(lambda:self.location_choice(19))
         
-        self.nav_btn.move(50,1080)
+        self.nav_btn.move(50,1000)
         self.nav_btn.resize(100,80)
         self.nav_btn.setText('放大\n地圖')
         self.nav_btn.setFont(QFont('Ariel',10*self.font_size))
@@ -673,10 +673,10 @@ class MyWidget(QWidget):
         self.mapsize_x = 1800
         self.mapsize_y = 724
         self.home.setVisible(True)
-        self.home.move(70,1100)
+        self.home.move(70,1000)
         self.home.resize(200,50)
         self.nav_start.setVisible(True)
-        self.nav_start.move(200,1100)
+        self.nav_start.move(350,1000)
         self.nav_start.resize(200,150)
         self.nav_start.clicked.connect(lambda:self.navigation_start(0))
         
@@ -773,6 +773,7 @@ class MyWidget(QWidget):
         self.all_clear()
         self.page.setText('充電頁面')        
         self.home.setVisible(True)
+        
         self.charging_text.setVisible(True)
         
         pixmap = QPixmap(self.path+'Image/charging_text.png')        
@@ -1291,7 +1292,7 @@ class MyWidget(QWidget):
     def navigation_start(self,loc=0):
         if self.navi_flag == False:
             self.navi_flag = True
-            threading._start_new_thread(go_to,(loc))
+            threading._start_new_thread(go_to,(loc,))
             
         
         
