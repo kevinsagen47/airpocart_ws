@@ -1166,6 +1166,7 @@ class MyWidget(QWidget):
             self.maplocation_x=self.imagesize_x-self.mapsize_x
         else:
             self.maplocation_x=int(self.maplocation_x)
+        '''
         self.maplocation_y += (self.start_press[1]-event.y())*v
         if self.maplocation_y <0:
             self.maplocation_y=0
@@ -1173,6 +1174,7 @@ class MyWidget(QWidget):
             self.maplocation_y=self.imagesize_y-self.mapsize_y
         else:
             self.maplocation_y=int(self.maplocation_y)
+        '''
         print('目前地圖最左上的座標',self.maplocation_x,self.maplocation_y)
         pixmap_tmp = pixmap.copy(self.maplocation_x,self.maplocation_y,self.mapsize_x,self.mapsize_y)
         self.map.setPixmap(pixmap_tmp)
@@ -1181,7 +1183,8 @@ class MyWidget(QWidget):
         # 指針滑動
         if self.loc_ch >= 0:            
             x=int(self.map_place_x + self.real_loc[self.loc_ch][0] - self.maplocation_x)
-            y=int(self.map_place_y + self.real_loc[self.loc_ch][1] - self.maplocation_y)
+            #y=int(self.map_place_y + self.real_loc[self.loc_ch][1] - self.maplocation_y)
+            y=int(self.map_place_y + self.real_loc[self.loc_ch][1])
             self.pin.move(x,y)
             
             if x >= self.map_place_x and x<= self.map_place_x+self.mapsize_x:
