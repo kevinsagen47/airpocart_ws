@@ -30,7 +30,7 @@ pid = PID(0.8, 0.5, 0.01, setpoint=0.55)
 pid.output_limits = (v_min, v_max)
 pid.sample_time = 0.06
 
-
+nav_status=0
 #slow = 0.3
 normal = 0.5
 fast = 0.6
@@ -154,6 +154,7 @@ def soft():
 def get_status():
     global nav_status
     return nav_status
+    
 class Server:
    def callback(self,data):
       global RoV,RoW,obstacle,data_ff
