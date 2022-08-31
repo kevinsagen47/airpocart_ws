@@ -151,6 +151,9 @@ def soft():
     global soft_start
     return soft_start
 
+def get_status():
+    global nav_status
+    return nav_status
 class Server:
    def callback(self,data):
       global RoV,RoW,obstacle,data_ff

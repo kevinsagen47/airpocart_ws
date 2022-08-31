@@ -25,8 +25,8 @@ class MyWidget(QWidget):
         self.setWindowTitle('User Interface')
         self.setGeometry(0,0,1920,1200)
         self.ros_on = True
-        #self.path = './'
-        self.path = path_image
+        self.path = './'
+        #self.path = path_image
         self.font_size = 1
 
         
@@ -351,6 +351,7 @@ class MyWidget(QWidget):
         #################################
         
         self.idle()
+        threading._start_new_thread(self.followering_error,())
 
     # (測試) 終端機指令    
     def os_command(self):
@@ -766,7 +767,7 @@ class MyWidget(QWidget):
         self.nav_start.setVisible(True)
         self.nav_start.move(700,1000)
         self.nav_start.resize(756,180)        
-        self.nav_start.clicked.connect(lambda:self.navigation_start(self.loc_ch))
+        self.nav_start.clicked.connect(lambda:self.navigation_start(self.loc_ch))#STARTTTTT
         self.nav_start.raise_()
         op = QGraphicsOpacityEffect()
         op.setOpacity(0.01)     # 透明度 0~1
@@ -784,7 +785,7 @@ class MyWidget(QWidget):
         self.nav_stop.setVisible(False)
         self.nav_stop.move(700,1000)
         self.nav_stop.resize(756,180)        
-        self.nav_stop.clicked.connect(self.navigation_cancel)        
+        self.nav_stop.clicked.connect(self.navigation_cancel)   # CANCELLLL       
         op = QGraphicsOpacityEffect()
         op.setOpacity(0.01)     # 透明度 0~1
         self.nav_stop.setGraphicsEffect(op)
@@ -1426,7 +1427,8 @@ class MyWidget(QWidget):
             else:
                 self.follow_error_icon.setVisible(False)
                 self.follow_soft_icon.setVisible(False)
-        
+            if get_status() != 1:
+                self.navigation_cancel()
     
     # (跟隨) 前跟隨模式
     def follow_start(self,on=1):
@@ -1456,7 +1458,7 @@ class MyWidget(QWidget):
             self.home.setEnabled(True)
         if self.follow_flag == False:
             threading._start_new_thread(follower,(self.pub,on))
-            threading._start_new_thread(self.followering_error,())
+            
             print("follow ONNNNNNNNNNNNNNNNNNNNNN")
         else:
             #threading.join()
@@ -1465,7 +1467,7 @@ class MyWidget(QWidget):
     
     # (導航) 開始導航
     def navigation_start(self,loc=0):
-        go_to(loc)        
+        go_to(loc)
         self.nav_start.setVisible(False)
         self.nav_start_icon.setVisible(False)        
         self.nav_stop.setVisible(True)
