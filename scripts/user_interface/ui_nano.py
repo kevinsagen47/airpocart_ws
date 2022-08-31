@@ -218,24 +218,6 @@ class MyWidget(QWidget):
         self.loc_choose = []
         for i in range(26):
             self.loc_choose.append(QPushButton(self))
-
-        '''
-        self.hito = []
-        for i in range(4):
-            self.hito.append(QPushButton(self))
-        self.cafe = []
-        for i in range(4):
-            self.cafe.append(QPushButton(self))
-        self.shop = []
-        for i in range(4):
-            self.shop.append(QPushButton(self))
-        self.toilet = []
-        for i in range(4):
-            self.toilet.append(QPushButton(self))
-        self.other = []
-        for i in range(4):
-            self.other.append(QPushButton(self))
-        '''
         
         # (Text) 評分、距離、備註
         self.score = []
@@ -259,8 +241,7 @@ class MyWidget(QWidget):
         self.pin.raise_()
 
         # (Button) 確定導航
-        self.nav_btn = QPushButton(self)
-        
+        self.nav_btn = QPushButton(self)        
         self.navi_flag = False
         
         ##  Page 2 ##
@@ -275,8 +256,6 @@ class MyWidget(QWidget):
         self.nav_stop_icon = QLabel(self)
 
         self.destination_text = QLabel(self)
-        
-        
         
         #################################
         
@@ -342,13 +321,14 @@ class MyWidget(QWidget):
         self.stop_btn.clicked.connect(lambda:self.walk('s'))
         self.RoV = 0.0
         self.RoW = 0.0
-        #################################
-
         
+        #################################        
         
         ##          Charging           ##
 
         self.charging_text = QLabel(self)
+        self.charging_btn = QPushButton(self)        
+        self.ch_on = False
         
         #################################
         
@@ -370,9 +350,7 @@ class MyWidget(QWidget):
             self.charging()            
         elif self.option.currentText() == 'Remoting':            
             self.remoting()
-            
-
-        
+      
     # (顯示) 閒置畫面
     def idle(self):
         self.all_clear()
@@ -471,7 +449,6 @@ class MyWidget(QWidget):
         op.setOpacity(0.01)     # 透明度 0~1
         self.explain_fol.setGraphicsEffect(op)
 
-
         for i in range(len(self.explain_page)):
             self.explain_page[i].resize(1136,711)
             self.explain_page[i].move(392,245)
@@ -503,10 +480,7 @@ class MyWidget(QWidget):
         self.showImage_map()
         for n in self.loc_choose[:4]:
             n.setVisible(True)
-        '''
-        for n in self.hito:
-            n.setVisible(True)
-        '''
+        
         self.home.setVisible(True)
         self.home.setText('返回主畫面\n Home')
         self.home.move(25,20)
@@ -527,18 +501,7 @@ class MyWidget(QWidget):
 
         for n in self.loc_choose:
             n.resize(size_x,size_y)
-        '''
-        for n in self.hito:
-            n.resize(size_x,size_y)
-        for n in self.cafe:
-            n.resize(size_x,size_y)
-        for n in self.shop:
-            n.resize(size_x,size_y)
-        for n in self.toilet:
-            n.resize(size_x,size_y)
-        for n in self.other:
-            n.resize(size_x,size_y)
-        '''
+        
         x = 250
         y = 180
         itv = 400
@@ -549,25 +512,6 @@ class MyWidget(QWidget):
             self.loc_choose[i].move(x+itv*(i%4),y)
         for i in range(10):
             self.loc_choose[i+16].move(x+itv_2*(i%5),y+itv_y*int(i/5))
-            
-        '''
-        for i in range(len(self.hito)):
-            self.hito[i].move(x+itv*i,y)
-        for i in range(len(self.cafe)):
-            self.cafe[i].move(x+itv*i,y)
-        for i in range(len(self.shop)):
-            self.shop[i].move(x+itv*i,y)
-        for i in range(len(self.toilet)):
-            self.toilet[i].move(x+itv*i,y)
-        for i in range(len(self.other)):
-            self.other[i].move(x+itv*i,y)
-        '''
-        '''
-        for i in range(len(self.score)):
-            self.score[i].move(x+size_x+10+itv*(i%4),y+5)
-        for i in range(len(self.distn)):
-            self.distn[i].move(x+size_x+10+itv*(i%4),y+18)
-        '''
         
         for i in range(16):
             self.extra[i].move(x+10+itv*(i%4),y+size_y+7)
@@ -601,29 +545,6 @@ class MyWidget(QWidget):
         self.loc_choose[24].setText('D9 登機門')
         self.loc_choose[25].setText('D10 登機門')
         
-        '''
-        self.hito[0].setText('諮詢服務台')
-        self.hito[1].setText('哺集乳室')
-        self.hito[2].setText('祈禱室')
-        self.hito[3].setText('手機充電區')
-        self.cafe[0].setText('運動公園')
-        self.cafe[1].setText('機場圖書館')
-        self.cafe[2].setText('電競體驗區')
-        self.cafe[3].setText('兒童遊樂區')
-        self.shop[0].setText('樂活離島候機室')
-        self.shop[1].setText('希望平溪候機室')
-        self.shop[2].setText('阿里山景觀休憩區')
-        self.shop[3].setText('空 None')
-        self.toilet[0].setText('客家文創園區')
-        self.toilet[1].setText('霹靂布袋戲館')
-        self.toilet[2].setText('藝文展演空間')
-        self.toilet[3].setText('原住民文化園區')
-        self.other[0].setText('空 None')
-        self.other[1].setText('空 None')
-        self.other[2].setText('空 None')
-        self.other[3].setText('空 None')
-        self.hito[0].setFont(QFont('Arial',10*self.font_size))
-        '''
         self.real_loc = []
         self.real_loc.append([1880,550])    #諮詢服務台
         self.real_loc.append([1700,530])    #哺集乳室
@@ -651,25 +572,13 @@ class MyWidget(QWidget):
         self.real_loc.append([772,200])     #登機門D8
         self.real_loc.append([408,200])     #登機門D9
         self.real_loc.append([44,200])      #登機門D10
-
-        '''
-        for n in self.score:
-            n.setFont(QFont('Arial',10*self.font_size))
-        '''
         
         for i in range(len(self.extra)):
             self.extra[i].setText(self.extra_comment(i)+'\n'+self.measure_distance(i))
-            self.extra[i].setFont(QFont('Arial',10*self.font_size))
-        '''
-        for n in self.score[:4]:
-            n.setVisible(True)
-        for n in self.distn[:4]:
-            n.setVisible(True)
-        '''
-        for n in self.extra[:4]:
-            n.setVisible(True)
-            
+            self.extra[i].setFont(QFont('Arial',12*self.font_size))
         
+        for n in self.extra[:4]:
+            n.setVisible(True)       
         
         self.loc_choose[0].clicked.connect(lambda:self.location_choice(0))
         self.loc_choose[1].clicked.connect(lambda:self.location_choice(1))
@@ -698,28 +607,6 @@ class MyWidget(QWidget):
         self.loc_choose[24].clicked.connect(lambda:self.location_choice(24))
         self.loc_choose[25].clicked.connect(lambda:self.location_choice(25))
         
-        '''
-        self.hito[0].clicked.connect(lambda:self.location_choice(0))
-        self.hito[1].clicked.connect(lambda:self.location_choice(1))
-        self.hito[2].clicked.connect(lambda:self.location_choice(2))
-        self.hito[3].clicked.connect(lambda:self.location_choice(3))
-        self.cafe[0].clicked.connect(lambda:self.location_choice(4))
-        self.cafe[1].clicked.connect(lambda:self.location_choice(5))
-        self.cafe[2].clicked.connect(lambda:self.location_choice(6))
-        self.cafe[3].clicked.connect(lambda:self.location_choice(7))
-        self.shop[0].clicked.connect(lambda:self.location_choice(8))
-        self.shop[1].clicked.connect(lambda:self.location_choice(9))
-        self.shop[2].clicked.connect(lambda:self.location_choice(10))
-        self.shop[3].clicked.connect(lambda:self.location_choice(11))
-        self.toilet[0].clicked.connect(lambda:self.location_choice(12))
-        self.toilet[1].clicked.connect(lambda:self.location_choice(13))
-        self.toilet[2].clicked.connect(lambda:self.location_choice(14))
-        self.toilet[3].clicked.connect(lambda:self.location_choice(15))
-        self.other[0].clicked.connect(lambda:self.location_choice(16))
-        self.other[1].clicked.connect(lambda:self.location_choice(17))
-        self.other[2].clicked.connect(lambda:self.location_choice(18))
-        self.other[3].clicked.connect(lambda:self.location_choice(19))
-        '''
         self.nav_btn.move(50,1080)
         self.nav_btn.resize(400,100)
         self.nav_btn.setText('開始導航\n Guide me!')
@@ -748,8 +635,7 @@ class MyWidget(QWidget):
         self.home_icon.move(250,1000)
         self.home_icon.resize(150,150)
         self.home_icon.setScaledContents(True)
-        self.home_icon.setVisible(True)
-        
+        self.home_icon.setVisible(True)        
 
         self.back.setVisible(True)
         self.back.move(70,1000)
@@ -765,8 +651,7 @@ class MyWidget(QWidget):
         self.back_icon.move(70,1000)
         self.back_icon.resize(150,150)
         self.back_icon.setScaledContents(True)
-        self.back_icon.setVisible(True)
-        
+        self.back_icon.setVisible(True)        
         
         self.nav_start.setVisible(True)
         self.nav_start.move(700,1000)
@@ -782,9 +667,7 @@ class MyWidget(QWidget):
         self.nav_start_icon.setPixmap(pixmap)
         self.nav_start_icon.move(700,1000)
         self.nav_start_icon.resize(756,180)
-        self.nav_start_icon.setScaledContents(True)
-
-        
+        self.nav_start_icon.setScaledContents(True)      
         
         self.nav_stop.setVisible(False)
         self.nav_stop.move(700,1000)
@@ -799,7 +682,6 @@ class MyWidget(QWidget):
         self.nav_stop_icon.move(700,1000)
         self.nav_stop_icon.resize(756,180)
         self.nav_stop_icon.setScaledContents(True)
-
 
         self.destination_text.setVisible(True)
         self.destination_text.move(500,50)
@@ -888,16 +770,17 @@ class MyWidget(QWidget):
         self.follow_on_icon_grey.resize(700,700)
         self.follow_off_icon.resize(700,700)
         
-        self.follow_error_icon.move(300,200)
-        self.follow_error_icon.resize(800,600)
-        self.movie_err = QMovie(self.path+image_erro)
-        self.follow_error_icon.setMovie(self.movie_err)
-        self.movie_err.start()
+        self.follow_error_icon.move(358,200)
+        self.follow_error_icon.resize(1204,427)
+        pixmap = QPixmap(self.path+image_erro)
+        self.follow_error_icon.setPixmap(pixmap)
         
-        self.follow_soft_icon.move(500,200)
-        self.follow_soft_icon.resize(800,600)
+        
+        self.follow_soft_icon.move(351,200)
+        self.follow_soft_icon.resize(1211,448)
         pixmap = QPixmap(self.path+image_soft)
         self.follow_soft_icon.setPixmap(pixmap)
+        
         
         self.home.setVisible(True)
         self.home.move(70,70)
@@ -919,13 +802,24 @@ class MyWidget(QWidget):
         self.page.setText('充電頁面')        
         self.home.setVisible(True)
         
-        self.charging_text.setVisible(True)
+        
+        self.charging_btn.setVisible(True)
+        
+        self.charging_btn.resize(1190,317)
+        self.charging_btn.move(200,150)
+        op = QGraphicsOpacityEffect()
+        op.setOpacity(0.01)     # 透明度 0~1
+        self.charging_btn.setGraphicsEffect(op)
+        self.charging_btn.raise_()
+        self.charging_btn.clicked.connect(self.charging_start)
         
         pixmap = QPixmap(self.path+text_charg)
         self.charging_text.setPixmap(pixmap)
         self.charging_text.resize(1190,317)
         self.charging_text.move(200,150)
         self.charging_text.setScaledContents(True)
+        self.charging_text.setVisible(True)
+        
         self.home.setText("返回主畫面\n Return to Home")
         self.home.setFont(QFont("Arial",30*self.font_size))
         self.home.move(200,550)
@@ -1040,24 +934,7 @@ class MyWidget(QWidget):
         self.map.setVisible(False)
         for n in self.loc_choose:
             n.setVisible(False)
-        '''
-        for n in self.hito:
-            n.setVisible(False)
-        for n in self.cafe:
-            n.setVisible(False)
-        for n in self.shop:
-            n.setVisible(False)
-        for n in self.toilet:
-            n.setVisible(False)
-        for n in self.other:
-            n.setVisible(False)
-        '''
-        '''
-        for n in self.score:
-            n.setVisible(False)
-        for n in self.distn:
-            n.setVisible(False)
-        '''
+        
         for n in self.extra:
             n.setVisible(False)        
         self.pin.setVisible(False)        
@@ -1082,40 +959,17 @@ class MyWidget(QWidget):
         self.follow_soft_icon.setVisible(False)
         self.running_icon.setVisible(False)
         self.charging_text.setVisible(False)
+        self.charging_btn.setVisible(False)
     
     # (顯示) 各式選擇
     def show_type(self,type_ch):
-        '''
-        for n in self.hito:
-            n.setVisible(False)
-        for n in self.cafe:
-            n.setVisible(False)
-        for n in self.shop:
-            n.setVisible(False)        
-        for n in self.toilet:
-            n.setVisible(False)        
-        for n in self.other:
-            n.setVisible(False)
-        '''
-        '''
-        for n in self.score:
-            n.setVisible(False)
-        for n in self.distn:
-            n.setVisible(False)
-        '''
+        
         for n in self.extra:
             n.setVisible(False)
         
         for n in self.loc_choose:
             n.setVisible(False)
-        '''
-        for n in self.score[type_ch*4:type_ch*4+4]:
-            n.setVisible(True)
-        for n in self.distn[type_ch*4:type_ch*4+4]:
-            n.setVisible(True)
-        for n in self.extra[type_ch*4:type_ch*4+4]:
-            n.setVisible(True)
-        '''
+        
         if type_ch == 4:
             for n in self.loc_choose[16:]:
                 n.setVisible(True)
@@ -1126,23 +980,6 @@ class MyWidget(QWidget):
                 n.setVisible(True)
             for n in self.extra[type_ch*4:(type_ch+1)*4]:
                 n.setVisible(True)
-        '''
-        if type_ch == 0:            
-            for n in self.hito:
-                n.setVisible(True)
-        elif type_ch == 1:
-            for n in self.cafe:
-                n.setVisible(True)
-        elif type_ch == 2:
-            for n in self.shop:
-                n.setVisible(True)
-        elif type_ch == 3:
-            for n in self.toilet:
-                n.setVisible(True)
-        elif type_ch == 4:
-            for n in self.other:
-                n.setVisible(True)
-        '''
         
     # (導航) 選擇導航點
     def location_choice(self,loc):
@@ -1418,9 +1255,8 @@ class MyWidget(QWidget):
     # (回饋)
     def followering_error(self):
         while True:
-            time.sleep(0.125)
-            if self.on==True:
-                
+            time.sleep(0.125)            
+            if self.on==True:                
                 if soft() == False:
                     self.follow_soft_icon.setVisible(True)
                 else:
@@ -1454,7 +1290,7 @@ class MyWidget(QWidget):
             self.follow_on_icon_grey.setVisible(True)
             self.home.setEnabled(False)            
         else:
-            self.on = False
+            self.on = False            
             self.running_icon.setVisible(False)
             self.movie.stop()
             self.follow_warning.setVisible(False)
@@ -1464,7 +1300,7 @@ class MyWidget(QWidget):
             self.follow_on_icon_grey.setVisible(False)
             self.follow_error_icon.setVisible(False)
             self.follow_soft_icon.setVisible(False)
-            self.home.setEnabled(True)
+            self.home.setEnabled(True)            
         if self.follow_flag == False:
             
             
@@ -1477,20 +1313,30 @@ class MyWidget(QWidget):
     # (導航) 開始導航
     def navigation_start(self,loc=0):
         go_to(loc)
-        self.nav_start.setVisible(False)
-        self.nav_start_icon.setVisible(False)        
-        self.nav_stop.setVisible(True)
-        self.nav_stop_icon.setVisible(True)
-        self.nav_stop.raise_()        
+        if self.nav_on:
+            self.nav_start.setVisible(False)
+            self.nav_start_icon.setVisible(False)        
+            self.nav_stop.setVisible(True)
+            self.nav_stop_icon.setVisible(True)
+            self.nav_stop.raise_()        
         
     def navigation_cancel(self):
         cancel()
-        self.nav_start.setVisible(True)
-        self.nav_start_icon.setVisible(True)
-        self.nav_start.raise_()
-        self.nav_stop.setVisible(False)
-        self.nav_stop_icon.setVisible(False)
-        
+        if self.nav_on:
+            self.nav_start.setVisible(True)
+            self.nav_start_icon.setVisible(True)
+            self.nav_start.raise_()
+            self.nav_stop.setVisible(False)
+            self.nav_stop_icon.setVisible(False)
+
+    # (充電) 前往充電(導航)
+    def charging_start(self):
+        if self.ch_on:
+            self.ch_on = False
+            cancel()
+        else:
+            self.ch_on = True
+            go_to(0)
         
     
 if __name__ == '__main__':
