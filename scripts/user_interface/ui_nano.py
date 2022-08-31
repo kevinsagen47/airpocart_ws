@@ -1070,6 +1070,7 @@ class MyWidget(QWidget):
         self.back_icon.setVisible(False)
         self.nav_start_icon.setVisible(False)
         self.nav_stop_icon.setVisible(False)
+        cancel()
         self.follow_on_btn.setVisible(False)
         self.follow_off_btn.setVisible(False)
         self.follow_on_icon.setVisible(False)
