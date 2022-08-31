@@ -353,6 +353,7 @@ class MyWidget(QWidget):
         #################################
         
         self.idle()
+        threading._start_new_thread(follower,(self.pub,self.on))
         threading._start_new_thread(self.followering_error,())
 
     # (測試) 終端機指令    
@@ -1435,7 +1436,7 @@ class MyWidget(QWidget):
                 print("status=3 in UIIIIIIIIIIIIII")
                 if self.nav_on == True:
                     self.navigation_cancel()
-                    self.destination_text("已到達目的地")
+                    self.destination_text.setText("已到達目的地")
     
     # (跟隨) 前跟隨模式
     def follow_start(self,on=1):
@@ -1464,7 +1465,7 @@ class MyWidget(QWidget):
             self.follow_soft_icon.setVisible(False)
             self.home.setEnabled(True)
         if self.follow_flag == False:
-            threading._start_new_thread(follower,(self.pub,on))
+            
             
             print("follow ONNNNNNNNNNNNNNNNNNNNNN")
         else:
