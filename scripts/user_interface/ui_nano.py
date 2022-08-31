@@ -1432,7 +1432,7 @@ class MyWidget(QWidget):
                 self.follow_error_icon.setVisible(False)
                 self.follow_soft_icon.setVisible(False)
             if get_status() == 3:
-                if self.nav_on == True
+                if self.nav_on == True:
                     self.navigation_cancel()
                     self.destination_text("已到達目的地")
     
