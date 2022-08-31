@@ -1427,7 +1427,7 @@ class MyWidget(QWidget):
             else:
                 self.follow_error_icon.setVisible(False)
                 self.follow_soft_icon.setVisible(False)
-            if get_status() != 1:
+            if get_status() == 3:
                 self.navigation_cancel()
     
     # (跟隨) 前跟隨模式
