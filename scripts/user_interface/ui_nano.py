@@ -25,8 +25,8 @@ class MyWidget(QWidget):
         self.setWindowTitle('User Interface')
         self.setGeometry(0,0,1920,1200)
         self.ros_on = True
-        self.path = './'
-        #self.path = path_image
+        #self.path = './'
+        self.path = path_image
         self.font_size = 1
 
         
