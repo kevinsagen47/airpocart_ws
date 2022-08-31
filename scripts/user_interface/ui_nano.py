@@ -264,6 +264,8 @@ class MyWidget(QWidget):
         self.navi_flag = False
         
         ##  Page 2 ##
+        
+        self.nav_on = False
         self.back = QPushButton('BACK',self)        
         self.nav_start = QPushButton('START',self)        
         self.nav_stop = QPushButton('STOP',self)
@@ -727,6 +729,7 @@ class MyWidget(QWidget):
     # (顯示) 導航畫面2
     def navigation_2(self):
         self.all_clear()
+        self.nav_on = True
         self.page.setText('導航畫面2')        
         self.map_place_x = 60
         self.map_place_y = 240
@@ -1058,6 +1061,7 @@ class MyWidget(QWidget):
             n.setVisible(False)        
         self.pin.setVisible(False)        
         self.nav_btn.setVisible(False)
+        self.nav_on = False
         self.destination_text.setVisible(False)
         self.back.setVisible(False)
         self.nav_start.setVisible(False)
@@ -1428,7 +1432,9 @@ class MyWidget(QWidget):
                 self.follow_error_icon.setVisible(False)
                 self.follow_soft_icon.setVisible(False)
             if get_status() == 3:
-                self.navigation_cancel()
+                if self.nav_on == True
+                    self.navigation_cancel()
+                    self.destination_text("已到達目的地")
     
     # (跟隨) 前跟隨模式
     def follow_start(self,on=1):
@@ -1475,7 +1481,7 @@ class MyWidget(QWidget):
         self.nav_stop.raise_()        
         
     def navigation_cancel(self):
-        cancel()        
+        cancel()
         self.nav_start.setVisible(True)
         self.nav_start_icon.setVisible(True)
         self.nav_start.raise_()
