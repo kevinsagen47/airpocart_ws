@@ -150,7 +150,11 @@ def person_detect():
 def soft():
     global soft_start
     return soft_start
-
+    
+def get_obstacle():
+    global obstacle
+    return obstacle
+    
 def get_status():
     global nav_status
     return nav_status

@@ -246,6 +246,7 @@ class MyWidget(QWidget):
         
         ##  Page 2 ##
         
+        self.nav_page = False
         self.nav_on = False
         self.back = QPushButton('BACK',self)        
         self.nav_start = QPushButton('START',self)        
@@ -277,6 +278,7 @@ class MyWidget(QWidget):
         
         self.follow_error_icon = QLabel(self)
         self.follow_soft_icon = QLabel(self)
+        self.follow_obstacle_icon = QLabel(self)
         self.follow_flag = False
         self.on = False
         
@@ -333,8 +335,10 @@ class MyWidget(QWidget):
         #################################
         
         self.idle()
-        threading._start_new_thread(follower,(self.pub,self.on))
-        threading._start_new_thread(self.followering_error,())
+        if self.ros_on:
+            threading._start_new_thread(follower,(self.pub,self.on))
+        threading._start_new_thread(self.feedback_status,())
+        self.status = get_status()
 
     # (測試) 終端機指令    
     def os_command(self):
@@ -617,7 +621,7 @@ class MyWidget(QWidget):
     # (顯示) 導航畫面2
     def navigation_2(self):
         self.all_clear()
-        self.nav_on = True
+        self.nav_page = True
         self.page.setText('導航畫面2')        
         self.map_place_x = 60
         self.map_place_y = 240
@@ -782,6 +786,11 @@ class MyWidget(QWidget):
         self.follow_soft_icon.setPixmap(pixmap)
         
         
+        
+        self.follow_obstacle_icon.move(350,75)
+        self.follow_obstacle_icon.setText("Obstacle Detected!")
+        self.follow_obstacle_icon.setFont(QFont("Arial",30*self.font_size))
+        
         self.home.setVisible(True)
         self.home.move(70,70)
         self.home.resize(180,180)
@@ -939,6 +948,7 @@ class MyWidget(QWidget):
             n.setVisible(False)        
         self.pin.setVisible(False)        
         self.nav_btn.setVisible(False)
+        self.nav_page = False
         self.nav_on = False
         self.destination_text.setVisible(False)
         self.back.setVisible(False)
@@ -957,6 +967,7 @@ class MyWidget(QWidget):
         self.follow_warning0.setVisible(False)
         self.follow_error_icon.setVisible(False)
         self.follow_soft_icon.setVisible(False)
+        self.follow_obstacle_icon.setVisible(False)
         self.running_icon.setVisible(False)
         self.charging_text.setVisible(False)
         self.charging_btn.setVisible(False)
@@ -1253,7 +1264,8 @@ class MyWidget(QWidget):
         return ''
     
     # (回饋)
-    def followering_error(self):
+    def feedback_status(self):
+        print("feedback on")
         while True:
             time.sleep(0.125)            
             if self.on==True:                
@@ -1266,12 +1278,27 @@ class MyWidget(QWidget):
                     print("no person!!")
                 else:
                     self.follow_error_icon.setVisible(False)
+                if get_obstacle() == True:
+                    print("Obstacle Detected")
+                    self.follow_obstacle_icon.setVisible(True)
+                else:
+                    self.follow_obstacle_icon.setVisible(False)
             else:
                 self.follow_error_icon.setVisible(False)
                 self.follow_soft_icon.setVisible(False)
+                self.follow_obstacle_icon.setVisible(False)
+            if self.nav_on == True:
+                if person_detect() == False:
+                    self.follow_error_icon.setVisible(True)
+                    print("no person!!")
+                else:
+                    self.follow_error_icon.setVisible(False)
+            if self.status != get_status():
+                print("Status change from %d to %d !!"%(self.status,get_status()))
+                self.status = get_status()
             if get_status() == 3:
                 print("status=3 in UIIIIIIIIIIIIII")
-                if self.nav_on == True:
+                if self.nav_page == True:
                     self.navigation_cancel()
                     self.destination_text.setText("已到達目的地")
     
@@ -1300,20 +1327,21 @@ class MyWidget(QWidget):
             self.follow_on_icon_grey.setVisible(False)
             self.follow_error_icon.setVisible(False)
             self.follow_soft_icon.setVisible(False)
-            self.home.setEnabled(True)            
-        if self.follow_flag == False:
-            
-            
+            self.home.setEnabled(True)
+        '''                
+        if self.follow_flag == False:           
             print("follow ONNNNNNNNNNNNNNNNNNNNNN")
         else:
             #threading.join()
             print("ON in UIIIIII",on)
-        #follower(self.pub,on)
+        '''
+        
     
     # (導航) 開始導航
-    def navigation_start(self,loc=0):
-        go_to(loc)
-        if self.nav_on:
+    def navigation_start(self,loc=0):        
+        if self.nav_page:
+            go_to(loc)
+            self.nav_on = True
             self.nav_start.setVisible(False)
             self.nav_start_icon.setVisible(False)        
             self.nav_stop.setVisible(True)
@@ -1322,7 +1350,8 @@ class MyWidget(QWidget):
         
     def navigation_cancel(self):
         cancel()
-        if self.nav_on:
+        if self.nav_page:
+            self.nav_on = False
             self.nav_start.setVisible(True)
             self.nav_start_icon.setVisible(True)
             self.nav_start.raise_()

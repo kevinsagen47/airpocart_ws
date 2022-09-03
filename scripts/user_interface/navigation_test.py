@@ -13,6 +13,7 @@ destination[0]=[14,0.04,0.24,-0.25,0.97]
 destination[1]=[13,4.74,-2.65,-0.25,0.96]
 
 
+
 def go_to(lala):
     print("go to",lala)
 

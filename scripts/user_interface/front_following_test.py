@@ -12,8 +12,21 @@ import sys
 #from std_msgs.msg import Bool
 #from simple_pid import PID
 #from actionlib_msgs.msg import GoalID, GoalStatusArray
+import random
 print (sys.version)
 
+def person_detect():
+    return True
+
+def get_status():
+    return int(random.random()*4)
+
+def soft():
+    return True
+
+def get_obstacle():
+    return True
+        
 def onoff(on):
     print("call onoff")
 
