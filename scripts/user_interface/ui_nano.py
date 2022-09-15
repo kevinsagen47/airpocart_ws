@@ -243,6 +243,11 @@ class MyWidget(QWidget):
         # (Button) 確定導航
         self.nav_btn = QPushButton(self)        
         self.navi_flag = False
+
+        self.page_count_1 = 0  # Avoid repeat call function
+        self.page_count_2 = 0  # Avoid repeat call function
+        
+
         
         ##  Page 2 ##
         
@@ -616,95 +621,104 @@ class MyWidget(QWidget):
         self.nav_btn.setText('開始導航\n Guide me!')
         self.nav_btn.setFont(QFont('Arial',15*self.font_size))
         self.nav_btn.clicked.connect(self.navigation_2)
+
+        # Avoid repeat
+        self.page_count_1 = 0
+        self.page_count_2 = 0
         
 
     # (顯示) 導航畫面2
     def navigation_2(self):
-        self.all_clear()
-        self.nav_page = True
-        self.page.setText('導航畫面2')        
-        self.map_place_x = 60
-        self.map_place_y = 240
-        self.mapsize_x = 1800
-        self.mapsize_y = 724
-        
-        self.home.setVisible(True)
-        self.home.move(250,1000)
-        self.home.resize(150,150)
-        self.home.raise_()
-        op = QGraphicsOpacityEffect()
-        op.setOpacity(0.01)     # 透明度 0~1
-        self.home.setGraphicsEffect(op)
-        
-        self.home_icon.move(250,1000)
-        self.home_icon.resize(150,150)
-        self.home_icon.setScaledContents(True)
-        self.home_icon.setVisible(True)        
+        # 不要print  output很花時間
+        #print("cnt_1=%d,cnt_2=%d"%(self.page_count_1,self.page_count_2))
 
-        self.back.setVisible(True)
-        self.back.move(70,1000)
-        self.back.resize(150,150)
-        self.back.clicked.connect(self.navigation)
-        self.back.raise_()
-        op = QGraphicsOpacityEffect()
-        op.setOpacity(0.01)     # 透明度 0~1
-        self.back.setGraphicsEffect(op)
+        if self.page_count_1 == self.page_count_2:
+            self.page_count_2 += 1
+            self.all_clear()
+            self.nav_page = True
+            self.page.setText('導航畫面2')        
+            self.map_place_x = 60
+            self.map_place_y = 240
+            self.mapsize_x = 1800
+            self.mapsize_y = 724
+            
+            self.home.setVisible(True)
+            self.home.move(250,1000)
+            self.home.resize(150,150)
+            self.home.raise_()
+            op = QGraphicsOpacityEffect()
+            op.setOpacity(0.01)     # 透明度 0~1
+            self.home.setGraphicsEffect(op)
+            
+            self.home_icon.move(250,1000)
+            self.home_icon.resize(150,150)
+            self.home_icon.setScaledContents(True)
+            self.home_icon.setVisible(True)        
 
-        pixmap = QPixmap(self.path+image_retn)
-        self.back_icon.setPixmap(pixmap)
-        self.back_icon.move(70,1000)
-        self.back_icon.resize(150,150)
-        self.back_icon.setScaledContents(True)
-        self.back_icon.setVisible(True)        
-        
-        self.nav_start.setVisible(True)
-        self.nav_start.move(700,1000)
-        self.nav_start.resize(756,180)        
-        self.nav_start.clicked.connect(lambda:self.navigation_start(self.loc_ch))#STARTTTTT
-        self.nav_start.raise_()
-        op = QGraphicsOpacityEffect()
-        op.setOpacity(0.01)     # 透明度 0~1
-        self.nav_start.setGraphicsEffect(op)
+            self.back.setVisible(True)
+            self.back.move(70,1000)
+            self.back.resize(150,150)
+            self.back.clicked.connect(self.navigation)
+            self.back.raise_()
+            op = QGraphicsOpacityEffect()
+            op.setOpacity(0.01)     # 透明度 0~1
+            self.back.setGraphicsEffect(op)
 
-        self.nav_start_icon.setVisible(True)
-        pixmap = QPixmap(self.path+image_sttn)
-        self.nav_start_icon.setPixmap(pixmap)
-        self.nav_start_icon.move(700,1000)
-        self.nav_start_icon.resize(756,180)
-        self.nav_start_icon.setScaledContents(True)      
-        
-        self.nav_stop.setVisible(False)
-        self.nav_stop.move(700,1000)
-        self.nav_stop.resize(756,180)        
-        self.nav_stop.clicked.connect(self.navigation_cancel)   # CANCELLLL       
-        op = QGraphicsOpacityEffect()
-        op.setOpacity(0.01)     # 透明度 0~1
-        self.nav_stop.setGraphicsEffect(op)
+            pixmap = QPixmap(self.path+image_retn)
+            self.back_icon.setPixmap(pixmap)
+            self.back_icon.move(70,1000)
+            self.back_icon.resize(150,150)
+            self.back_icon.setScaledContents(True)
+            self.back_icon.setVisible(True)        
+            
+            self.nav_start.setVisible(True)
+            self.nav_start.move(700,1000)
+            self.nav_start.resize(756,180)        
+            self.nav_start.clicked.connect(lambda:self.navigation_start(self.loc_ch))#STARTTTTT
+            self.nav_start.raise_()
+            op = QGraphicsOpacityEffect()
+            op.setOpacity(0.01)     # 透明度 0~1
+            self.nav_start.setGraphicsEffect(op)
 
-        pixmap = QPixmap(self.path+image_stpn)
-        self.nav_stop_icon.setPixmap(pixmap)
-        self.nav_stop_icon.move(700,1000)
-        self.nav_stop_icon.resize(756,180)
-        self.nav_stop_icon.setScaledContents(True)
+            self.nav_start_icon.setVisible(True)
+            pixmap = QPixmap(self.path+image_sttn)
+            self.nav_start_icon.setPixmap(pixmap)
+            self.nav_start_icon.move(700,1000)
+            self.nav_start_icon.resize(756,180)
+            self.nav_start_icon.setScaledContents(True)      
+            
+            self.nav_stop.setVisible(False)
+            self.nav_stop.move(700,1000)
+            self.nav_stop.resize(756,180)        
+            self.nav_stop.clicked.connect(self.navigation_cancel)   # CANCELLLL       
+            op = QGraphicsOpacityEffect()
+            op.setOpacity(0.01)     # 透明度 0~1
+            self.nav_stop.setGraphicsEffect(op)
 
-        self.destination_text.setVisible(True)
-        self.destination_text.move(500,50)
-        self.destination_text.resize(1000,180)
-        self.destination_text.setText("正在前往 %s"%self.loc_choose[self.loc_ch].text())
-        self.destination_text.setFont(QFont('Arial',30*self.font_size))
-        
-        self.showImage_map()
-        x=int(self.map_place_x + self.real_loc[self.loc_ch][0] - self.maplocation_x)
-        y=int(self.map_place_y + self.real_loc[self.loc_ch][1] - self.maplocation_y)
-        self.pin.move(x,y)
-        
-        if x >= self.map_place_x and x<= self.map_place_x+self.mapsize_x:
-            if y >= self.map_place_y and y<= self.map_place_y+self.mapsize_y:
-                self.pin.setVisible(True)
+            pixmap = QPixmap(self.path+image_stpn)
+            self.nav_stop_icon.setPixmap(pixmap)
+            self.nav_stop_icon.move(700,1000)
+            self.nav_stop_icon.resize(756,180)
+            self.nav_stop_icon.setScaledContents(True)
+
+            self.destination_text.setVisible(True)
+            self.destination_text.move(500,50)
+            self.destination_text.resize(1000,180)
+            self.destination_text.setText("正在前往 %s"%self.loc_choose[self.loc_ch].text())
+            self.destination_text.setFont(QFont('Arial',30*self.font_size))
+            
+            self.showImage_map()
+            x=int(self.map_place_x + self.real_loc[self.loc_ch][0] - self.maplocation_x)
+            y=int(self.map_place_y + self.real_loc[self.loc_ch][1] - self.maplocation_y)
+            self.pin.move(x,y)
+            
+            if x >= self.map_place_x and x<= self.map_place_x+self.mapsize_x:
+                if y >= self.map_place_y and y<= self.map_place_y+self.mapsize_y:
+                    self.pin.setVisible(True)
+                else:
+                    self.pin.setVisible(False)
             else:
                 self.pin.setVisible(False)
-        else:
-            self.pin.setVisible(False)
             
     # (顯示) 跟隨畫面
     def following(self):
@@ -1291,6 +1305,9 @@ class MyWidget(QWidget):
                 if person_detect() == False:
                     self.follow_error_icon.setVisible(True)
                     print("no person!!")
+                    ###      only test     ###
+                    #self.navigation_cancel()
+                    ##########################
                 else:
                     self.follow_error_icon.setVisible(False)
             if self.status != get_status():
