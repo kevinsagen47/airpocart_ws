@@ -24,7 +24,7 @@ class MyWidget(QWidget):
     def initUI(self):
         self.setWindowTitle('User Interface')
         self.setGeometry(0,0,1920,1200)
-        self.ros_on = True
+        self.ros_on = False
         #self.path = './'
         self.path = path_image
         self.font_size = 1
@@ -334,7 +334,9 @@ class MyWidget(QWidget):
         ##          Charging           ##
 
         self.charging_text = QLabel(self)
-        self.charging_btn = QPushButton(self)        
+        self.charging_cancel_text = QLabel(self)
+        self.charging_btn = QPushButton(self)
+        self.charging_cancel_btn = QPushButton(self)
         self.ch_on = False
         
         #################################
@@ -823,30 +825,51 @@ class MyWidget(QWidget):
     def charging(self):
         self.all_clear()
         self.page.setText('充電頁面')        
-        self.home.setVisible(True)
+        self.home.setVisible(True)        
         
-        
-        self.charging_btn.setVisible(True)
-        
-        self.charging_btn.resize(1190,317)
-        self.charging_btn.move(200,150)
+        self.charging_btn.setVisible(True)        
+        self.charging_btn.resize(700,700)
+        self.charging_btn.move(600,200)
         op = QGraphicsOpacityEffect()
         op.setOpacity(0.01)     # 透明度 0~1
         self.charging_btn.setGraphicsEffect(op)
         self.charging_btn.raise_()
         self.charging_btn.clicked.connect(self.charging_start)
-        
-        pixmap = QPixmap(self.path+text_charg)
+
+        pixmap = QPixmap(self.path+image_chst)
         self.charging_text.setPixmap(pixmap)
-        self.charging_text.resize(1190,317)
-        self.charging_text.move(200,150)
+        self.charging_text.resize(700,700)
+        self.charging_text.move(600,200)
         self.charging_text.setScaledContents(True)
-        self.charging_text.setVisible(True)
+        self.charging_text.setVisible(True)        
+
+        self.charging_cancel_btn.resize(1920,1200)
+        self.charging_cancel_btn.move(0,0)
+        op = QGraphicsOpacityEffect()
+        op.setOpacity(0.01)     # 透明度 0~1
+        self.charging_cancel_btn.setGraphicsEffect(op)
+        self.charging_cancel_btn.raise_()
+        self.charging_cancel_btn.clicked.connect(self.charging_cancel)
+        
+        pixmap = QPixmap(self.path+image_chcn)
+        self.charging_cancel_text.setPixmap(pixmap)
+        self.charging_cancel_text.resize(1136,711)
+        self.charging_cancel_text.move(392,200)
+        self.charging_cancel_text.setScaledContents(True)       
         
         self.home.setText("返回主畫面\n Return to Home")
         self.home.setFont(QFont("Arial",30*self.font_size))
-        self.home.move(200,550)
-        self.home.resize(1200,500)
+        self.home.move(70,70)
+        self.home.resize(180,180)
+        op = QGraphicsOpacityEffect()
+        op.setOpacity(0.01)     # 透明度 0~1
+        self.home.setGraphicsEffect(op)
+        self.home.raise_()
+        self.home_icon.move(70,70)
+        self.home_icon.resize(180,180)
+        self.home_icon.setScaledContents(True)
+        self.home_icon.setVisible(True)
+        
         self.shut_button.setVisible(True)
         self.shut_button.move(1600,1000)
         self.shut_button.resize(200,120)
@@ -984,7 +1007,9 @@ class MyWidget(QWidget):
         self.follow_obstacle_icon.setVisible(False)
         self.running_icon.setVisible(False)
         self.charging_text.setVisible(False)
+        self.charging_cancel_text.setVisible(False)
         self.charging_btn.setVisible(False)
+        self.charging_cancel_btn.setVisible(False)
     
     # (顯示) 各式選擇
     def show_type(self,type_ch):
@@ -1377,12 +1402,18 @@ class MyWidget(QWidget):
 
     # (充電) 前往充電(導航)
     def charging_start(self):
-        if self.ch_on:
-            self.ch_on = False
-            cancel()
-        else:
-            self.ch_on = True
-            go_to(0)
+        self.ch_on = True
+        self.charging_cancel_btn.setVisible(True)
+        self.charging_cancel_text.setVisible(True)
+        print("back to home")
+        go_to(11)
+        
+    def charging_cancel(self):
+        self.ch_on = False
+        self.charging_cancel_btn.setVisible(False)
+        self.charging_cancel_text.setVisible(False)
+        print("cancel going home")
+        cancel()
         
     
 if __name__ == '__main__':
