@@ -1350,6 +1350,8 @@ class MyWidget(QWidget):
                 if self.nav_page == True:
                     self.navigation_cancel()
                     self.destination_text.setText("已到達目的地")
+                if self.ch_on == True:
+                    self.charging_cancel()
     
     # (跟隨) 前跟隨模式
     def follow_start(self,on=1):
