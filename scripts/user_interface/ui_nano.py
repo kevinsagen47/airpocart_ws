@@ -282,6 +282,12 @@ class MyWidget(QWidget):
         self.follow_off_icon = QLabel(self)
         
         self.follow_error_icon = QLabel(self)
+
+        self.follow_error_icon.move(358,200)
+        self.follow_error_icon.resize(1204,427)
+        pixmap = QPixmap(self.path+image_erro)
+        self.follow_error_icon.setPixmap(pixmap)
+        
         self.follow_soft_icon = QLabel(self)
         self.follow_obstacle_icon = QLabel(self)
         self.follow_flag = False
@@ -789,12 +795,13 @@ class MyWidget(QWidget):
         self.follow_on_icon.resize(700,700)
         self.follow_on_icon_grey.resize(700,700)
         self.follow_off_icon.resize(700,700)
-        
+
+        '''
         self.follow_error_icon.move(358,200)
         self.follow_error_icon.resize(1204,427)
         pixmap = QPixmap(self.path+image_erro)
         self.follow_error_icon.setPixmap(pixmap)
-        
+        '''
         
         self.follow_soft_icon.move(351,200)
         self.follow_soft_icon.resize(1211,448)
