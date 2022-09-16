@@ -24,7 +24,7 @@ class MyWidget(QWidget):
     def initUI(self):
         self.setWindowTitle('User Interface')
         self.setGeometry(0,0,1920,1200)
-        self.ros_on = False
+        self.ros_on = True
         #self.path = './'
         self.path = path_image
         self.font_size = 1
