@@ -1312,6 +1312,7 @@ class MyWidget(QWidget):
     # (回饋)
     def feedback_status(self):
         print("feedback on")
+        stop_cnt = 0
         while True:
             time.sleep(0.125)            
             if self.on==True:                
@@ -1338,10 +1339,13 @@ class MyWidget(QWidget):
                     self.follow_error_icon.setVisible(True)
                     print("no person!!")
                     ###      only test     ###
-                    #self.navigation_cancel()
+                    stop_cnt += 1
+                    if stop_cnt>=24:
+                        self.navigation_cancel()
                     ##########################
                 else:
                     self.follow_error_icon.setVisible(False)
+                    stop_cnt = 0
             if self.status != get_status():
                 print("Status change from %d to %d !!"%(self.status,get_status()))
                 self.status = get_status()
@@ -1408,6 +1412,7 @@ class MyWidget(QWidget):
             self.nav_start.raise_()
             self.nav_stop.setVisible(False)
             self.nav_stop_icon.setVisible(False)
+            self.follow_error_icon.setVisible(False)
 
     # (充電) 前往充電(導航)
     def charging_start(self):
